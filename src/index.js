@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// npm install typeface-roboto --save 
+//Then, you can import it in your entry-point.
+import 'typeface-roboto'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
