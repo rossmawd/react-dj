@@ -11,19 +11,22 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   appBar: {
   backgroundColor: "#BB1918",
+  textAlign: "left",
+ 
+  
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
+ 
   },
   createButton: {
-    
   }
 }));
 
