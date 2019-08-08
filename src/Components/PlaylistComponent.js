@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 const message = `Truncation should be conditionally applicable on this long line of text
  as this is a much longer line than what the container can support. `;
 
-export default function PlaylistComponent() {
+export default function PlaylistComponent(props) {
   const classes = useStyles();
 
   return (
@@ -41,7 +41,7 @@ export default function PlaylistComponent() {
           </Grid>
           {/* ZERO MIN WIDTH */}
           <Grid item xs zeroMinWidth>
-            <Typography noWrap>{message}</Typography>
+            <Typography noWrap>{props.playlist.name}</Typography>
           </Grid>
         </Grid>
       </Paper>

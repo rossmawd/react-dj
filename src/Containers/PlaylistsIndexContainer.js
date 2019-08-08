@@ -5,7 +5,9 @@ class PlaylistsIndexContainer extends Component {
   render() {
     return (
       <div>
-        <PlaylistComponent/>
+        { this.props.playlists.length !== 0  ? 
+          this.props.playlists.map(playlist => <PlaylistComponent playlist={playlist}/>) : null }
+        
       </div>
     );
   }
