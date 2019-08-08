@@ -3,11 +3,12 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import ButtonAppBar from '../Components/ButtonAppBar';
 
+
 class PlayListIndexHeader extends Component {
   render() {
     return (
       <div>
-        <h1>Can I push from another branch- YES</h1>
+    
          <ButtonGroup fullWidth aria-label="full width outlined button group">
           <Button>PlayLister</Button>
           <Button>Log Out</Button>
