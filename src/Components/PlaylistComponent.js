@@ -9,8 +9,6 @@ import Star from '@material-ui/icons/Star';
 import Lightning from '@material-ui/icons/OfflineBolt';
 
 
-
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -19,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     maxWidth: 400,
-    margin: `${theme.spacing(0.6)}px auto`, //space between divs
+    margin: `${theme.spacing(0.2)}px auto`, //space between divs
     padding: theme.spacing(2), //space between components in div
     backgroundColor: "grey"
   },
