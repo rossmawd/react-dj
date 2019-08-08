@@ -6,20 +6,17 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     overflow: 'hidden',
-    padding: theme.spacing(0, 0.1), //top and sides of element
+    position: 'relative',
+    padding: theme.spacing(11.5, 0.1), //top and sides of element
+    //the 11 stops the element beinh hidden behind buttons
   },
-  paper: {
-    maxWidth: 400,
-    margin: `${theme.spacing(0.2)}px auto`, //space between divs
-    padding: theme.spacing(2), //space between components in div
-    backgroundColor: "grey"
-  },
+
 }));
 
  const PlaylistsIndexContainer = (props) => {
   const classes = useStyles();
     return (
-      <div>
+      <div className= {classes.root}>
         { props.playlists.length !== 0  ? 
           props.playlists.map(playlist => <PlaylistComponent playlist={playlist}/>) : null }
         

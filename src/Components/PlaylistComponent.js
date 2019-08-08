@@ -10,14 +10,9 @@ import Lightning from '@material-ui/icons/OfflineBolt';
 
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    overflow: 'hidden',
-    padding: theme.spacing(0, 0.1), //top and sides of element
-  },
   paper: {
     maxWidth: 400,
-    margin: `${theme.spacing(0.2)}px auto`, //space between divs
+    margin: `${theme.spacing(0.4)}px auto`, //space between divs
     padding: theme.spacing(2), //space between components in div
     backgroundColor: "grey"
   },
@@ -30,8 +25,6 @@ export default function PlaylistComponent(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-
       <Paper className={classes.paper}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
@@ -43,10 +36,7 @@ export default function PlaylistComponent(props) {
           </Grid>
         </Grid>
       </Paper>
-
-    
-
-    </div>
+   
   );
 }
 
