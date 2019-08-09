@@ -29,7 +29,6 @@ const PlayListIndexHeader = () => {
          aria-label="full width outlined button group"
          className ={classes.buttons}
            >
-
           <Button>PlayLister</Button>
           <Button>Log Out</Button>
           <Button>Share</Button>
