@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-//import MenuIcon from '@material-ui/icons/Menu';
 import CreateIcon from '@material-ui/icons/Create';
 import SettingsIcon from '@material-ui/icons/Settings';
 
@@ -15,16 +14,13 @@ const useStyles = makeStyles(theme => ({
   },
   appBar: {
   backgroundColor: "#BB1918",
-  textAlign: "left",
- 
-  
+  textAlign: "left", 
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
- 
   },
   createButton: {
   }
@@ -49,7 +45,6 @@ export default function ButtonAppBar() {
            <IconButton edge="start"  color="inherit" aria-label="create">
             <CreateIcon />
           </IconButton>
-       
           {/* <Button 
           className={classes.createButton}
           color="inherit">Create</Button> */}
