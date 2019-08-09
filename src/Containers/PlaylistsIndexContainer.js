@@ -13,12 +13,19 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
+
+const userPlaylists = (playlists) => {
+  if (playlists.length !== 0) {
+  return playlists.filter(playlist => playlist.user_id == localStorage.currentUser)
+}
+}
+
  const PlaylistsIndexContainer = (props) => {
   const classes = useStyles();
     return (
       <div className= {classes.root}>
         { props.playlists.length !== 0  ? 
-          props.playlists.map(playlist => <PlaylistComponent playlist={playlist}/>) : null }
+          userPlaylists(props.playlists).map(playlist => <PlaylistComponent playlist={playlist}/>) : null }
         
       </div>
     );

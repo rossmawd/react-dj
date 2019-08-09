@@ -26,12 +26,13 @@ export default function PlaylistComponent(props) {
           <Lightning/>  
           </Grid>
 
-          <Grid item>
-          <Lightning/>
-          </Grid>
+         
           {/* ZERO MIN WIDTH */}
           <Grid item xs zeroMinWidth>
             <Typography noWrap>{props.playlist.name}</Typography>
+          </Grid>
+          <Grid item xs zeroMinWidth>
+            <Typography noWrap>User: {props.playlist.user_id}</Typography>
           </Grid>
           
         </Grid>
