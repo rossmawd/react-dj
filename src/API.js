@@ -1,16 +1,9 @@
 
-
 const endpoint = 'http://localhost:3000/api/v1/'
-const cardsUrl = `${endpoint}/cards`
 //Sam's Auth code:
 const signupUrl = `${endpoint}/users`
 const loginUrl = `${endpoint}/login`
 const validateUrl = `${endpoint}/validate`
-const totalsUrl = `${endpoint}/totals`
-const gameUrl = `${endpoint}/games`
-
-
-//const postsUrl = `${endpoint}/posts`
 
 const jsonify = res => {
   // return res.json()
@@ -33,12 +26,12 @@ const handleServerError = errors => {
   throw errors
 } //only called in catch
 
-const cards = () => {
-  return fetch(cardsUrl)
-    .then(jsonify)
-    // .then(console.log)
-    .catch(handleServerError)
-}
+// const cards = () => {
+//   return fetch(cardsUrl)
+//     .then(jsonify)
+//     // .then(console.log)
+//     .catch(handleServerError)
+// }
 //Sam's Auth Code...
 const constructHeaders = (moreHeaders = {}) => (
   {
@@ -89,24 +82,24 @@ const validateUser = () => {
     .catch(handleServerError)
 }
 
-const fetchTotalScores = () => {
-  return fetch(totalsUrl)
-    .then(jsonify)
-    .catch(handleServerError)
-}
+// const fetchTotalScores = () => {
+//   return fetch(totalsUrl)
+//     .then(jsonify)
+//     .catch(handleServerError)
+// }
 
-const postGame = (game) => fetch(gameUrl, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ game })
-}).then(jsonify)
-  .then(game => {
-    console.log("game: ", game)
-    return game
-  })
-  .catch(handleServerError)
+// const postGame = (game) => fetch(gameUrl, {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify({ game })
+// }).then(jsonify)
+//   .then(game => {
+//     console.log("game: ", game)
+//     return game
+//   })
+//   .catch(handleServerError)
 
 const clearToken = () => localStorage.removeItem('token')
 
@@ -115,9 +108,6 @@ export default {
   logIn,
   validateUser,
   clearToken,
-  cards,
-  fetchTotalScores,
-  postGame
 }
 
 
