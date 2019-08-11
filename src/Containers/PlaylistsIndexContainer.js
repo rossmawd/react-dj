@@ -25,7 +25,7 @@ const userPlaylists = (playlists) => {
     return (
       <div className= {classes.root}>
         { props.playlists.length !== 0  ? 
-          userPlaylists(props.playlists).map(playlist => <PlaylistComponent playlist={playlist}/>) : null }
+          userPlaylists(props.playlists).map((playlist,i) => <PlaylistComponent key={i} playlist={playlist}/>) : null }
         
       </div>
     );

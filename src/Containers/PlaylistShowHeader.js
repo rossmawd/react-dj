@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const PlaylistIndexHeader = (props) => {
+const PlaylistShowHeader = (props) => {
   const classes = useStyles();
 
   return (
@@ -37,7 +37,7 @@ const PlaylistIndexHeader = (props) => {
           >Log Out
           </Button>
 
-          <Button>Share</Button>
+          <Button>Search</Button>
         </ButtonGroup>
         <ButtonAppBar />
       </AppBar>
@@ -46,4 +46,4 @@ const PlaylistIndexHeader = (props) => {
   );
 }
 
-export default PlaylistIndexHeader;
+export default PlaylistShowHeader;

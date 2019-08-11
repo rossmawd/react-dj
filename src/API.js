@@ -1,4 +1,7 @@
 
+import Link from '@material-ui/core/Link';
+import React from 'react';
+
 const endpoint = 'http://localhost:3000/api/v1/'
 //Sam's Auth code:
 const signupUrl = `${endpoint}/users`
@@ -64,7 +67,9 @@ const logIn = (user) => fetch(loginUrl, {
 }).then(jsonify)
   .then(data => {
     console.log("token: ", data.token)
+    console.log(data)
     localStorage.setItem('token', data.token)
+    localStorage.setItem('currentUser', data.user.id)
     return data.user
   })
   .catch(handleServerError)                       
@@ -101,13 +106,19 @@ const validateUser = () => {
 //   })
 //   .catch(handleServerError)
 
-const clearToken = () => localStorage.removeItem('token')
+const logOut = (props) => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('currentUser')
+  props.clearCurrentUser()  
+  props.history.push('/')
+ 
+}
 
 export default {
   signUp,
   logIn,
   validateUser,
-  clearToken,
+  logOut,
 }
 
 
