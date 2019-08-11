@@ -132,7 +132,7 @@ class App extends React.Component {
               <Route exact path='/playlist' render={routerProps =>
                 <>
                   <PlaylistShowHeader {...routerProps} clearCurrentUser={this.clearCurrentUser}/>
-                  <PlaylistsIndexContainer playlists={this.state.playlists} />
+                 
                 </>
               }
               />

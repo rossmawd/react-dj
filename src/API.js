@@ -70,6 +70,7 @@ const logIn = (user) => fetch(loginUrl, {
     console.log(data)
     localStorage.setItem('token', data.token)
     localStorage.setItem('currentUser', data.user.id)
+    localStorage.setItem('email', data.user.email)
     return data.user
   })
   .catch(handleServerError)                       
