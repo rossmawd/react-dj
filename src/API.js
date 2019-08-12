@@ -100,18 +100,18 @@ const validateUser = () => {
 //     .catch(handleServerError)
 // }
 
-// const postGame = (game) => fetch(gameUrl, {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({ game })
-// }).then(jsonify)
-//   .then(game => {
-//     console.log("game: ", game)
-//     return game
-//   })
-//   .catch(handleServerError)
+const postListing = (listing) => fetch(listingsUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ listing })
+}).then(jsonify)
+  .then(listing => {
+    console.log("listing: ", listing)
+    return listing
+  })
+  .catch(handleServerError)
 
 const logOut = props => {
   localStorage.removeItem("token");
@@ -125,5 +125,6 @@ export default {
   logIn,
   validateUser,
   logOut,
-  fetchAllListings
+  fetchAllListings,
+  postListing
 };

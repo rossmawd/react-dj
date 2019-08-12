@@ -134,13 +134,16 @@ class App extends React.Component {
                 {...routerProps}
                 clearCurrentUser={this.clearCurrentUser}
                 toggleShowListingsEdit={this.toggleShowListingsEdit}
+                playlist={playlist}
               />
 
               <ListingContainer
                 updateListings={this.updateListings}
                 listings={this.state.listings}
+                currentUser={this.state.user}
                 playlist={playlist}
                 showListingsEdit={this.state.showListingsEdit}
+                toggleShowListingsEdit={this.toggleShowListingsEdit}
               />
             </>
           )

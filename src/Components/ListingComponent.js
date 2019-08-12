@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ListingComponent(props) {
   const classes = useStyles();
+  const {suggestion, url, position, playlist_id, name, updated_at} = props.listing
 
   return (
     <div className={classes.root}>
@@ -41,7 +42,7 @@ export default function ListingComponent(props) {
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
            
-            <ReactPlayer className={classes.img} url={props.listing.url} light />
+            <ReactPlayer className={classes.img} url={url} light />
         
             {/* </ButtonBase> */}
           </Grid>
@@ -49,13 +50,13 @@ export default function ListingComponent(props) {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  {props.listing.url}
+                  {name}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Suggestion?: {props.listing.suggestion}
+                  Suggestion?: {suggestion ? "Yes": "No"}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  ID: 1030114
+                  Position in Playlist: {position}
                 </Typography>
               </Grid>
               <Grid item>
@@ -65,7 +66,7 @@ export default function ListingComponent(props) {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle1">$19.00</Typography>
+              <Typography variant="subtitle1">{suggestion ? "Suggestion" : ""}</Typography>
             </Grid>
           </Grid>
         </Grid>

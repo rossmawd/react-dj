@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
+  const {playlist} = props 
 
   return (
     <div className={classes.root}>
@@ -37,7 +39,7 @@ export default function ButtonAppBar(props) {
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" className={classes.title}>
-            {localStorage.email}
+            {playlist ? playlist.name : localStorage.email}
           </Typography>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="create">
             <SettingsIcon />

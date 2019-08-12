@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-//import PlaylistComponent from "../Components/PlaylistComponent";
+import React from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
-
 import { makeStyles } from "@material-ui/core/styles";
-import { ResponsivePlayer } from "../Components/ResponsivePlayer";
+import { ListItemIcon } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -16,32 +14,53 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const playlistListingsOnly = (listings, playlist) => {
-  if (listings) {
-    return listings.filter(listing => listing.playlist_id === playlist.id);
-  }
-};
-
-const renderListings = (props, routerProps) => {
-
-  if (props.listings && props.listings.length !== 0 ) {
-    return playlistListingsOnly(props.listings, props.playlist).map(
-      (listing, i) => (
-        <ListingComponent {...routerProps} key={i} listing={listing} />
-      )
-    );
-  }
-};
-
 const ListingContainer = (props, routerProps) => {
-  const classes = useStyles();
+    const classes = useStyles();
+    const { listings, playlist, currentUser } = props;
 
-  return (
-    <div className={classes.root}>
-      {props.showListingsEdit ? <EditListingForm /> :  
-      renderListings(props, routerProps)}
-    </div>
-  );
+    const playlistListingsOnly = () => {
+      let listingCount = 0;
+
+      if (listings && playlist) {
+        let filteredListings = listings.filter(
+          listing => listing.playlist_id === playlist.id
+        );
+        listingCount = filteredListings.length;
+
+        return { filteredListings, listingCount };
+      }
+    };
+
+
+    const sortListings = () => {
+      return playlistListingsOnly(listings, playlist).filteredListings.sort( listing => listing.position).reverse()
+
+    }
+
+    const renderListings = () => {
+      if (listings && listings.length !== 0) {
+        return sortListings().map((listing, i) => (
+          <ListingComponent {...routerProps} key={i} listing={listing} />
+        ));
+      }
+    };
+
+    return (
+      <div className={classes.root}>
+        {props.showListingsEdit ? (
+          <EditListingForm
+            {...routerProps}
+            playlist={props.playlist}
+            playlistLength={
+              playlistListingsOnly().listingCount
+            }
+            toggleShowListingsEdit={props.toggleShowListingsEdit}
+          />
+        ) : (
+          renderListings()
+        )}
+      </div>
+    );
 };
 
 export default ListingContainer;

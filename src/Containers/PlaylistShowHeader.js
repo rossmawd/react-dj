@@ -3,6 +3,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import ButtonAppBar from '../Components/ButtonAppBar';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import API from '../API'
@@ -16,6 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 const PlaylistShowHeader = (props) => {
   const classes = useStyles();
+  const {playlist} = props
+ 
 
   return (
     <div  >
@@ -26,7 +29,9 @@ const PlaylistShowHeader = (props) => {
           aria-label="full width outlined button group"
           className={classes.buttons}
         >
-          <Button>PlayLister</Button>
+           
+          <Button as={Link} href={"/playlists"}>PlayLister</Button>
+        
 
           <Button
             onClick={() => {
@@ -39,7 +44,10 @@ const PlaylistShowHeader = (props) => {
 
           <Button>Search</Button>
         </ButtonGroup>
-        <ButtonAppBar toggleShowListingsEdit={props.toggleShowListingsEdit} />
+        <ButtonAppBar
+          playlist = {playlist}
+          toggleShowListingsEdit={props.toggleShowListingsEdit}
+        />
       </AppBar>
 
     </div>
