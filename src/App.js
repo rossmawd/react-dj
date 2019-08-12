@@ -7,6 +7,7 @@ import API from "./API.js";
 import { Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import ListingContainer from "./Containers/ListingContainer";
 const PLAYLISTURL = "http://localhost:3000/api/v1/playlists";
 
 class App extends React.Component {
@@ -14,7 +15,18 @@ class App extends React.Component {
     playlists: [],
     user: {},
     email: null,
-    password: null
+    password: null,
+    listings: {}
+  };
+
+  componentDidMount() { 
+    this.updateListings()
+    this.fetchPlaylists()
+    this.setCurrentUserFromToken() 
+  }
+
+  updateListings = () => {
+    return API.fetchAllListings().then(listings => this.setState({listings}))
   };
 
   clearCurrentUser = () => {
@@ -29,10 +41,6 @@ class App extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.fetchPlaylists();
-    this.setCurrentUserFromToken();
-  }
 
   fetchPlaylists = () => {
     return fetch(PLAYLISTURL)
@@ -62,16 +70,16 @@ class App extends React.Component {
   //   }
   // }
 
-  // createUser = user => {
-  //   API.signUp(user).then(userData => this.setState({ user: userData }))
-  //     .then(() => {
-  //       console.log(this.props.history)
-  //       this.props.history.push('/game')})
-  //     .catch(errors => {
-  //       this.setState({ errors })
-  //       alert(errors)
-  //     })
-  // }
+  createUser = user => {
+    API.signUp(user).then(userData => this.setState({ user: userData }))
+      .then(() => {
+        console.log(this.props.history)
+        this.props.history.push('/game')})
+      .catch(errors => {
+        this.setState({ errors })
+        alert(errors)
+      })
+  }
 
   handleSignInSubmit = e => {
     e.preventDefault();
@@ -102,26 +110,23 @@ class App extends React.Component {
     );
   };
 
-  returnPlaylistRoute = (playlist) => {
-    
+  returnPlaylistRoute = playlist => {
     return (
       <Route
         key={playlist.id}
         exact
         path={`/playlist/${playlist.id}`}
-        render={(routerProps) => (
+        render={routerProps => (
           <>
             <PlaylistShowHeader
               {...routerProps}
               clearCurrentUser={this.clearCurrentUser}
             />
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <h1>This Playlists ID is {playlist.id}</h1>
+
+            <ListingContainer
+              updateListings={this.updateListings}
+              listings={this.state.listings}
+            />
           </>
         )}
       />
@@ -160,12 +165,17 @@ class App extends React.Component {
                     {...routerProps}
                     clearCurrentUser={this.clearCurrentUser}
                   />
-                  <PlaylistsIndexContainer {...routerProps} playlists={this.state.playlists} />
+                  <PlaylistsIndexContainer
+                    {...routerProps}
+                    playlists={this.state.playlists}
+                  />
                 </>
               )}
             />
 
-          {this.state.playlists.map(playlist => this.returnPlaylistRoute(playlist))}
+            {this.state.playlists.map(playlist =>
+              this.returnPlaylistRoute(playlist)
+            )}
           </Switch>
         </React.Fragment>
       </div>
