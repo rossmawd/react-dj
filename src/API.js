@@ -1,9 +1,9 @@
 const endpoint = "http://localhost:3000/api/v1/";
 //Sam's Auth code:
-const signupUrl = `${endpoint}users`;
-const loginUrl = `${endpoint}login`;
-const validateUrl = `${endpoint}validate`;
-const listingsUrl = `${endpoint}listings`;
+const signupUrl = `${endpoint}users/`;
+const loginUrl = `${endpoint}login/`;
+const validateUrl = `${endpoint}validate/`;
+const listingsUrl = `${endpoint}listings/`;
 
 const jsonify = res => {
   // return res.json()
@@ -94,11 +94,20 @@ const validateUser = () => {
     .catch(handleServerError);
 };
 
-// const fetchTotalScores = () => {
-//   return fetch(totalsUrl)
-//     .then(jsonify)
-//     .catch(handleServerError)
-// }
+const deleteListing = (id) => {
+  return fetch(listingsUrl+ id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    
+  }).then(jsonify)
+    .then(listing => {
+      console.log(" deleted listing: ", listing)
+      return listing
+    })
+    .catch(handleServerError)
+}
 
 const postListing = (listing) => fetch(listingsUrl, {
   method: 'POST',
@@ -126,5 +135,6 @@ export default {
   validateUser,
   logOut,
   fetchAllListings,
-  postListing
+  postListing,
+  deleteListing
 };

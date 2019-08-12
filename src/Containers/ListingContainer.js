@@ -40,7 +40,7 @@ const ListingContainer = (props, routerProps) => {
     const renderListings = () => {
       if (listings && listings.length !== 0) {
         return sortListings().map((listing, i) => (
-          <ListingComponent {...routerProps} key={i} listing={listing} />
+          <ListingComponent {...routerProps} key={i} listing={listing} updateListings={props.updateListings}/>
         ));
       }
     };

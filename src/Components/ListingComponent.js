@@ -7,6 +7,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import ReactPlayer from 'react-player'
 import { ResponsivePlayer } from './ResponsivePlayer';
 import CardMedia from '@material-ui/core/CardMedia';
+import API from '../API'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +32,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function ListingComponent(props) {
   const classes = useStyles();
-  const {suggestion, url, position, playlist_id, name, updated_at} = props.listing
+  const {id, suggestion, url, position, playlist_id, name, updated_at} = props.listing
+
+
+  const handleClick = () => {
+      API.deleteListing(id).then(resp => {
+      props.updateListings()
+        alert(resp.message)
+      
+      })
+  }
 
   return (
     <div className={classes.root}>
@@ -56,11 +66,14 @@ export default function ListingComponent(props) {
                   Suggestion?: {suggestion ? "Yes": "No"}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Position in Playlist: {position}
+                  Position Number: {position}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Listing id: {id}
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                <Typography onClick={handleClick} variant="body2" style={{ cursor: 'pointer' }}>
                   Remove
                 </Typography>
               </Grid>
