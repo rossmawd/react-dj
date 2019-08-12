@@ -5,29 +5,15 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useState } from 'react';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-const ranges = [
-  {
-    value: '0-20',
-    label: '0 to 20',
-  },
-  {
-    value: '21-50',
-    label: '21 to 50',
-  },
-  {
-    value: '51-100',
-    label: '51 to 100',
-  },
-];
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
-    position: "sticky"
+    flexWrap: 'wrap'
   },
   margin: {
     margin: theme.spacing(1),
@@ -37,48 +23,54 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function OutlinedInputAdornments() {
+export default function EditListingForm() {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
-  });
+  const [url, setUrl] = useState("");
+  const [name, setName] = useState("");
 
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
 
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = event => {
-    event.preventDefault();
-  };
+const handleChange = (event) => {
+  if (event.target.id === "url") {
+ 
+  setUrl(event.target.value)
+}
+else if (event.target.id === "song-name") {
+  setName(event.target.value)
+}
+}
 
   return (
     <div className={classes.root}>
+      <br></br>
       <TextField
-        id="outlined-simple-start-adornment"
+        id="url"
         className={clsx(classes.margin, classes.textField)}
         variant="outlined"
-        label="With outlined TextField"
+        label="YouTube URL"
+        onChange={(event) => handleChange(event)}
         InputProps={{
-          startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+          
         }}
       />
       <TextField
+        id="song-name"
+        className={clsx(classes.margin, classes.textField)}
+        variant="outlined"
+        label="Track Name"
+        onChange={(event) => handleChange(event)}
+        InputProps={{
+          
+        }}
+      />
+      {/* <TextField
         select
         className={clsx(classes.margin, classes.textField)}
         variant="outlined"
-        label="With Select"
+        label="Your Songs"
         value={values.weightRange}
         onChange={handleChange('weightRange')}
         InputProps={{
-          startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+          startAdornment: <InputAdornment position="start">Select</InputAdornment>,
         }}
       >
         {ranges.map(option => (
@@ -86,53 +78,8 @@ export default function OutlinedInputAdornments() {
             {option.label}
           </MenuItem>
         ))}
-      </TextField>
-      <TextField
-        id="outlined-adornment-amount"
-        className={clsx(classes.margin, classes.textField)}
-        variant="outlined"
-        label="Amount"
-        value={values.amount}
-        onChange={handleChange('amount')}
-        InputProps={{
-          startAdornment: <InputAdornment position="start">$</InputAdornment>,
-        }}
-      />
-      <TextField
-        id="outlined-adornment-weight"
-        className={clsx(classes.margin, classes.textField)}
-        variant="outlined"
-        label="Weight"
-        value={values.weight}
-        onChange={handleChange('weight')}
-        helperText="Weight"
-        InputProps={{
-          endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
-        }}
-      />
-      <TextField
-        id="outlined-adornment-password"
-        className={clsx(classes.margin, classes.textField)}
-        variant="outlined"
-        type={values.showPassword ? 'text' : 'password'}
-        label="Password"
-        value={values.password}
-        onChange={handleChange('password')}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                edge="end"
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
-                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
+      </TextField> */}
+    
     </div>
   );
 }

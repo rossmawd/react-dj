@@ -10,6 +10,10 @@ import SignUp from "./SignUp";
 import ListingContainer from "./Containers/ListingContainer";
 const PLAYLISTURL = "http://localhost:3000/api/v1/playlists";
 
+const ConditionalComponent = (condition, jsx) => {
+  return condition ? jsx : <div>Loading...</div>;
+}
+
 class App extends React.Component {
   state = {
     playlists: [],
@@ -20,18 +24,18 @@ class App extends React.Component {
     showListingsEdit: false
   };
 
-  componentDidMount() { 
+  componentDidMount() {
     this.updateListings()
     this.fetchPlaylists()
-    this.setCurrentUserFromToken() 
+    this.setCurrentUserFromToken()
   }
 
   toggleShowListingsEdit = () => {
-    this.setState({showListingsEdit: !this.state.showListingsEdit})
+    this.setState({ showListingsEdit: !this.state.showListingsEdit })
   }
 
   updateListings = () => {
-    return API.fetchAllListings().then(listings => this.setState({listings}))
+    return API.fetchAllListings().then(listings => this.setState({ listings }))
   };
 
   clearCurrentUser = () => {
@@ -79,7 +83,8 @@ class App extends React.Component {
     API.signUp(user).then(userData => this.setState({ user: userData }))
       .then(() => {
         console.log(this.props.history)
-        this.props.history.push('/game')})
+        this.props.history.push('/game')
+      })
       .catch(errors => {
         this.setState({ errors })
         alert(errors)
@@ -122,20 +127,23 @@ class App extends React.Component {
         exact
         path={`/playlist/${playlist.id}`}
         render={routerProps => (
-          <>
-            <PlaylistShowHeader
-              {...routerProps}
-              clearCurrentUser={this.clearCurrentUser}
-              toggleShowListingsEdit= {this.toggleShowListingsEdit}
-            />
+          ConditionalComponent(
+            this.state.listings && this.state.listings.length > 0,
+            <>
+              <PlaylistShowHeader
+                {...routerProps}
+                clearCurrentUser={this.clearCurrentUser}
+                toggleShowListingsEdit={this.toggleShowListingsEdit}
+              />
 
-            <ListingContainer
-              updateListings={this.updateListings}
-              listings={this.state.listings}
-              playlist={playlist}
-              showListingsEdit={this.state.showListingsEdit}
-            />
-          </>
+              <ListingContainer
+                updateListings={this.updateListings}
+                listings={this.state.listings}
+                playlist={playlist}
+                showListingsEdit={this.state.showListingsEdit}
+              />
+            </>
+          )
         )}
       />
     );
@@ -168,16 +176,19 @@ class App extends React.Component {
               exact
               path="/playlists"
               render={routerProps => (
-                <>
-                  <PlaylistIndexHeader
-                    {...routerProps}
-                    clearCurrentUser={this.clearCurrentUser}
-                  />
-                  <PlaylistsIndexContainer
-                    {...routerProps}
-                    playlists={this.state.playlists}
-                  />
-                </>
+                ConditionalComponent(
+                  this.state.playlists && this.state.playlists.length > 0,
+                  <>
+                    <PlaylistIndexHeader
+                      {...routerProps}
+                      clearCurrentUser={this.clearCurrentUser}
+                    />
+                    <PlaylistsIndexContainer
+                      {...routerProps}
+                      playlists={this.state.playlists}
+                    />
+                  </>
+                )
               )}
             />
 
