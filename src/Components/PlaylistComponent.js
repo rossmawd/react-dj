@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Lightning from '@material-ui/icons/OfflineBolt';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -14,12 +15,28 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// const goToPlaylist = (e, playlist) => {
+//   e.preventDefault()
+//   debugger
+//   if (playlist){
+//     console.log(playlist.name)
+//   }
+
+// }
+
 
 export default function PlaylistComponent(props) {
   const classes = useStyles();
-
+  
   return (
-      <Paper className={classes.paper}>
+    
+
+    <Link  href={`/playlist/${props.playlist.id}`}>
+       
+      
+      <Paper 
+      className={classes.paper}
+      >
         <Grid container wrap="nowrap" spacing={2}>
 
           <Grid item>
@@ -37,6 +54,7 @@ export default function PlaylistComponent(props) {
           
         </Grid>
       </Paper>
+      </Link>
   );
 }
 
