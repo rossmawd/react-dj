@@ -16,13 +16,18 @@ class App extends React.Component {
     user: {},
     email: null,
     password: null,
-    listings: {}
+    listings: null,
+    showListingsEdit: false
   };
 
   componentDidMount() { 
     this.updateListings()
     this.fetchPlaylists()
     this.setCurrentUserFromToken() 
+  }
+
+  toggleShowListingsEdit = () => {
+    this.setState({showListingsEdit: !this.state.showListingsEdit})
   }
 
   updateListings = () => {
@@ -121,11 +126,14 @@ class App extends React.Component {
             <PlaylistShowHeader
               {...routerProps}
               clearCurrentUser={this.clearCurrentUser}
+              toggleShowListingsEdit= {this.toggleShowListingsEdit}
             />
 
             <ListingContainer
               updateListings={this.updateListings}
               listings={this.state.listings}
+              playlist={playlist}
+              showListingsEdit={this.state.showListingsEdit}
             />
           </>
         )}

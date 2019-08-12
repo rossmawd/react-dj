@@ -4,6 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import ReactPlayer from 'react-player'
+import { ResponsivePlayer } from './ResponsivePlayer';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,26 +29,30 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ComplexGrid() {
+export default function ListingComponent(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
+        
         <Grid container spacing={2}>
-          <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src="/static/images/grid/complex.jpg" />
-            </ButtonBase>
+          <Grid item >
+            {/* <ButtonBase className={classes.image}> */}
+            {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
+           
+            <ReactPlayer className={classes.img} url={props.listing.url} light />
+        
+            {/* </ButtonBase> */}
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  Standard license
+                  {props.listing.url}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
+                  Suggestion?: {props.listing.suggestion}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   ID: 1030114

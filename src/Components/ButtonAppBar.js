@@ -13,8 +13,8 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   appBar: {
-  backgroundColor: "#BB1918",
-  textAlign: "left", 
+    backgroundColor: "#BB1918",
+    textAlign: "left",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
   const classes = useStyles();
 
   return (
@@ -37,13 +37,14 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton> */}
           <Typography variant="h6" className={classes.title}>
-           {localStorage.email}
+            {localStorage.email}
           </Typography>
-          <IconButton edge="start" className={classes.menuButton}  color="inherit" aria-label="create">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="create">
             <SettingsIcon />
           </IconButton>
-           <IconButton edge="start"  color="inherit" aria-label="create">
-            <CreateIcon />
+          <IconButton edge="start" color="inherit" aria-label="create"
+            onClick={props.toggleShowListingsEdit}>
+            <CreateIcon/>
           </IconButton>
           {/* <Button 
           className={classes.createButton}

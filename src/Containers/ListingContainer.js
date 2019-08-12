@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 //import PlaylistComponent from "../Components/PlaylistComponent";
 import ListingComponent from '../Components/ListingComponent'
+import EditListingForm from '../Components/EditListingForm'
+
 
 import { makeStyles } from "@material-ui/core/styles";
+import { ResponsivePlayer } from "../Components/ResponsivePlayer";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,22 +17,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// const userPlaylists = playlists => {
-//   if (playlists.length !== 0) {
-//     return playlists.filter(
-//       playlist => playlist.user_id === parseInt(localStorage.currentUser)
-//     );
-//   }
-// };
+
+const playlistListingsOnly = (listings, playlist) => {
+  if (listings) {
+    
+    return listings.filter(
+             listing => listing.playlist_id === playlist.id
+           );
+  }
+}
 
 
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
+  
+  
   return (
     <div className={classes.root}>
+      {props.showListingsEdit ?  <EditListingForm />: null}
+     
       {/* <ListingComponent /> */}
       {props.listings.length !== 0
-        ? props.listings.map((listing, i) => (
+        ? playlistListingsOnly(props.listings, props.playlist).map((listing, i) => (
             <ListingComponent 
             {...routerProps}
             key={i} 
@@ -38,6 +47,7 @@ const ListingContainer = (props, routerProps) => {
             />
           ))
         : null}
+       
     </div>
   );
 };

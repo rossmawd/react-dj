@@ -39,7 +39,7 @@ const PlaylistShowHeader = (props) => {
 
           <Button>Search</Button>
         </ButtonGroup>
-        <ButtonAppBar />
+        <ButtonAppBar toggleShowListingsEdit={props.toggleShowListingsEdit} />
       </AppBar>
 
     </div>
