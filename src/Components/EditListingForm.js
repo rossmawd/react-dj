@@ -27,7 +27,7 @@ export default function EditListingForm(props) {
   const classes = useStyles();
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
-  const {playlistLength} = props
+  const {playlistLength, updateListings} = props
 
   const handleChange = event => {
     if (event.target.id === "url") {
@@ -41,6 +41,7 @@ export default function EditListingForm(props) {
     API.postListing(constructListing()).then(data => {
       console.log("Here is the result of a listing POST: ", data)
       props.toggleShowListingsEdit()
+      updateListings()
     })
   };
 

@@ -94,6 +94,13 @@ const validateUser = () => {
     .catch(handleServerError);
 };
 
+const logOut = props => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("currentUser");
+  props.clearCurrentUser();
+  props.history.push("/");
+};
+
 const deleteListing = (id) => {
   return fetch(listingsUrl+ id, {
     method: 'DELETE',
@@ -122,12 +129,7 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
-const logOut = props => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("currentUser");
-  props.clearCurrentUser();
-  props.history.push("/");
-};
+
 
 export default {
   signUp,
