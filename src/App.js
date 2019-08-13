@@ -192,7 +192,9 @@ class App extends React.Component {
                     <PlaylistsIndexContainer
                       {...routerProps}
                       playlists={this.state.playlists}
+                      updatePlaylists={this.fetchPlaylists}
                       showPlaylistForm={this.state.showPlaylistForm}
+                      togglePlaylistForm={this.togglePlaylistForm}
                     />
                   </>
                 )

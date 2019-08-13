@@ -14,25 +14,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const userPlaylists = playlists => {
-  if (playlists.length !== 0) {
-    return playlists.filter(
-      playlist => playlist.user_id === parseInt(localStorage.currentUser)
-    );
-  }
-};
-
-
 const PlaylistsIndexContainer = (props, routerProps) => {
   const classes = useStyles();
   
+  const userPlaylists = playlists => {
+    if (playlists.length !== 0) {
+      return playlists.filter(
+        playlist => playlist.user_id === parseInt(localStorage.currentUser)
+      );
+    }
+  };
+
+  const sortedUserPlaylists = (userPlaylists) => {
+    return userPlaylists.sort(playlist => playlist.created_at).reverse()
+  }
 
   
   return (
     <div className={classes.root}>
-      {props.showPlaylistForm ? <AddorEditPlaylist />: null}
+
+      {props.showPlaylistForm ? 
+      <AddorEditPlaylist 
+      togglePlaylistForm={props.togglePlaylistForm}
+      updatePlaylists={props.updatePlaylists}
+      />
+      : null}
+
       {props.playlists.length !== 0
-        ? userPlaylists(props.playlists).map((playlist, i) => (
+        ? sortedUserPlaylists(userPlaylists(props.playlists)).map((playlist, i) => (
             <PlaylistComponent 
             {...routerProps}
             key={i} 

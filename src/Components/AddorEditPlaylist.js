@@ -46,8 +46,8 @@ export default function AddorEditPlaylist(props) {
   const handleSubmit = () => {
     API.postPlaylist(constructPlaylist()).then(data => { 
       console.log("Here is the result of a Playlist POST: ", data)
-      //props.toggleShowPlaylistsEdit()
-      //updateListings()
+      props.togglePlaylistForm()
+      props.updatePlaylists()
     })
     // POST - Party flase
     console.log("lets POST a playlist!")
@@ -56,7 +56,7 @@ export default function AddorEditPlaylist(props) {
   const constructPlaylist = () => {
     let newPlaylist = {"name": name, "description": description, "party":false,
      "genre": genre, user_id: localStorage.currentUser} 
-     debugger
+    
     return newPlaylist  // token will have to be sent from API method to check if user valid
   };
 
