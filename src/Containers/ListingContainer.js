@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
 const ListingContainer = (props, routerProps) => {
     const classes = useStyles();
     const { listings, playlist, currentUser, updateListings } = props;
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
 
     const playlistListingsOnly = () => {
       let listingCount = 0;
@@ -41,7 +43,9 @@ const ListingContainer = (props, routerProps) => {
     const renderListings = () => {
       if (listings && listings.length !== 0) {
         return sortListings().map((listing, i) => (
-          <ListingComponent {...routerProps} key={i} listing={listing} updateListings={updateListings}/>
+          <ListingComponent {...routerProps} key={i} listing={listing} updateListings={updateListings}
+          forceUpdate={forceUpdate}
+          />
         ));
       }
     };
