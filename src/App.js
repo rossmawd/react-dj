@@ -50,10 +50,8 @@ class App extends React.Component {
     });
   };
 
-
   fetchPlaylists = () => {
-    return fetch(PLAYLISTURL)
-      .then(res => res.json())
+    return API.fetchAllPlaylists()
       .then(playlists => this.setState({ playlists }));
   };
 

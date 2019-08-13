@@ -4,6 +4,7 @@ const signupUrl = `${endpoint}users/`;
 const loginUrl = `${endpoint}login/`;
 const validateUrl = `${endpoint}validate/`;
 const listingsUrl = `${endpoint}listings/`;
+const playlistsUrl = `${endpoint}playlists/`;
 
 const jsonify = res => {
   // return res.json()
@@ -34,6 +35,12 @@ const handleServerError = errors => {
 
 const fetchAllListings = () => {
   return fetch(listingsUrl)
+    .then(resp => resp.json())
+    .catch(handleServerError);
+};
+
+const fetchAllPlaylists = () => {
+  return fetch(playlistsUrl)
     .then(resp => resp.json())
     .catch(handleServerError);
 };
@@ -116,6 +123,21 @@ const deleteListing = (id) => {
     .catch(handleServerError)
 }
 
+const deletePlaylist = (id) => {
+  return fetch(playlistsUrl+ id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    
+  }).then(jsonify)
+    .then(playlist => {
+      console.log(" deleted playlist: ", playlist)
+      return playlist
+    })
+    .catch(handleServerError)
+}
+
 const postListing = (listing) => fetch(listingsUrl, {
   method: 'POST',
   headers: {
@@ -129,6 +151,18 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
+  const postPlaylist = (playlist) => fetch(playlistsUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ playlist })
+  }).then(jsonify)
+    .then(playlist => {
+      console.log("playlist: ", playlist)
+      return playlist
+    })
+    .catch(handleServerError)
 
 
 export default {
@@ -138,5 +172,8 @@ export default {
   logOut,
   fetchAllListings,
   postListing,
-  deleteListing
+  deleteListing,
+  postPlaylist,
+  deletePlaylist,
+  fetchAllPlaylists
 };
