@@ -8,6 +8,10 @@ import ReactPlayer from 'react-player'
 import { ResponsivePlayer } from './ResponsivePlayer';
 import CardMedia from '@material-ui/core/CardMedia';
 import API from '../API'
+import ButtonColumn from './ButtonColumn';
+import Fab from '@material-ui/core/Fab';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,11 +32,42 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 export default function ListingComponent(props) {
   const classes = useStyles();
   const {id, suggestion, url, position, playlist_id, name, updated_at} = props.listing
+
+  const returnButtonColumn = () => {
+    return(
+      <div>
+        <Fab id="up" size="small" color="primary" aria-label="add" 
+        className={classes.margin}
+        onClick={() => handleMove("up")}
+        >
+          <ArrowUpwardIcon />
+        </Fab>
+        
+        <Fab id="down" size="small" color="primary" aria-label="add" 
+        className={classes.margin}
+        onClick={() => handleMove("down")}
+        >
+          <ArrowDownwardIcon />
+        </Fab>
+        
+      </div>
+    )
+  }
+
+  const handleMove = (direction) => {
+   direction === "up" ? console.log("moving up", id) : console.log("moving down", id)
+  }
 
 
   const handleClick = () => {
@@ -52,9 +87,10 @@ export default function ListingComponent(props) {
           <Grid item >
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
-           
+            <Grid item xs container direction="row" spacing={2}>
+            {returnButtonColumn()}
+            </Grid> 
             
-        
             {/* </ButtonBase> */}
           </Grid>
           <Grid item xs={12} sm container>
