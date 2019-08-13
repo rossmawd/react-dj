@@ -151,6 +151,21 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
+const updateListing = (listing) => fetch(listingsUrl + listing.id, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ listing })
+}).then(jsonify)
+  .then(listing => {
+    console.log("Updated listing: ", listing)
+    return listing
+  })
+  .catch(handleServerError)
+
+  
+
   const postPlaylist = (playlist) => fetch(playlistsUrl, {
     method: 'POST',
     headers: {
@@ -175,5 +190,6 @@ export default {
   deleteListing,
   postPlaylist,
   deletePlaylist,
-  fetchAllPlaylists
+  fetchAllPlaylists,
+  updateListing
 };

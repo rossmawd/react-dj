@@ -33,6 +33,7 @@ const ListingContainer = (props, routerProps) => {
 
 
     const sortListings = () => {
+      //debugger
       return playlistListingsOnly(listings, playlist).filteredListings.sort( listing => listing.position).reverse()
 
     }

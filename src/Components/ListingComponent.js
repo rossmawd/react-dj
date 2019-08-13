@@ -67,6 +67,9 @@ export default function ListingComponent(props) {
 
   const handleMove = (direction) => {
    direction === "up" ? console.log("moving up", id) : console.log("moving down", id)
+   let newListing = {...props.listing, position: position + 1}
+   API.updateListing(newListing)
+  
   }
 
 
