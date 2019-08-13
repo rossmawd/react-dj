@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Lightning from '@material-ui/icons/OfflineBolt';
+import Delete from '@material-ui/icons/Delete';
 import Link from '@material-ui/core/Link';
+import API from '../API'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -27,13 +29,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function PlaylistComponent(props) {
   const classes = useStyles();
+
+  const handleDelete = () => {
+    API.deletePlaylist(props.playlist.id).then(data => {
+      props.updatePlaylists()
+    })
+  }
   
   return (
-    
-
-    <Link  href={`/playlist/${props.playlist.id}`}>
-       
-      
+   
       <Paper 
       className={classes.paper}
       >
@@ -42,19 +46,27 @@ export default function PlaylistComponent(props) {
           <Grid item>
           <Lightning/>  
           </Grid>
-
+         
          
           {/* ZERO MIN WIDTH */}
+         
           <Grid item xs zeroMinWidth>
+          <Link  href={`/playlist/${props.playlist.id}`}>
             <Typography noWrap>{props.playlist.name}</Typography>
+            </Link>
           </Grid>
-          <Grid item xs zeroMinWidth>
-            <Typography noWrap>User: {props.playlist.user_id}</Typography>
+       
+          <Grid item>
+          <Delete onClick={handleDelete}/>  
           </Grid>
           
         </Grid>
+        <Grid item xs zeroMinWidth>
+            <Typography noWrap>User: {props.playlist.user_id}</Typography>
+          </Grid>
+        
       </Paper>
-      </Link>
+     
   );
 }
 

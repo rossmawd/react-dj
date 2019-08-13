@@ -48,11 +48,12 @@ export default function ListingComponent(props) {
       <Paper className={classes.paper}>
         
         <Grid container spacing={2}>
+        <ReactPlayer className={classes.img} url={url} light />
           <Grid item >
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
            
-            <ReactPlayer className={classes.img} url={url} light />
+            
         
             {/* </ButtonBase> */}
           </Grid>
