@@ -3,6 +3,7 @@ import PlaylistComponent from "../Components/PlaylistComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import AddorEditPlaylist from "../Components/AddorEditPlaylist";
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -24,9 +25,12 @@ const userPlaylists = playlists => {
 
 const PlaylistsIndexContainer = (props, routerProps) => {
   const classes = useStyles();
+  
+
+  
   return (
     <div className={classes.root}>
-      <AddorEditPlaylist />
+      {props.showPlaylistForm ? <AddorEditPlaylist />: null}
       {props.playlists.length !== 0
         ? userPlaylists(props.playlists).map((playlist, i) => (
             <PlaylistComponent 

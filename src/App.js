@@ -21,7 +21,8 @@ class App extends React.Component {
     email: null,
     password: null,
     listings: null,
-    showListingsEdit: false
+    showListingsEdit: false,
+    showPlaylistForm: false
   };
 
   componentDidMount() {
@@ -30,6 +31,9 @@ class App extends React.Component {
     this.setCurrentUserFromToken()
   }
 
+  togglePlaylistForm = () => {
+    this.setState({ showPlaylistForm: !this.state.showPlaylistForm })
+  }
   toggleShowListingsEdit = () => {
     this.setState({ showListingsEdit: !this.state.showListingsEdit })
   }
@@ -183,10 +187,12 @@ class App extends React.Component {
                     <PlaylistIndexHeader
                       {...routerProps}
                       clearCurrentUser={this.clearCurrentUser}
+                      togglePlaylistForm={this.togglePlaylistForm}
                     />
                     <PlaylistsIndexContainer
                       {...routerProps}
                       playlists={this.state.playlists}
+                      showPlaylistForm={this.state.showPlaylistForm}
                     />
                   </>
                 )

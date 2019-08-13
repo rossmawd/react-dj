@@ -45,7 +45,7 @@ export default function ButtonAppBar(props) {
             <SettingsIcon />
           </IconButton>
           <IconButton edge="start" color="inherit" aria-label="create"
-            onClick={props.toggleShowListingsEdit}>
+            onClick={props.toggleShowListingsEdit ? props.toggleShowListingsEdit : props.togglePlaylistForm}>
             <CreateIcon/>
           </IconButton>
           {/* <Button 

@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import API from '../API'
 
+
 const useStyles = makeStyles(theme => ({
 
   buttons: {
@@ -39,7 +40,9 @@ const PlaylistIndexHeader = (props) => {
 
           <Button>Share</Button>
         </ButtonGroup>
-        <ButtonAppBar />
+        <ButtonAppBar 
+        togglePlaylistForm={props.togglePlaylistForm}
+        />
       </AppBar>
 
     </div>
