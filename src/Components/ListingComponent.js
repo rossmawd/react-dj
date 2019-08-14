@@ -90,7 +90,7 @@ export default function ListingComponent(props) {
       <Paper className={classes.paper}>
         
         <Grid container spacing={2}>
-        <ReactPlayer className={classes.img} url={url} light />
+        <ReactPlayer className={classes.img} url={url} />
           <Grid item >
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
@@ -109,12 +109,12 @@ export default function ListingComponent(props) {
                 <Typography variant="body2" gutterBottom>
                   Suggestion?: {suggestion ? "Yes": "No"}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                {/* <Typography variant="body2" color="textSecondary">
                   Position Number: {position}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
+                </Typography> */}
+                {/* <Typography variant="body2" color="textSecondary">
                   Listing id: {id}
-                </Typography>
+                </Typography> */}
               </Grid>
               <Grid item>
                 <Typography onClick={handleClick} variant="body2" style={{ cursor: 'pointer' }}>
