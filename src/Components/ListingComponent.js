@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const {id, suggestion, url, position, playlist_id, name, updated_at} = props.listing
-  const {currentlyPlaying, currentUrl, setUrl, setPlaying} = props
+  const {currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer} = props
 
   const returnButtonColumn = () => {
     return(
@@ -72,6 +72,12 @@ export default function ListingComponent(props) {
    let newListing = {...props.listing}
    API.updateListing(newListing, type).then(resp => {
      props.updateListings()
+    //  if (type === "up" && currentlyPlaying === position){
+    //   setPlaying(currentlyPlaying  +1) 
+    //  }
+    //   else if (type === "down" && currentlyPlaying === position) {
+    //    setPlaying(currentlyPlaying  -1) 
+    //   } 
    })
   }
 
@@ -79,9 +85,10 @@ export default function ListingComponent(props) {
     API.updateListing(props.listing, "delete")
       API.deleteListing(id).then(resp => {
       props.updateListings()
-        alert(resp.message) 
+        alert(resp.message)    
       })
   }
+
 
   return (
     <div className={classes.root}>
@@ -91,9 +98,14 @@ export default function ListingComponent(props) {
 
           <ReactPlayer 
           className={classes.img}
-          playing={currentlyPlaying === position ? true : false} 
+          playing={ currentlyPlaying === position ? true : false} 
           url={url}
-          onPlay={() => setPlaying(position)}
+          onPlay={() => {
+            setPlaying(position)
+            addPlayer(playerCount + 1)
+          }
+        }
+          // onPause={() => addPlayer(playerCount - 1)}
           onEnded= {() => setPlaying(position - 1) }
           controls={true}
           

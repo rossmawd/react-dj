@@ -20,6 +20,7 @@ const ListingContainer = (props, routerProps) => {
     const classes = useStyles();
     const { listings, playlist, currentUser, updateListings } = props;
     const [currentlyPlaying, setPlaying] = useState(null);
+    const [playerCount, addPlayer] = useState(0);
     const [currentUrl, setUrl] = useState(null);
    
 
@@ -55,6 +56,8 @@ const ListingContainer = (props, routerProps) => {
             currentUrl={currentUrl}
             setUrl={setUrl}
             setPlaying={setPlaying}
+            playerCount={playerCount}
+            addPlayer={addPlayer}
           />
         ));
       }
