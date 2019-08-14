@@ -83,7 +83,7 @@ const ListingContainer = (props, routerProps) => {
 
         <div className={classes.wrapper}>
       
-        <Slide direction="left" in={props.showListingsEdit} mountOnEnter unmountOnExit>
+        <Slide  timeout={500} direction="left" in={props.showListingsEdit} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
          
           <EditListingForm
