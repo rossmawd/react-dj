@@ -1,8 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
 import { ListItemIcon } from "@material-ui/core";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,8 +19,9 @@ const useStyles = makeStyles(theme => ({
 const ListingContainer = (props, routerProps) => {
     const classes = useStyles();
     const { listings, playlist, currentUser, updateListings } = props;
-    const [, updateState] = React.useState();
-    const forceUpdate = React.useCallback(() => updateState({}), []);
+    const [currentlyPlaying, setPlaying] = useState(null);
+    const [currentUrl, setUrl] = useState(null);
+   
 
     const playlistListingsOnly = () => {
       let listingCount = 0;
@@ -43,8 +46,15 @@ const ListingContainer = (props, routerProps) => {
     const renderListings = () => {
       if (listings && listings.length !== 0) {
         return sortListings().map((listing, i) => (
-          <ListingComponent {...routerProps} key={listing.id} listing={listing} updateListings={updateListings}
-          forceUpdate={forceUpdate}
+          <ListingComponent 
+            {...routerProps} 
+            key={listing.id} 
+            listing={listing} 
+            updateListings={updateListings}
+            currentlyPlaying={currentlyPlaying}
+            currentUrl={currentUrl}
+            setUrl={setUrl}
+            setPlaying={setPlaying}
           />
         ));
       }
@@ -63,8 +73,9 @@ const ListingContainer = (props, routerProps) => {
             updateListings={updateListings}
           />
         ) : (
-          renderListings()
+          null
         )}
+{renderListings()}
       </div>
     );
 };

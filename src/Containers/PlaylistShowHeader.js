@@ -42,7 +42,7 @@ const PlaylistShowHeader = (props) => {
           >Log Out
           </Button>
 
-          <Button>Search</Button>
+          <Button>Share</Button>
         </ButtonGroup>
         <ButtonAppBar
           playlist = {playlist}

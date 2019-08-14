@@ -38,7 +38,7 @@ const PlaylistIndexHeader = (props) => {
           >Log Out
           </Button>
 
-          <Button>Share</Button>
+          <Button>Search</Button>
         </ButtonGroup>
         <ButtonAppBar 
         togglePlaylistForm={props.togglePlaylistForm}

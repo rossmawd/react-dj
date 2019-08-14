@@ -157,12 +157,8 @@ class App extends React.Component {
   render() {
     console.log("APP HAS RENDERED");
     return (
-      <div className="App">
-        <React.Fragment>
+      <div className="App">  
           <Switch>
-            <Route exact path="/test" render={() => <h1>Home!</h1>} />
-            {/* <Route exact path="/scores" component={HighScoreContainer} /> */}
-
             <Route
               exact
               path="/"
@@ -200,12 +196,10 @@ class App extends React.Component {
                 )
               )}
             />
-
             {this.state.playlists.map(playlist =>
               this.returnPlaylistRoute(playlist)
             )}
           </Switch>
-        </React.Fragment>
       </div>
     );
   }

@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const {id, suggestion, url, position, playlist_id, name, updated_at} = props.listing
+  const {currentlyPlaying, currentUrl, setUrl, setPlaying} = props
 
   const returnButtonColumn = () => {
     return(
@@ -65,17 +66,14 @@ export default function ListingComponent(props) {
     )
   }
 
-  const handleMove = (type) => {
-    //debugger
-   type === "up" ? console.log("moving up", id) : console.log("moving down", id)
+  const handleMove = (type) => { 
+   type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
+
    let newListing = {...props.listing}
    API.updateListing(newListing, type).then(resp => {
      props.updateListings()
-    // props.forceUpdate()
    })
-  
   }
-
 
   const handleClick = () => {
     API.updateListing(props.listing, "delete")
@@ -90,7 +88,17 @@ export default function ListingComponent(props) {
       <Paper className={classes.paper}>
         
         <Grid container spacing={2}>
-        <ReactPlayer className={classes.img} url={url} />
+
+          <ReactPlayer 
+          className={classes.img}
+          playing={currentlyPlaying === position ? true : false} 
+          url={url}
+          onPlay={() => setPlaying(position)}
+          onEnded= {() => setPlaying(position - 1) }
+          controls={true}
+          
+          />
+
           <Grid item >
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
@@ -109,12 +117,12 @@ export default function ListingComponent(props) {
                 <Typography variant="body2" gutterBottom>
                   Suggestion?: {suggestion ? "Yes": "No"}
                 </Typography>
-                {/* <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" color="textSecondary">
                   Position Number: {position}
-                </Typography> */}
-                {/* <Typography variant="body2" color="textSecondary">
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
                   Listing id: {id}
-                </Typography> */}
+                </Typography>
               </Grid>
               <Grid item>
                 <Typography onClick={handleClick} variant="body2" style={{ cursor: 'pointer' }}>
