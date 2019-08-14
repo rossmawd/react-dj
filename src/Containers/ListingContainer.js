@@ -3,7 +3,10 @@ import { useState } from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
-import { ListItemIcon } from "@material-ui/core";
+
+import Paper from '@material-ui/core/Paper';
+import Slide from '@material-ui/core/Slide';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,7 +16,16 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     padding: theme.spacing(11.5, 0.1) //top and sides of element
     //the 11 stops the element beinh hidden behind buttons
-  }
+  },
+  wrapper: {
+    width: "100%" 
+  },
+  paper: {
+    zIndex: 1,
+    position: 'relative',
+    margin: theme.spacing(1),
+  },
+
 }));
 
 const ListingContainer = (props, routerProps) => {
@@ -22,7 +34,7 @@ const ListingContainer = (props, routerProps) => {
     const [currentlyPlaying, setPlaying] = useState(null);
     const [playerCount, addPlayer] = useState(0);
     const [currentUrl, setUrl] = useState(null);
-   
+
 
     const playlistListingsOnly = () => {
       let listingCount = 0;
@@ -63,9 +75,17 @@ const ListingContainer = (props, routerProps) => {
       }
     };
 
+    
+    
+
     return (
       <div className={classes.root}>
-        {props.showListingsEdit ? (
+
+        <div className={classes.wrapper}>
+      
+        <Slide direction="left" in={props.showListingsEdit} mountOnEnter unmountOnExit>
+          <Paper elevation={4} className={classes.paper}>
+         
           <EditListingForm
             {...routerProps}
             playlist={props.playlist}
@@ -75,9 +95,11 @@ const ListingContainer = (props, routerProps) => {
             toggleShowListingsEdit={props.toggleShowListingsEdit}
             updateListings={updateListings}
           />
-        ) : (
-          null
-        )}
+       
+          </Paper>
+        </Slide>
+      </div>
+
 {renderListings()}
       </div>
     );
