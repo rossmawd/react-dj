@@ -65,10 +65,11 @@ export default function ListingComponent(props) {
     )
   }
 
-  const handleMove = (direction) => {
-   direction === "up" ? console.log("moving up", id) : console.log("moving down", id)
+  const handleMove = (type) => {
+    //debugger
+   type === "up" ? console.log("moving up", id) : console.log("moving down", id)
    let newListing = {...props.listing}
-   API.updateListing(newListing).then(resp => {
+   API.updateListing(newListing, type).then(resp => {
      props.updateListings()
     // props.forceUpdate()
    })
@@ -77,10 +78,10 @@ export default function ListingComponent(props) {
 
 
   const handleClick = () => {
+    API.updateListing(props.listing, "delete")
       API.deleteListing(id).then(resp => {
       props.updateListings()
-        alert(resp.message)
-      
+        alert(resp.message) 
       })
   }
 

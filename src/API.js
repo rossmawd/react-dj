@@ -4,7 +4,7 @@ const signupUrl = `${endpoint}users/`;
 const loginUrl = `${endpoint}login/`;
 const validateUrl = `${endpoint}validate/`;
 const listingsUrl = `${endpoint}listings/`;
-const listingUpUrl = `${endpoint}listing/up`;
+const listingPositonUrl = `${endpoint}listing/`;
 const listingDownUrl = `${endpoint}listing/down`;
 const playlistsUrl = `${endpoint}playlists/`;
 
@@ -153,7 +153,7 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
-const updateListing = (listing) => fetch(listingUpUrl, {//ADD up OR down
+const updateListing = (listing, type) => fetch(listingPositonUrl + type, {//ADD up OR down
   method: 'PATCH',
   headers: {
     'Content-Type': 'application/json'
