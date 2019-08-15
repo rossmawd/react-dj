@@ -72,6 +72,7 @@ const ListingContainer = (props, routerProps) => {
           playerCount={playerCount}
           addPlayer={addPlayer}
           showUpDownButtons={!!currentUser}
+          setCurrentUserFromToken={props.setCurrentUserFromToken}
         />
       ));
     }
@@ -95,7 +96,8 @@ const ListingContainer = (props, routerProps) => {
                 playlistListingsOnly().listingCount
               }
               toggleShowListingsEdit={props.toggleShowListingsEdit}
-              updateListings={updateListings}
+              //updateListings={updateListings}
+              setCurrentUserFromToken={props.setCurrentUserFromToken}
             />
 
           </Paper>

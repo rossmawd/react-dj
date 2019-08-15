@@ -129,39 +129,41 @@ class App extends React.Component {
     );
   };
 
-  returnPlaylistRoute = playlist => {
-    return (
-      <Route
-        key={playlist.id}
-        exact
-        path={`/playlist/${playlist.id}`}
-        render={routerProps => (
-          ConditionalComponent(
-            playlist,
-            <>
-              <PlaylistShowHeader
-                {...routerProps}
-                clearCurrentUser={this.clearCurrentUser}
-                toggleShowListingsEdit={this.toggleShowListingsEdit}
-                playlist={playlist}
-              />
+  // returnPlaylistRoute = playlist => {
+  //   return (
+  //     <Route
+  //       key={playlist.id}
+  //       exact
+  //       path={`/playlist/${playlist.id}`}
+  //       render={routerProps => (
+  //         ConditionalComponent(
+  //           playlist,
+  //           <>
+  //             <PlaylistShowHeader
+  //               {...routerProps}
+  //               clearCurrentUser={this.clearCurrentUser}
+  //               toggleShowListingsEdit={this.toggleShowListingsEdit}
+  //               playlist={playlist}
+  //             />
 
-              <ListingContainer
-                updateListings={this.updateListings}
-                listings={playlist.listings}
-                currentUser={this.state.user}
-                playlist={playlist}
-                showListingsEdit={this.state.showListingsEdit}
-                toggleShowListingsEdit={this.toggleShowListingsEdit}
-              />
+  //             <ListingContainer
+  //               updateListings={this.updateListings}
+  //               listings={playlist.listings}
+  //               currentUser={this.state.user}
+  //               playlist={playlist}
+  //               showListingsEdit={this.state.showListingsEdit}
+  //               toggleShowListingsEdit={this.toggleShowListingsEdit}
+  //               setCurrentUserFromToken={this.setCurrentUserFromToken}
+                
+  //             />
 
-              <BottomAppBar />
-            </>
-          )
-        )}
-      />
-    );
-  };
+  //             <BottomAppBar />
+  //           </>
+  //         )
+  //       )}
+  //     />
+  //   );
+  // };
 
   getPlaylist = id => {
     API.getPlaylist(id)
@@ -223,6 +225,7 @@ class App extends React.Component {
                 this.getPlaylist(routerProps.match.params.id)
                 return null
               }
+              
               return ConditionalComponent(
                 !!playlist,
                 <>
@@ -240,6 +243,7 @@ class App extends React.Component {
                     playlist={playlist}
                     showListingsEdit={this.state.showListingsEdit}
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
+                    setCurrentUserFromToken={this.setCurrentUserFromToken}
                   />
 
                   <BottomAppBar />

@@ -71,16 +71,10 @@ export default function ListingComponent(props) {
 
   const handleMove = (type) => {
     type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
-
     let newListing = { ...props.listing }
     API.updateListingsPositions(newListing, type).then(resp => {
-      props.updateListings()
-      //  if (type === "up" && currentlyPlaying === position){
-      //   setPlaying(currentlyPlaying  +1) 
-      //  }
-      //   else if (type === "down" && currentlyPlaying === position) {
-      //    setPlaying(currentlyPlaying  -1) 
-      //   } 
+      props.setCurrentUserFromToken() // Updates user playlists and Listings
+    
     })
   }
 
@@ -99,7 +93,7 @@ export default function ListingComponent(props) {
       if (result.value) {
         API.updateListingsPositions(props.listing, "delete")
         API.deleteListing(id).then(resp => {
-          props.updateListings()
+          props.setCurrentUserFromToken()
           MySwal.fire(
             'Done!',
             `${resp.message}`,
@@ -111,11 +105,6 @@ export default function ListingComponent(props) {
     })
 
 
-    // API.updateListingsPositions(props.listing, "delete")
-    //   API.deleteListing(id).then(resp => {
-    //   props.updateListings()
-    //     alert(resp.message)    
-    //   })
   }
 
 
