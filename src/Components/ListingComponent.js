@@ -117,6 +117,7 @@ export default function ListingComponent(props) {
           <ReactPlayer
             className={classes.img}
             playing={currentlyPlaying === position ? true : false}
+            // playing ={false}
             url={url}
             light
             onPlay={() => {
