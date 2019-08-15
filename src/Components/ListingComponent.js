@@ -12,6 +12,8 @@ import ButtonColumn from './ButtonColumn';
 import Fab from '@material-ui/core/Fab';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ListingComponent(props) {
   const classes = useStyles();
+  const MySwal = withReactContent(Swal)
   const {id, suggestion, url, position, playlist_id, name, updated_at} = props.listing
   const {currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer} = props
 
@@ -82,11 +85,37 @@ export default function ListingComponent(props) {
   }
 
   const handleClick = () => {
-    API.updateListing(props.listing, "delete")
-      API.deleteListing(id).then(resp => {
-      props.updateListings()
-        alert(resp.message)    
-      })
+
+    MySwal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+
+      if (result.value) {
+        API.updateListing(props.listing, "delete")
+        API.deleteListing(id).then(resp => {
+        props.updateListings()  
+          MySwal.fire(
+            'Done!',
+            `${resp.message}`,
+            'success'
+          )
+        })
+       
+      }
+    })
+
+
+    // API.updateListing(props.listing, "delete")
+    //   API.deleteListing(id).then(resp => {
+    //   props.updateListings()
+    //     alert(resp.message)    
+    //   })
   }
 
 

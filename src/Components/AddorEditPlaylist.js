@@ -6,17 +6,16 @@ import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
 import API from "../API.js";
 import DropDownSelect from './DropDownSelect'
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    position: "fixed"
   },
   margin: {
     margin: theme.spacing(1)
-  },
-  textField: {
-    flexBasis: 200
   },
   button: {
     margin: theme.spacing(1),
@@ -63,6 +62,7 @@ export default function AddorEditPlaylist(props) {
   return (
     <div className={classes.root}>
       <br />
+      <Paper elevation={4} className={classes.paper}>
       <TextField
         id="name"
         className={clsx(classes.margin, classes.textField)}
@@ -92,6 +92,7 @@ export default function AddorEditPlaylist(props) {
       >
         Create Playlist
       </Button>
+      </Paper>
     </div>
   );
 }

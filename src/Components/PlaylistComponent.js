@@ -26,11 +26,11 @@ export default function PlaylistComponent(props) {
   const handleDelete = () => {
     MySwal.fire({
       title: `Delete "${props.playlist.name}"?`,
-      text: "You won't be able to undo this!",
+      text: "You can't undo this!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      cancelButtonColor: '#800080',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
@@ -64,7 +64,7 @@ export default function PlaylistComponent(props) {
           {/* ZERO MIN WIDTH */}
          
           <Grid item xs zeroMinWidth>
-          <Link  href={`/playlist/${props.playlist.id}`}>
+          <Link variant="body2" href={`/playlist/${props.playlist.id}`}>
             <Typography noWrap>{props.playlist.name}</Typography>
             </Link>
           </Grid>

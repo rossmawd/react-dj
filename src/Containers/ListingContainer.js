@@ -8,7 +8,6 @@ import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
