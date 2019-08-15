@@ -8,7 +8,7 @@ const listingPositonUrl = `${endpoint}listing/`;
 const listingDownUrl = `${endpoint}listing/down`;
 const playlistsUrl = `${endpoint}playlists/`;
 
-const jsonify = res => { 
+const jsonify = res => {
   if (res.ok) return res.json(); //DEFAULT
 
   else {
@@ -17,7 +17,7 @@ const jsonify = res => {
       if (data.errors) {
         throw data.errors; //if errors "throw" errrs
       } else {
-        return data;  
+        return data;
       }
     });
   }
@@ -43,6 +43,13 @@ const fetchAllListings = () => {
 
 const fetchAllPlaylists = () => {
   return fetch(playlistsUrl)
+    .then(resp => resp.json())
+    .catch(handleServerError);
+};
+
+
+const getPlaylist = (id) => {
+  return fetch(playlistsUrl + '/' + id)
     .then(resp => resp.json())
     .catch(handleServerError);
 };
@@ -207,5 +214,6 @@ export default {
   deletePlaylist,
   fetchAllPlaylists,
   updateListingsPositions,
-  updatePlaylist
+  updatePlaylist,
+  getPlaylist
 };

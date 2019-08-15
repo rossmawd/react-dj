@@ -46,7 +46,7 @@ export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
   const { id, suggestion, url, position, playlist_id, name, updated_at } = props.listing
-  const { currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer } = props
+  const { currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer, showUpDownButtons } = props
 
   const returnButtonColumn = () => {
     return (
@@ -145,7 +145,7 @@ export default function ListingComponent(props) {
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
             <Grid item xs container direction="row" spacing={2}>
-              {returnButtonColumn()}
+              {showUpDownButtons && returnButtonColumn()}
             </Grid>
 
             {/* </ButtonBase> */}

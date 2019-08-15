@@ -30,80 +30,81 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ListingContainer = (props, routerProps) => {
-    const classes = useStyles();
-    const { listings, playlist, currentUser, updateListings } = props;
-    const [currentlyPlaying, setPlaying] = useState(null);
-    const [playerCount, addPlayer] = useState(0);
-    const [currentUrl, setUrl] = useState(null);
+  const classes = useStyles();
+  const { listings, playlist, currentUser, updateListings } = props;
+  const [currentlyPlaying, setPlaying] = useState(null);
+  const [playerCount, addPlayer] = useState(0);
+  const [currentUrl, setUrl] = useState(null);
 
 
-    const playlistListingsOnly = () => {
-      let listingCount = 0;
+  const playlistListingsOnly = () => {
+    let listingCount = 0;
 
-      if (listings && playlist) {
-        let filteredListings = listings.filter(
-          listing => listing.playlist_id === playlist.id
-        );
-        listingCount = filteredListings.length;
+    if (listings && playlist) {
+      let filteredListings = listings.filter(
+        listing => listing.playlist_id === playlist.id
+      );
+      listingCount = filteredListings.length;
 
-        return { filteredListings, listingCount };
-      }
-    };
-
-
-    const sortListings = () => {
-      
-      return playlistListingsOnly(listings, playlist).filteredListings.sort( (a,b) => a.position - b.position).reverse()
-
+      return { filteredListings, listingCount };
     }
+  };
 
-    const renderListings = () => {
-      if (listings && listings.length !== 0) {
-        return sortListings().map((listing, i) => (
-          <ListingComponent 
-            {...routerProps} 
-            key={listing.id} 
-            listing={listing} 
-            updateListings={updateListings}
-            currentlyPlaying={currentlyPlaying}
-            currentUrl={currentUrl}
-            setUrl={setUrl}
-            setPlaying={setPlaying}
-            playerCount={playerCount}
-            addPlayer={addPlayer}
-          />
-        ));
-      }
-    };
 
-    
-    
+  const sortListings = () => {
 
-    return (
-      <div className={classes.root}>
+    return playlistListingsOnly(listings, playlist).filteredListings.sort((a, b) => a.position - b.position).reverse()
 
-        <div className={classes.wrapper}>
-      
-        <Slide  timeout={500} direction="left" in={props.showListingsEdit} mountOnEnter unmountOnExit>
+  }
+
+  const renderListings = () => {
+    if (listings && listings.length !== 0) {
+      return sortListings().map((listing, i) => (
+        <ListingComponent
+          {...routerProps}
+          key={listing.id}
+          listing={listing}
+          updateListings={updateListings}
+          currentlyPlaying={currentlyPlaying}
+          currentUrl={currentUrl}
+          setUrl={setUrl}
+          setPlaying={setPlaying}
+          playerCount={playerCount}
+          addPlayer={addPlayer}
+          showUpDownButtons={!!currentUser}
+        />
+      ));
+    }
+  };
+
+
+
+
+  return (
+    <div className={classes.root}>
+
+      <div className={classes.wrapper}>
+
+        <Slide timeout={500} direction="left" in={props.showListingsEdit} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
-         
-          <EditListingForm
-            {...routerProps}
-            playlist={props.playlist}
-            playlistLength={
-              playlistListingsOnly().listingCount
-            }
-            toggleShowListingsEdit={props.toggleShowListingsEdit}
-            updateListings={updateListings}
-          />
-       
+
+            <EditListingForm
+              {...routerProps}
+              playlist={props.playlist}
+              playlistLength={
+                playlistListingsOnly().listingCount
+              }
+              toggleShowListingsEdit={props.toggleShowListingsEdit}
+              updateListings={updateListings}
+            />
+
           </Paper>
         </Slide>
       </div>
 
-{renderListings()}
-      </div>
-    );
+      {renderListings()}
+    </div>
+  );
 };
 
 export default ListingContainer;

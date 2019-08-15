@@ -6,13 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   playerWrapper: {
-   position: "relative",
-   paddingTop: "56.25% /* Player ratio: 100 / (1280 / 720) */"
+  //  position: "relative",
+  //  paddingTop: "56.25% /* Player ratio: 100 / (1280 / 720) */"
   },
-  reactPlayer: {
-  
-  
-  }
+ 
 }));
 
 
@@ -24,7 +21,7 @@ export const ResponsivePlayer = () => {
       <div className={classes.playerWrapper}>
         <ReactPlayer
           className={classes.reactPlayer}
-          url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+          url='https://www.youtube.com/watch?v=_X_1o3Qw4KM'
           width='100%'
           height='100%'
         />
