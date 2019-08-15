@@ -14,20 +14,21 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import Divider from '@material-ui/core/Divider';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500,
-  },
-  image: {
-    width: 128,
-    height: 128,
-  },
+  // paper: {
+  //   padding: theme.spacing(2),
+  //   margin: 'auto',
+  //   maxWidth: 500,
+  // },
   img: {
     margin: 'auto',
     display: 'block',
@@ -36,10 +37,33 @@ const useStyles = makeStyles(theme => ({
   },
   margin: {
     margin: theme.spacing(1),
+   float: "left"
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
+  },card: {
+    minWidth: 275,
   },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+  card: {
+    '&:hover': {
+      background: '#C0C0C0',
+    },
+    padding: "5px",
+    border: "2px solid black"
+   
+    
+  }
 }));
 
 export default function ListingComponent(props) {
@@ -50,16 +74,16 @@ export default function ListingComponent(props) {
 
   const returnButtonColumn = () => {
     return (
-      <div>
+      <div className={classes.margin}>
         <Fab id="up" size="small" color="primary" aria-label="add"
-          className={classes.margin}
+          // className={classes.margin}
           onClick={() => handleMove("up")}
         >
           <ArrowUpwardIcon />
         </Fab>
 
         <Fab id="down" size="small" color="primary" aria-label="add"
-          className={classes.margin}
+          // className={classes.margin}
           onClick={() => handleMove("down")}
         >
           <ArrowDownwardIcon />
@@ -104,70 +128,53 @@ export default function ListingComponent(props) {
       }
     })
 
-
   }
 
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
+     
+      <Card className={classes.card}>
+      <CardContent>
+      {showUpDownButtons && returnButtonColumn()}
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        {name}
+        </Typography>
+        {/* <Typography variant="h5" component="h2">
+        Suggestion?: {suggestion ? "Yes" : "No"}
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+        Position Number: {position}
+        </Typography> */}
+        <Typography variant="body2" component="p">
+        Listing id: {id}
+          <br />
+         Position: {position}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={handleClick}>DELETE</Button>
+      </CardActions>
+    </Card>
 
-        <Grid container spacing={2}>
-
-          <ReactPlayer
+          {/* <ReactPlayer
             className={classes.img}
             playing={currentlyPlaying === position ? true : false}
             // playing ={false}
             url={url}
-            light
+          
+            wrapper={classes.paper}   //Hmmmm
             onPlay={() => {
               setPlaying(position)
               addPlayer(playerCount + 1)
             }
             }
-            // onPause={() => addPlayer(playerCount - 1)}
+            // onClick={setPlaying(-1)}
+            
             onEnded={() => setPlaying(position - 1)}
             controls={true}
 
-          />
-
-          <Grid item >
-            {/* <ButtonBase className={classes.image}> */}
-            {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
-            <Grid item xs container direction="row" spacing={2}>
-              {showUpDownButtons && returnButtonColumn()}
-            </Grid>
-
-            {/* </ButtonBase> */}
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                  {name}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  Suggestion?: {suggestion ? "Yes" : "No"}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Position Number: {position}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Listing id: {id}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography onClick={handleClick} variant="body2" style={{ cursor: 'pointer' }}>
-                  Remove
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">{suggestion ? "Suggestion" : ""}</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
+          /> */}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import ListingContainer from "./Containers/ListingContainer";
-import BottomAppBar from "./Components/BottomAppBar";
+
 const PLAYLISTURL = "http://localhost:3000/api/v1/playlists";
 
 const ConditionalComponent = (condition, jsx) => {
@@ -225,7 +225,7 @@ class App extends React.Component {
                 this.getPlaylist(routerProps.match.params.id)
                 return null
               }
-              
+
               return ConditionalComponent(
                 !!playlist,
                 <>
@@ -246,7 +246,7 @@ class App extends React.Component {
                     setCurrentUserFromToken={this.setCurrentUserFromToken}
                   />
 
-                  <BottomAppBar />
+                 
                 </>
               )
             }}

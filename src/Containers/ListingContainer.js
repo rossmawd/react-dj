@@ -3,6 +3,7 @@ import { useState } from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
+import BottomAppBar from "../Components/BottomAppBar";
 
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
@@ -36,7 +37,6 @@ const ListingContainer = (props, routerProps) => {
   const [playerCount, addPlayer] = useState(0);
   const [currentUrl, setUrl] = useState(null);
 
-
   const playlistListingsOnly = () => {
     let listingCount = 0;
 
@@ -49,7 +49,6 @@ const ListingContainer = (props, routerProps) => {
       return { filteredListings, listingCount };
     }
   };
-
 
   const sortListings = () => {
 
@@ -78,9 +77,6 @@ const ListingContainer = (props, routerProps) => {
     }
   };
 
-
-
-
   return (
     <div className={classes.root}>
 
@@ -95,16 +91,15 @@ const ListingContainer = (props, routerProps) => {
               playlistLength={
                 playlistListingsOnly().listingCount
               }
-              toggleShowListingsEdit={props.toggleShowListingsEdit}
-              //updateListings={updateListings}
-              setCurrentUserFromToken={props.setCurrentUserFromToken}
+              toggleShowListingsEdit = {props.toggleShowListingsEdit}
+              setCurrentUserFromToken = {props.setCurrentUserFromToken}
             />
 
           </Paper>
         </Slide>
       </div>
-
       {renderListings()}
+      <BottomAppBar currentUrl={currentUrl} />
     </div>
   );
 };
