@@ -18,7 +18,9 @@ const useStyles = makeStyles(theme => ({
     //the 11 stops the element beinh hidden behind buttons
   },
   wrapper: {
-    width: "100%" 
+    width: "100%",
+    position: "fixed",
+    zIndex: "1"
   },
   paper: {
     zIndex: 1,
