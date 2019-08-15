@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import Lightning from '@material-ui/icons/OfflineBolt';
 import Delete from '@material-ui/icons/Delete';
 import Link from '@material-ui/core/Link';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import API from '../API'
 
 const useStyles = makeStyles(theme => ({
@@ -17,23 +19,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// const goToPlaylist = (e, playlist) => {
-//   e.preventDefault()
-//   debugger
-//   if (playlist){
-//     console.log(playlist.name)
-//   }
-
-// }
-
-
 export default function PlaylistComponent(props) {
   const classes = useStyles();
+  const MySwal = withReactContent(Swal)
 
   const handleDelete = () => {
-    API.deletePlaylist(props.playlist.id).then(data => {
-      props.updatePlaylists()
+    MySwal.fire({
+      title: `Delete "${props.playlist.name}"?`,
+      text: "You won't be able to undo this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        API.deletePlaylist(props.playlist.id).then(data => {
+          props.updatePlaylists()
+        })
+        MySwal.fire(
+          'Deleted!',
+          `"${props.playlist.name}" has been deleted.`,
+          'success'
+        )
+      }
     })
+
+    // API.deletePlaylist(props.playlist.id).then(data => {
+    //   props.updatePlaylists()
+    // })
   }
   
   return (
@@ -45,9 +59,8 @@ export default function PlaylistComponent(props) {
 
           <Grid item>
           <Lightning/>  
-          </Grid>
-         
-         
+          </Grid>    
+
           {/* ZERO MIN WIDTH */}
          
           <Grid item xs zeroMinWidth>
