@@ -32,10 +32,18 @@ const useStyles = makeStyles(theme => ({
 
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
+ 
   const { listings, playlist, currentUser, updateListings } = props;
-  const [currentlyPlaying, setPlaying] = useState(null);
-  const [playerCount, addPlayer] = useState(0);
-  const [currentUrl, setUrl] = useState(null);
+  const [currentListing, setCurrentListing] = useState(listings[listings.length -1]);
+  const [isPlaying, setPlaying] = useState(false);
+
+
+  const triggerNextSong = (position) => {
+    console.log("Moving to the next track!")
+    const next = listings.find(listing => listing.position === position)
+    setCurrentListing(next)
+  }
+  
 
   const playlistListingsOnly = () => {
     let listingCount = 0;
@@ -57,19 +65,17 @@ const ListingContainer = (props, routerProps) => {
   }
 
   const renderListings = () => {
+  
     if (listings && listings.length !== 0) {
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}
           key={listing.id}
           listing={listing}
-          updateListings={updateListings}
-          currentlyPlaying={currentlyPlaying}
-          currentUrl={currentUrl}
-          setUrl={setUrl}
+          setCurrentListing={setCurrentListing}
           setPlaying={setPlaying}
-          playerCount={playerCount}
-          addPlayer={addPlayer}
+          isPlaying={isPlaying}
+        
           showUpDownButtons={!!currentUser}
           setCurrentUserFromToken={props.setCurrentUserFromToken}
         />
@@ -99,7 +105,14 @@ const ListingContainer = (props, routerProps) => {
         </Slide>
       </div>
       {renderListings()}
-      <BottomAppBar currentUrl={currentUrl} />
+      <BottomAppBar 
+        currentListing={currentListing}
+        triggerNextSong={triggerNextSong}
+        setPlaying={setPlaying}
+        isPlaying={isPlaying}
+
+      
+      />
     </div>
   );
 };

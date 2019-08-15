@@ -70,7 +70,7 @@ export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
   const { id, suggestion, url, position, playlist_id, name, updated_at } = props.listing
-  const { currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer, showUpDownButtons } = props
+  const { setCurrentListing, setPlaying, isPlaying, showUpDownButtons } = props
 
   const returnButtonColumn = () => {
     return (
@@ -102,7 +102,7 @@ export default function ListingComponent(props) {
     })
   }
 
-  const handleClick = () => {
+  const handleDelete = () => {
 
     MySwal.fire({
       title: 'Are you sure?',
@@ -130,6 +130,13 @@ export default function ListingComponent(props) {
 
   }
 
+  const handlePlay = () => {
+    console.log(props.listing)
+    setCurrentListing(props.listing)
+    setPlaying(true)
+
+  }
+
 
   return (
     <div className={classes.root}>
@@ -137,7 +144,7 @@ export default function ListingComponent(props) {
       <Card className={classes.card}>
       <CardContent>
       {showUpDownButtons && returnButtonColumn()}
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>
         {name}
         </Typography>
         {/* <Typography variant="h5" component="h2">
@@ -153,7 +160,7 @@ export default function ListingComponent(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleClick}>DELETE</Button>
+        <Button size="small" onClick={handleDelete}>DELETE</Button>
       </CardActions>
     </Card>
 

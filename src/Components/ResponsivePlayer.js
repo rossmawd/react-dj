@@ -13,23 +13,36 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export const ResponsivePlayer = () => {
+export const ResponsivePlayer = ({isPlaying, setPlaying, triggerNextSong, currentListing}) => {
 
   const classes = useStyles();
-
+  
+  
+    
     return (
       <div className={classes.playerWrapper}>
         <ReactPlayer
           className={classes.reactPlayer}
-          url='https://www.youtube.com/watch?v=_X_1o3Qw4KM'
+          url={currentListing.url}
           width='100%'
           height='100%'
+          playing={isPlaying}
+          controls={true}
+          onEnded={() => triggerNextSong(currentListing.position -1)}
         />
       </div>
     )
   }
 
-
+  // currentlListing:
+  // {…}
+  
+  // isPlaying:
+  // true
+  // setPlaying:
+  // bound dispatchAction()
+  // triggerNextSong:
+  // triggerNextSong()
 
 // .player-wrapper {
 //   position: relative;

@@ -3,18 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
-
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
-import Fab from '@material-ui/core/Fab';
-
 import MenuIcon from '@material-ui/icons/Menu';
-import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ReactPlayer from 'react-player'
 import { ResponsivePlayer } from './ResponsivePlayer';
-
 
 
 const useStyles = makeStyles(theme => ({
@@ -51,17 +46,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BottomAppBar() {
+export default function BottomAppBar(props) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <CssBaseline />
-    
+
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="open drawer">
-            <MenuIcon />
+            <MenuIcon onClick={ () => {
+              console.log("why no worky!") 
+              props.setPlaying(!props.isPlaying) 
+            }
+            }
+            />
           </IconButton>
 
           {/* <ReactPlayer
@@ -78,10 +78,16 @@ export default function BottomAppBar() {
             // onEnded={() => setPlaying(position - 1)}
             controls={true}
           /> */}
-          <ResponsivePlayer />
-          <Fab color="secondary" aria-label="add" className={classes.fabButton}>
+          <ResponsivePlayer
+
+            setPlaying={props.setPlaying}
+            currentListing={props.currentListing}
+            triggerNextSong={props.triggerNextSong}
+            isPlaying={props.isPlaying}
+          />
+          {/* <Fab color="secondary" aria-label="add" className={classes.fabButton}>
             <AddIcon />
-          </Fab>
+          </Fab> */}
           <div className={classes.grow} />
           <IconButton color="inherit">
             <SearchIcon />
