@@ -23,6 +23,7 @@ export default function DropDownSelect(props) {
   const classes = useStyles();
   
   const inputLabel = React.useRef(null);
+  const genres = ["Rock","Speed Metal","Blues", "Jazz"]
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
@@ -30,6 +31,10 @@ export default function DropDownSelect(props) {
 
   const handleChange = event => {  
     props.setGenre(event.target.value)  
+  }
+
+  const returnGenreOption = (genre) => {
+    return (<option value={genre}>{genre}</option>)
   }
 
   return (
@@ -40,19 +45,15 @@ export default function DropDownSelect(props) {
         </InputLabel>
         <Select
           native
-          value={props.genre}
+          defaultValue={props.selectedPlaylist && props.addOrEdit === "edit" ? props.selectedPlaylist.genre : null}
           onChange={handleChange}
           input={
             <OutlinedInput name="genre" labelWidth={labelWidth} id="outlined-age-native-simple" />
           }
         >
-          <option value="" />
-          <optgroup label="Rock">
-          <option value={"Speed Metal"}>Speed Metal</option>
-          </optgroup>
-          <option value={"Blues"}>Blues</option>
-         
-          <option value={"Jazz"}>Jazz</option>
+          <option value=""></option>
+          {genres.map(genre => returnGenreOption(genre))}
+          
         </Select>
       </FormControl>
    

@@ -8,16 +8,16 @@ const listingPositonUrl = `${endpoint}listing/`;
 const listingDownUrl = `${endpoint}listing/down`;
 const playlistsUrl = `${endpoint}playlists/`;
 
-const jsonify = res => {
-  // return res.json()
-  if (res.ok) return res.json();
+const jsonify = res => { 
+  if (res.ok) return res.json(); //DEFAULT
+
   else {
-    const jsonData = res.json();
-    return jsonData.then(data => {
+
+    return res.json().then(data => {
       if (data.errors) {
-        throw data.errors;
+        throw data.errors; //if errors "throw" errrs
       } else {
-        return data;
+        return data;  
       }
     });
   }
@@ -153,7 +153,7 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
-const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + type, {//ADD up OR down
+const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + type, {
   method: 'PATCH',
   headers: {
     'Content-Type': 'application/json'
@@ -163,6 +163,19 @@ const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + typ
   .then(listing => {
     console.log("Updated listing: ", listing)
     return listing
+  })
+  .catch(handleServerError)
+
+const updatePlaylist = (playlist) => fetch(playlistsUrl + playlist.id, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ playlist })
+}).then(jsonify)
+  .then(playlist => {
+    console.log("Updated listing: ", playlist)
+    return playlist
   })
   .catch(handleServerError)
 

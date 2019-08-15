@@ -32,7 +32,6 @@ export default function AddorEditPlaylist(props) {
   const [genre, setGenre] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  //const {playlistLength, updateListings} = props
 
   const handleChange = event => {
     if (event.target.id === "name") {
@@ -43,7 +42,8 @@ export default function AddorEditPlaylist(props) {
   };
 
   const handleSubmit = () => {
-    API.postPlaylist(constructPlaylist()).then(data => { 
+
+    API.postPlaylist(constructPlaylist()).then(data => {
       console.log("Here is the result of a Playlist POST: ", data)
       props.togglePlaylistForm()
       props.updatePlaylists()
@@ -52,10 +52,16 @@ export default function AddorEditPlaylist(props) {
     console.log("lets POST a playlist!")
   };
 
+  const handleEdit = () => {
+    console.log("let's Edit!!!!", props.playlist.id)
+  }
+
   const constructPlaylist = () => {
-    let newPlaylist = {"name": name, "description": description, "party":false,
-     "genre": genre, user_id: localStorage.currentUser} 
-    
+    let newPlaylist = {
+      "name": name, "description": description, "party": false,
+      "genre": genre, user_id: localStorage.currentUser
+    }
+
     return newPlaylist  // token will have to be sent from API method to check if user valid
   };
 
@@ -63,34 +69,42 @@ export default function AddorEditPlaylist(props) {
     <div className={classes.root}>
       <br />
       <Paper elevation={4} className={classes.paper}>
-      <TextField
-        id="name"
-        className={clsx(classes.margin, classes.textField)}
-        variant="outlined"
-        label="Playlist Name"
-        onChange={event => handleChange(event)}
-        InputProps={{}}
-      />
+        <TextField
+          id="name"
+          defaultValue={props.selectedPlaylist && props.addOrEdit === "edit" ?
+            props.selectedPlaylist.name : null}
+          className={clsx(classes.margin, classes.textField)}
+          variant="outlined"
+          label="Playlist Name"
+          onChange={event => handleChange(event)}
+          InputProps={{}}
+        />
 
-<DropDownSelect setGenre={setGenre} genre={genre} />
+        <DropDownSelect selectedPlaylist={props.selectedPlaylist}
+          addOrEdit={props.addOrEdit}
+          setGenre={setGenre}
+          genre={genre}
+        />
 
-<TextField
-        id="description"
-        label="Description"
-        multiline
-        rows="4"
-        className={classes.textField}
-        margin="normal"
-        variant="outlined"
-        onChange={event => handleChange(event)}
-      />
-      
-      <Button
-        variant="contained"
-        className={classes.button}
-        onClick={handleSubmit}
-      >
-        Create Playlist
+        <TextField
+          id="description"
+          defaultValue={props.selectedPlaylist && props.addOrEdit === "edit" ?
+            props.selectedPlaylist.description : null}
+          label="Description"
+          multiline
+          rows="4"
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          onChange={event => handleChange(event)}
+        />
+
+        <Button
+          variant="contained"
+          className={classes.button}
+          onClick={props.addOrEdit === "edit" ? handleEdit : handleSubmit}
+        >
+          {props.addOrEdit} Playlist
       </Button>
       </Paper>
     </div>

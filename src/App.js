@@ -22,7 +22,8 @@ class App extends React.Component {
     password: null,
     listings: null,
     showListingsEdit: false,
-    showPlaylistForm: false
+    showPlaylistForm: false,
+    addOrEdit: null
   };
 
   componentDidMount() {
@@ -31,8 +32,13 @@ class App extends React.Component {
     this.setCurrentUserFromToken()
   }
 
-  togglePlaylistForm = () => {
-    this.setState({ showPlaylistForm: !this.state.showPlaylistForm })
+  togglePlaylistForm = (edit= false) => {
+    this.setState({ 
+      showPlaylistForm: !this.state.showPlaylistForm,
+      addOrEdit:  edit ? "edit" : "create"
+    
+    })
+   
   }
   toggleShowListingsEdit = () => {
     this.setState({ showListingsEdit: !this.state.showListingsEdit })
@@ -191,6 +197,7 @@ class App extends React.Component {
                       updatePlaylists={this.fetchPlaylists}
                       showPlaylistForm={this.state.showPlaylistForm}
                       togglePlaylistForm={this.togglePlaylistForm}
+                      addOrEdit={this.state.addOrEdit}
                     />
                   </>
                 )
