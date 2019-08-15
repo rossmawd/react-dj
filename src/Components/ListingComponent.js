@@ -129,6 +129,7 @@ export default function ListingComponent(props) {
             className={classes.img}
             playing={currentlyPlaying === position ? true : false}
             url={url}
+            light
             onPlay={() => {
               setPlaying(position)
               addPlayer(playerCount + 1)
