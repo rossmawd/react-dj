@@ -45,43 +45,43 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
-  const {id, suggestion, url, position, playlist_id, name, updated_at} = props.listing
-  const {currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer} = props
+  const { id, suggestion, url, position, playlist_id, name, updated_at } = props.listing
+  const { currentlyPlaying, currentUrl, setUrl, setPlaying, playerCount, addPlayer } = props
 
   const returnButtonColumn = () => {
-    return(
+    return (
       <div>
-        <Fab id="up" size="small" color="primary" aria-label="add" 
-        className={classes.margin}
-        onClick={() => handleMove("up")}
+        <Fab id="up" size="small" color="primary" aria-label="add"
+          className={classes.margin}
+          onClick={() => handleMove("up")}
         >
           <ArrowUpwardIcon />
         </Fab>
-        
-        <Fab id="down" size="small" color="primary" aria-label="add" 
-        className={classes.margin}
-        onClick={() => handleMove("down")}
+
+        <Fab id="down" size="small" color="primary" aria-label="add"
+          className={classes.margin}
+          onClick={() => handleMove("down")}
         >
           <ArrowDownwardIcon />
         </Fab>
-        
+
       </div>
     )
   }
 
-  const handleMove = (type) => { 
-   type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
+  const handleMove = (type) => {
+    type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
 
-   let newListing = {...props.listing}
-   API.updateListing(newListing, type).then(resp => {
-     props.updateListings()
-    //  if (type === "up" && currentlyPlaying === position){
-    //   setPlaying(currentlyPlaying  +1) 
-    //  }
-    //   else if (type === "down" && currentlyPlaying === position) {
-    //    setPlaying(currentlyPlaying  -1) 
-    //   } 
-   })
+    let newListing = { ...props.listing }
+    API.updateListingsPositions(newListing, type).then(resp => {
+      props.updateListings()
+      //  if (type === "up" && currentlyPlaying === position){
+      //   setPlaying(currentlyPlaying  +1) 
+      //  }
+      //   else if (type === "down" && currentlyPlaying === position) {
+      //    setPlaying(currentlyPlaying  -1) 
+      //   } 
+    })
   }
 
   const handleClick = () => {
@@ -97,21 +97,21 @@ export default function ListingComponent(props) {
     }).then((result) => {
 
       if (result.value) {
-        API.updateListing(props.listing, "delete")
+        API.updateListingsPositions(props.listing, "delete")
         API.deleteListing(id).then(resp => {
-        props.updateListings()  
+          props.updateListings()
           MySwal.fire(
             'Done!',
             `${resp.message}`,
             'success'
           )
         })
-       
+
       }
     })
 
 
-    // API.updateListing(props.listing, "delete")
+    // API.updateListingsPositions(props.listing, "delete")
     //   API.deleteListing(id).then(resp => {
     //   props.updateListings()
     //     alert(resp.message)    
@@ -122,31 +122,31 @@ export default function ListingComponent(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        
+
         <Grid container spacing={2}>
 
-          <ReactPlayer 
-          className={classes.img}
-          playing={ currentlyPlaying === position ? true : false} 
-          url={url}
-          onPlay={() => {
-            setPlaying(position)
-            addPlayer(playerCount + 1)
-          }
-        }
-          // onPause={() => addPlayer(playerCount - 1)}
-          onEnded= {() => setPlaying(position - 1) }
-          controls={true}
-          
+          <ReactPlayer
+            className={classes.img}
+            playing={currentlyPlaying === position ? true : false}
+            url={url}
+            onPlay={() => {
+              setPlaying(position)
+              addPlayer(playerCount + 1)
+            }
+            }
+            // onPause={() => addPlayer(playerCount - 1)}
+            onEnded={() => setPlaying(position - 1)}
+            controls={true}
+
           />
 
           <Grid item >
             {/* <ButtonBase className={classes.image}> */}
             {/* <ResponsivePlayer className={classes.img} ></ResponsivePlayer>  */}
             <Grid item xs container direction="row" spacing={2}>
-            {returnButtonColumn()}
-            </Grid> 
-            
+              {returnButtonColumn()}
+            </Grid>
+
             {/* </ButtonBase> */}
           </Grid>
           <Grid item xs={12} sm container>
@@ -156,7 +156,7 @@ export default function ListingComponent(props) {
                   {name}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Suggestion?: {suggestion ? "Yes": "No"}
+                  Suggestion?: {suggestion ? "Yes" : "No"}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   Position Number: {position}

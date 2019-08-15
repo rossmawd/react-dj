@@ -111,12 +111,12 @@ const logOut = props => {
 };
 
 const deleteListing = (id) => {
-  return fetch(listingsUrl+ id, {
+  return fetch(listingsUrl + id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     },
-    
+
   }).then(jsonify)
     .then(listing => {
       console.log(" deleted listing: ", listing)
@@ -126,12 +126,12 @@ const deleteListing = (id) => {
 }
 
 const deletePlaylist = (id) => {
-  return fetch(playlistsUrl+ id, {
+  return fetch(playlistsUrl + id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
     },
-    
+
   }).then(jsonify)
     .then(playlist => {
       console.log(" deleted playlist: ", playlist)
@@ -153,7 +153,7 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
-const updateListing = (listing, type) => fetch(listingPositonUrl + type, {//ADD up OR down
+const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + type, {//ADD up OR down
   method: 'PATCH',
   headers: {
     'Content-Type': 'application/json'
@@ -166,20 +166,20 @@ const updateListing = (listing, type) => fetch(listingPositonUrl + type, {//ADD 
   })
   .catch(handleServerError)
 
-  
 
-  const postPlaylist = (playlist) => fetch(playlistsUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ playlist })
-  }).then(jsonify)
-    .then(playlist => {
-      console.log("playlist: ", playlist)
-      return playlist
-    })
-    .catch(handleServerError)
+
+const postPlaylist = (playlist) => fetch(playlistsUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ playlist })
+}).then(jsonify)
+  .then(playlist => {
+    console.log("playlist: ", playlist)
+    return playlist
+  })
+  .catch(handleServerError)
 
 
 export default {
@@ -193,5 +193,5 @@ export default {
   postPlaylist,
   deletePlaylist,
   fetchAllPlaylists,
-  updateListing
+  updateListingsPositions
 };
