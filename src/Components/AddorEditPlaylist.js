@@ -29,9 +29,14 @@ const useStyles = makeStyles(theme => ({
 
 export default function AddorEditPlaylist(props) {
   const classes = useStyles();
-  const [genre, setGenre] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [genre, setGenre] = useState(
+    props.selectedPlaylist && props.addOrEdit === "edit" ?
+    props.selectedPlaylist.genre : "");
+  const [name, setName] = useState(
+    props.selectedPlaylist && props.addOrEdit === "edit" ?
+    props.selectedPlaylist.name : "");
+  const [description, setDescription] = useState(props.selectedPlaylist && props.addOrEdit === "edit" ?
+  props.selectedPlaylist.description : "");
 
   const handleChange = event => {
     if (event.target.id === "name") {
@@ -52,16 +57,30 @@ export default function AddorEditPlaylist(props) {
     console.log("lets POST a playlist!")
   };
 
-  const handleEdit = () => {
-    console.log("let's Edit!!!!", props.playlist.id)
+  const handleEdit = (event) => {
+    event.preventDefault()
+  
+    console.log("let's Edit!!!!")
+    
+    API.updatePlaylist(constructPlaylist(props.selectedPlaylist.id)).then(data => {
+      console.log("Here is the result of a Playlist PATCH: ", data)
+      props.togglePlaylistForm()
+      props.updatePlaylists()
+    })
+    // PO
+    
   }
 
-  const constructPlaylist = () => {
+  const constructPlaylist = (playlistId = null) => {
+
     let newPlaylist = {
       "name": name, "description": description, "party": false,
       "genre": genre, user_id: localStorage.currentUser
     }
 
+    if (playlistId) {
+        newPlaylist["id"] = playlistId
+    }
     return newPlaylist  // token will have to be sent from API method to check if user valid
   };
 
@@ -71,8 +90,7 @@ export default function AddorEditPlaylist(props) {
       <Paper elevation={4} className={classes.paper}>
         <TextField
           id="name"
-          defaultValue={props.selectedPlaylist && props.addOrEdit === "edit" ?
-            props.selectedPlaylist.name : null}
+          value= {name ? name : null} //CONTROLLED
           className={clsx(classes.margin, classes.textField)}
           variant="outlined"
           label="Playlist Name"
@@ -88,8 +106,7 @@ export default function AddorEditPlaylist(props) {
 
         <TextField
           id="description"
-          defaultValue={props.selectedPlaylist && props.addOrEdit === "edit" ?
-            props.selectedPlaylist.description : null}
+          value={description ? description : null} //CONTROLLED
           label="Description"
           multiline
           rows="4"

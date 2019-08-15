@@ -23,7 +23,8 @@ export default function DropDownSelect(props) {
   const classes = useStyles();
   
   const inputLabel = React.useRef(null);
-  const genres = ["Rock","Speed Metal","Blues", "Jazz"]
+  const genres = ["Blues" ,"Classical","Country", "Electronic",
+   "Folk","Jazz" ,"New age", "Reggae", "Rock", "Metal", "Other"]
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);

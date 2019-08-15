@@ -206,5 +206,6 @@ export default {
   postPlaylist,
   deletePlaylist,
   fetchAllPlaylists,
-  updateListingsPositions
+  updateListingsPositions,
+  updatePlaylist
 };
