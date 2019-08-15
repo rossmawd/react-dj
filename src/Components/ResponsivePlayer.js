@@ -15,22 +15,34 @@ const useStyles = makeStyles(theme => ({
 
 export const ResponsivePlayer = ({isPlaying, setPlaying, triggerNextSong, currentListing}) => {
 
+  // const player = () => {
+  //  return(
+     
+  //  )
+  // }
+
   const classes = useStyles();
   
   
-    
     return (
+      
       <div className={classes.playerWrapper}>
+        {currentListing ? (
         <ReactPlayer
           className={classes.reactPlayer}
-          url={currentListing.url}
+          url={currentListing ? currentListing.url : ""}
           width='100%'
           height='100%'
           playing={isPlaying}
           controls={true}
-          onEnded={() => triggerNextSong(currentListing.position -1)}
+          onEnded={() => triggerNextSong(currentListing.id)}
         />
-      </div>
+     
+       ) :(
+    <h1>hello</h1>
+       )}
+       
+       </div>
     )
   }
 

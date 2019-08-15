@@ -38,11 +38,21 @@ const ListingContainer = (props, routerProps) => {
   const [isPlaying, setPlaying] = useState(false);
 
 
-  const triggerNextSong = (position) => {
-    console.log("Moving to the next track!")
-    const next = listings.find(listing => listing.position === position)
+  const triggerNextSong = (id) => {
+   
+    const prev = listings.find(listing => listing.id === id)
+    console.log("the prev track was in position", prev.position)
+   
+    const next = listings.find(listing => listing.position === prev.position - 1)
+    if (next) {
+    console.log("the next track is in position", next.position)
+  
     setCurrentListing(next)
-  }
+    } else {
+      alert("Playlist Over!")
+    }
+
+}
   
 
   const playlistListingsOnly = () => {
