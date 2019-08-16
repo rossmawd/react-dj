@@ -21,7 +21,7 @@ class App extends React.Component {
     user: null,
     email: null,
     password: null,
-    listings: null,
+    // listings: null,
     showListingsEdit: false,
     showPlaylistForm: false,
     addOrEdit: null
@@ -42,10 +42,6 @@ class App extends React.Component {
   toggleShowListingsEdit = () => {
     this.setState({ showListingsEdit: !this.state.showListingsEdit })
   }
-
-  updateListings = () => {
-    return API.fetchAllListings().then(listings => this.setState({ listings }))
-  };
 
   clearCurrentUser = () => {
     this.setState({
@@ -129,41 +125,7 @@ class App extends React.Component {
     );
   };
 
-  // returnPlaylistRoute = playlist => {
-  //   return (
-  //     <Route
-  //       key={playlist.id}
-  //       exact
-  //       path={`/playlist/${playlist.id}`}
-  //       render={routerProps => (
-  //         ConditionalComponent(
-  //           playlist,
-  //           <>
-  //             <PlaylistShowHeader
-  //               {...routerProps}
-  //               clearCurrentUser={this.clearCurrentUser}
-  //               toggleShowListingsEdit={this.toggleShowListingsEdit}
-  //               playlist={playlist}
-  //             />
 
-  //             <ListingContainer
-  //               updateListings={this.updateListings}
-  //               listings={playlist.listings}
-  //               currentUser={this.state.user}
-  //               playlist={playlist}
-  //               showListingsEdit={this.state.showListingsEdit}
-  //               toggleShowListingsEdit={this.toggleShowListingsEdit}
-  //               setCurrentUserFromToken={this.setCurrentUserFromToken}
-                
-  //             />
-
-  //             <BottomAppBar />
-  //           </>
-  //         )
-  //       )}
-  //     />
-  //   );
-  // };
 
   getPlaylist = id => {
     API.getPlaylist(id)
@@ -213,11 +175,8 @@ class App extends React.Component {
               )
             )}
           />
-          {this.state.currentUser && this.state.playlists.map(playlist =>
-            this.returnPlaylistRoute(playlist)
-          )}
           {
-            !this.state.currentUser &&
+
             <Route exact path="/playlist/:id" render={(routerProps) => {
               const playlist = this.state.playlists.find(p => p.id === parseInt(routerProps.match.params.id))
 
@@ -225,7 +184,7 @@ class App extends React.Component {
                 this.getPlaylist(routerProps.match.params.id)
                 return null
               }
-
+              console.log('render called', playlist)
               return ConditionalComponent(
                 !!playlist,
                 <>
@@ -237,8 +196,6 @@ class App extends React.Component {
                   />
 
                   <ListingContainer
-                    updateListings={this.updateListings}
-                    listings={playlist.listings}
                     currentUser={this.state.user}
                     playlist={playlist}
                     showListingsEdit={this.state.showListingsEdit}
@@ -246,7 +203,7 @@ class App extends React.Component {
                     setCurrentUserFromToken={this.setCurrentUserFromToken}
                   />
 
-                 
+
                 </>
               )
             }}

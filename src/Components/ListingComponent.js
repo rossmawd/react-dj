@@ -6,9 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import ReactPlayer from 'react-player'
 import { ResponsivePlayer } from './ResponsivePlayer';
-import CardMedia from '@material-ui/core/CardMedia';
 import API from '../API'
-import ButtonColumn from './ButtonColumn';
 import Fab from '@material-ui/core/Fab';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -37,11 +35,11 @@ const useStyles = makeStyles(theme => ({
   },
   margin: {
     margin: theme.spacing(1),
-   float: "left"
+    float: "left"
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
-  },card: {
+  }, card: {
     minWidth: 275,
   },
   bullet: {
@@ -61,8 +59,8 @@ const useStyles = makeStyles(theme => ({
     },
     padding: "5px",
     border: "2px solid black"
-   
-    
+
+
   }
 }));
 
@@ -98,7 +96,7 @@ export default function ListingComponent(props) {
     let newListing = { ...props.listing }
     API.updateListingsPositions(newListing, type).then(resp => {
       props.setCurrentUserFromToken() // Updates user playlists and Listings
-    
+
     })
   }
 
@@ -131,40 +129,38 @@ export default function ListingComponent(props) {
   }
 
   const handlePlay = () => {
-    console.log(props.listing)
+    console.log("Play triggered by clicking on Title; currentListing is now:", props.listing)
     setCurrentListing(props.listing)
     setPlaying(true)
-
   }
-
 
   return (
     <div className={classes.root}>
-     
+
       <Card className={classes.card}>
-      <CardContent>
-      {showUpDownButtons && returnButtonColumn()}
-        <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>
-        {name}
-        </Typography>
-        {/* <Typography variant="h5" component="h2">
+        <CardContent>
+          {showUpDownButtons && returnButtonColumn()}
+          <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>
+            {name}
+          </Typography>
+          {/* <Typography variant="h5" component="h2">
         Suggestion?: {suggestion ? "Yes" : "No"}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
         Position Number: {position}
         </Typography> */}
-        <Typography variant="body2" component="p">
-        Listing id: {id}
-          <br />
-         Position: {position}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={handleDelete}>DELETE</Button>
-      </CardActions>
-    </Card>
+          <Typography variant="body2" component="p">
+            Listing id: {id}
+            <br />
+            Position: {position}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={handleDelete}>DELETE</Button>
+        </CardActions>
+      </Card>
 
-          {/* <ReactPlayer
+      {/* <ReactPlayer
             className={classes.img}
             playing={currentlyPlaying === position ? true : false}
             // playing ={false}

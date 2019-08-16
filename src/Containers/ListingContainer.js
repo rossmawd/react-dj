@@ -5,9 +5,8 @@ import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomAppBar from "../Components/BottomAppBar";
 
-import Paper from '@material-ui/core/Paper';
-import Slide from '@material-ui/core/Slide';
-
+import Paper from "@material-ui/core/Paper";
+import Slide from "@material-ui/core/Slide";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,59 +23,47 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     zIndex: 1,
-    position: 'relative',
-    margin: theme.spacing(1),
-  },
-
+    position: "relative",
+    margin: theme.spacing(1)
+  }
 }));
 
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
- 
-  const { listings, playlist, currentUser, updateListings } = props;
-  const [currentListing, setCurrentListing] = useState(listings[listings.length -1]);
+
+
+  const { playlist, currentUser } = props;
+
+  const sortListings = () => {
+    return playlist.listings
+      .sort((a, b) => a.position - b.position)
+      .reverse();
+  };
+  const [currentListing, setCurrentListing] = useState(
+    { ...sortListings()[0] }
+  );
   const [isPlaying, setPlaying] = useState(false);
+  console.log('listing container render', playlist)
+  const triggerNextSong = id => {
+    console.log('trigger next song', playlist)
+    console.log("triggerNextSong fired!")
+    const prev = playlist.listings.find(listing => listing.id === id);
+    console.log("the prev track is NOW in position", prev.position);
 
-
-  const triggerNextSong = (id) => {
-   
-    const prev = listings.find(listing => listing.id === id)
-    console.log("the prev track was in position", prev.position)
-   
-    const next = listings.find(listing => listing.position === prev.position - 1)
+    const next = playlist.listings.find(
+      listing => listing.position === prev.position - 1
+    );
     if (next) {
-    console.log("the next track is in position", next.position)
-  
-    setCurrentListing(next)
+      console.log("the next track is in position", next.position);
+      console.log("The new current Listing is", next)
+      setCurrentListing({ ...next });
     } else {
-      alert("Playlist Over!")
-    }
-
-}
-  
-
-  const playlistListingsOnly = () => {
-    let listingCount = 0;
-
-    if (listings && playlist) {
-      let filteredListings = listings.filter(
-        listing => listing.playlist_id === playlist.id
-      );
-      listingCount = filteredListings.length;
-
-      return { filteredListings, listingCount };
+      alert("Playlist Over!");
     }
   };
 
-  const sortListings = () => {
-
-    return playlistListingsOnly(listings, playlist).filteredListings.sort((a, b) => a.position - b.position).reverse()
-
-  }
-
   const renderListings = () => {
-  
-    if (listings && listings.length !== 0) {
+    if (playlist.listings && playlist.listings.length !== 0) {
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}
@@ -85,7 +72,6 @@ const ListingContainer = (props, routerProps) => {
           setCurrentListing={setCurrentListing}
           setPlaying={setPlaying}
           isPlaying={isPlaying}
-        
           showUpDownButtons={!!currentUser}
           setCurrentUserFromToken={props.setCurrentUserFromToken}
         />
@@ -95,33 +81,31 @@ const ListingContainer = (props, routerProps) => {
 
   return (
     <div className={classes.root}>
-
       <div className={classes.wrapper}>
-
-        <Slide timeout={500} direction="left" in={props.showListingsEdit} mountOnEnter unmountOnExit>
+        <Slide
+          timeout={500}
+          direction="left"
+          in={props.showListingsEdit}
+          mountOnEnter
+          unmountOnExit
+        >
           <Paper elevation={4} className={classes.paper}>
-
             <EditListingForm
               {...routerProps}
               playlist={props.playlist}
-              playlistLength={
-                playlistListingsOnly().listingCount
-              }
-              toggleShowListingsEdit = {props.toggleShowListingsEdit}
-              setCurrentUserFromToken = {props.setCurrentUserFromToken}
+              playlistLength={playlist.listings.length}
+              toggleShowListingsEdit={props.toggleShowListingsEdit}
+              setCurrentUserFromToken={props.setCurrentUserFromToken}
             />
-
           </Paper>
         </Slide>
       </div>
       {renderListings()}
-      <BottomAppBar 
+      <BottomAppBar
         currentListing={currentListing}
-        triggerNextSong={triggerNextSong}
+        triggerNextSong={id => triggerNextSong(id)}
         setPlaying={setPlaying}
         isPlaying={isPlaying}
-
-      
       />
     </div>
   );

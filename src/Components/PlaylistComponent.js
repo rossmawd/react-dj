@@ -5,9 +5,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Lightning from "@material-ui/icons/OfflineBolt";
 import Delete from "@material-ui/icons/Delete";
-import Link from "@material-ui/core/Link";
+import {Link} from 'react-router-dom'
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import CreateIcon from '@material-ui/icons/Create';
 import API from "../API";
 
 const useStyles = makeStyles(theme => ({
@@ -15,8 +16,12 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 400,
     margin: `${theme.spacing(0.4)}px auto`, //space between divs
     padding: theme.spacing(2), //space between components in div
-    backgroundColor: "grey"
-  }
+    backgroundColor: "white"
+
+  },
+  title: {
+    fontSize: 20,
+  },
 }));
 
 export default function PlaylistComponent(props) {
@@ -47,24 +52,28 @@ export default function PlaylistComponent(props) {
   };
 
   const handleClick = () => {
-     props.setSelectedPlaylist(props.playlist)
-     console.log("time to edit")
-     props.togglePlaylistForm(true)
+    props.setSelectedPlaylist(props.playlist)
+    console.log("time to edit")
+    props.togglePlaylistForm(true)
   };
 
   return (
     <Paper className={classes.paper}>
       <Grid container wrap="nowrap" spacing={2}>
         <Grid item>
-          <Lightning  onClick={handleClick} />
+          <CreateIcon onClick={handleClick} />
         </Grid>
 
         {/* ZERO MIN WIDTH */}
 
         <Grid item xs zeroMinWidth>
-          <Link variant="body2" href={`/playlist/${props.playlist.id}`}>
-            <Typography noWrap>{props.playlist.name}</Typography>
-          </Link>
+
+          <Typography variant={"overline"} className={classes.title} noWrap>
+            <Link to={`/playlist/${props.playlist.id}`}>
+              {props.playlist.name}
+            </Link>
+          </Typography>
+
         </Grid>
 
         <Grid item>
@@ -73,6 +82,9 @@ export default function PlaylistComponent(props) {
       </Grid>
       <Grid item xs zeroMinWidth>
         <Typography noWrap>User: {props.playlist.user_id}</Typography>
+      </Grid>
+      <Grid item>
+        <Lightning onClick={handleClick} />
       </Grid>
     </Paper>
   );
