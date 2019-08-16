@@ -30,7 +30,12 @@ const PlaylistShowHeader = (props) => {
           className={classes.buttons}
         >
            
-          <Button as={Link} href={"/playlists"}>PlayLister</Button>
+       
+          <Button as={Link} >
+          <Link to={"/playlists"}>
+            React-DJ
+            </Link>
+            </Button>
         
 
           <Button

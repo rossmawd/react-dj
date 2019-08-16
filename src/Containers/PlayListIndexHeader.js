@@ -27,7 +27,7 @@ const PlaylistIndexHeader = (props) => {
           aria-label="full width outlined button group"
           className={classes.buttons}
         >
-          <Button>PlayLister</Button>
+          <Button>React-DJ</Button>
 
           <Button
             onClick={() => {

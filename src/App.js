@@ -87,7 +87,7 @@ class App extends React.Component {
       this.setState({ user, playlists: user.playlists }))
       .then(() => {
         console.log(this.props.history)
-        this.props.history.push('/game')
+        this.props.history.push('/playlists')
       })
       .catch(errors => {
         this.setState({ errors })
@@ -124,8 +124,6 @@ class App extends React.Component {
       />
     );
   };
-
-
 
   getPlaylist = id => {
     API.getPlaylist(id)
@@ -178,12 +176,14 @@ class App extends React.Component {
           {
 
             <Route exact path="/playlist/:id" render={(routerProps) => {
-              const playlist = this.state.playlists.find(p => p.id === parseInt(routerProps.match.params.id))
+              debugger
+              const playlist = this.state.playlists.find(playlist => playlist.id === parseInt(routerProps.match.params.id))
 
-              if (!playlist) {
+              if (!playlist) {  //i.e no playlists in state as NO USER
                 this.getPlaylist(routerProps.match.params.id)
                 return null
               }
+
               console.log('render called', playlist)
               return ConditionalComponent(
                 !!playlist,

@@ -111,8 +111,7 @@ const validateUser = () => {
 };
 
 const logOut = props => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("currentUser");
+  localStorage.clear()
   props.clearCurrentUser();
   props.history.push("/");
 };
