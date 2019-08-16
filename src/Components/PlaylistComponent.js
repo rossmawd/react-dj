@@ -5,10 +5,26 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Lightning from "@material-ui/icons/OfflineBolt";
 import Delete from "@material-ui/icons/Delete";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import CreateIcon from '@material-ui/icons/Create';
+import CreateIcon from "@material-ui/icons/Create";
+import Tooltip from "@material-ui/core/Tooltip";
+import Zoom from "@material-ui/core/Zoom";
+import { FaSkull as Metal } from "react-icons/fa";
+import { FaSadCry as Blues } from "react-icons/fa";
+import { FaGuitar as Classical } from "react-icons/fa";
+import { FaTruckMonster as Country } from "react-icons/fa";
+import { FaWaveSquare as Electronic } from "react-icons/fa";
+import { FaPiedPiperAlt as Folk } from "react-icons/fa";
+import { FaJoint as Jazz } from "react-icons/fa";
+import { FaSpa as NewAge } from "react-icons/fa";
+import { FaPeace as Reggae } from "react-icons/fa";
+import { FaFireAlt as Rock } from "react-icons/fa";
+
+import { FaBeer } from "react-icons/fa";
+import { WiAlien as Hello } from "react-icons/wi";
+
 import API from "../API";
 
 const useStyles = makeStyles(theme => ({
@@ -16,12 +32,19 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 400,
     margin: `${theme.spacing(0.4)}px auto`, //space between divs
     padding: theme.spacing(2), //space between components in div
-    backgroundColor: "white"
-
+    backgroundImage: "linear-gradient(#808080,#3B3A35)"
   },
   title: {
     fontSize: 20,
+    color: "black"
   },
+  icon: {
+    color: "white",
+  },
+  faIcon: {
+    color: "white",
+    zoom: "1.3"
+  }
 }));
 
 export default function PlaylistComponent(props) {
@@ -52,39 +75,87 @@ export default function PlaylistComponent(props) {
   };
 
   const handleClick = () => {
-    props.setSelectedPlaylist(props.playlist)
-    console.log("time to edit")
-    props.togglePlaylistForm(true)
+    props.setSelectedPlaylist(props.playlist);
+    console.log("time to edit");
+    props.togglePlaylistForm(true);
+  };
+
+  const renderGenreIcon = genre => {
+    const genres = [
+      "Blues",
+      "Classical",
+      "Country",
+      "Electronic",
+      "Folk",
+      "Jazz",
+      "New age",
+      "Reggae",
+      "Rock",
+      "Metal",
+      "Other"
+    ];
+    switch (genre) {
+      case "Blues":
+        return <Blues />;
+      case "Classical":
+        return <Classical />;
+      case "Metal":
+        return <Metal />;
+      case "Country":
+        return <Country />;
+      case "Electronic":
+        return <Electronic />;
+      case "Folk":
+        return <Folk />;
+      case "Jazz":
+        return <Jazz />;
+      case "New age":
+        return <NewAge />;
+      case "Reggae":
+        return <Reggae />;
+      case "Rock":
+        return <Rock />;
+      default:
+        return <FaBeer />;
+    }
   };
 
   return (
     <Paper className={classes.paper}>
       <Grid container wrap="nowrap" spacing={2}>
-        <Grid item>
-          <CreateIcon onClick={handleClick} />
-        </Grid>
-
-        {/* ZERO MIN WIDTH */}
+        <Tooltip title="Edit" TransitionComponent={Zoom}>
+          <Grid item>
+            <CreateIcon className={classes.icon} onClick={handleClick} />
+          </Grid>
+        </Tooltip>
 
         <Grid item xs zeroMinWidth>
-
-          <Typography variant={"overline"} className={classes.title} noWrap>
+          <Typography variant={"button"} className={classes.title} noWrap>
             <Link to={`/playlist/${props.playlist.id}`}>
               {props.playlist.name}
             </Link>
           </Typography>
-
         </Grid>
 
-        <Grid item>
-          <Delete onClick={handleDelete} />
+        <Tooltip title="Delete" TransitionComponent={Zoom}>
+          <Grid item>
+            <Delete className={classes.icon} onClick={handleDelete} />
+          </Grid>
+        </Tooltip>
+      </Grid>
+
+      <Grid container wrap="nowrap" spacing={3}>
+      <Tooltip title={props.playlist.genre} TransitionComponent={Zoom}>
+          <Grid className={classes.faIcon} item>
+            {/* <FontAwesomeIcon icon="blind" />  */}
+            {renderGenreIcon(props.playlist.genre)}
+          </Grid>
+        </Tooltip>
+        <Grid item xs zeroMinWidth>
+          <Typography variant={"subtitle"} noWrap>User: {props.playlist.user_id}</Typography>
         </Grid>
-      </Grid>
-      <Grid item xs zeroMinWidth>
-        <Typography noWrap>User: {props.playlist.user_id}</Typography>
-      </Grid>
-      <Grid item>
-        <Lightning onClick={handleClick} />
+
+       
       </Grid>
     </Paper>
   );

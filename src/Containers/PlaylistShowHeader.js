@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
-import ButtonAppBar from '../Components/ButtonAppBar';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom'
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import API from '../API'
+import React, { Component } from "react";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import ButtonAppBar from "../Components/ButtonAppBar";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import API from "../API";
 
 const useStyles = makeStyles(theme => ({
-
   buttons: {
     backgroundColor: "white"
-  },
+  }
 }));
 
-const PlaylistShowHeader = (props) => {
+const PlaylistShowHeader = props => {
   const classes = useStyles();
-  const {playlist} = props
- 
+  const { playlist, currentUser } = props;
 
   return (
-    <div  >
+    <div>
       <CssBaseline />
       <AppBar>
         <ButtonGroup
@@ -29,34 +27,27 @@ const PlaylistShowHeader = (props) => {
           aria-label="full width outlined button group"
           className={classes.buttons}
         >
-           
-       
-          <Button as={Link} >
-          <Link to={"/playlists"}>
-            React-DJ
-            </Link>
-            </Button>
-        
+          <Button as={Link}>
+            <Link to={"/playlists"}>React-DJ</Link>
+          </Button>
 
           <Button
             onClick={() => {
-              API.logOut(props)
-              //props.history.push('/')
-            }
-            }
-          >Log Out
+              API.logOut(props);
+            }}
+          >
+            {props.currentUser ? "Log Out": "Guest View"}
           </Button>
 
           <Button>Share</Button>
         </ButtonGroup>
         <ButtonAppBar
-          playlist = {playlist}
+          playlist={playlist}
           toggleShowListingsEdit={props.toggleShowListingsEdit}
         />
       </AppBar>
-
     </div>
   );
-}
+};
 
 export default PlaylistShowHeader;

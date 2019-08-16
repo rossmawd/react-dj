@@ -6,6 +6,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
+import { FaPlay } from "react-icons/fa";
+import { FaPause } from "react-icons/fa";
+import { MdSkipNext } from "react-icons/md";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ReactPlayer from "react-player";
@@ -48,6 +51,14 @@ const useStyles = makeStyles(theme => ({
 export default function BottomAppBar(props) {
   const classes = useStyles();
 
+  const playOrPause = () => {
+    if (!props.isPlaying) {
+      return (<FaPlay onClick={() => {props.setPlaying(!props.isPlaying)}} /> )
+    } else {
+      return (<FaPause onClick={() => {props.setPlaying(!props.isPlaying)}}/> )
+    }
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -55,12 +66,7 @@ export default function BottomAppBar(props) {
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="open drawer">
-            <MenuIcon
-              onClick={() => {
-                console.log("why no worky!");
-                props.setPlaying(!props.isPlaying);
-              }}
-            />
+            {playOrPause()}
           </IconButton>
 
           {/* <ReactPlayer
@@ -88,7 +94,7 @@ export default function BottomAppBar(props) {
           </Fab> */}
           <div className={classes.grow} />
           <IconButton color="inherit">
-            <SearchIcon />
+            <MdSkipNext onClick={() => props.triggerNextSong(props.currentListing.id)}/>
           </IconButton>
           <IconButton edge="end" color="inherit">
             <MoreIcon />

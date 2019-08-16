@@ -31,22 +31,22 @@ const useStyles = makeStyles(theme => ({
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
 
-
   const { playlist, currentUser } = props;
 
   const sortListings = () => {
-    return playlist.listings
-      .sort((a, b) => a.position - b.position)
-      .reverse();
+    return playlist.listings.sort((a, b) => a.position - b.position).reverse();
   };
-  const [currentListing, setCurrentListing] = useState(
-    { ...sortListings()[0] }
-  );
+
+  const [currentListing, setCurrentListing] = useState({
+    ...sortListings()[0]
+  });
   const [isPlaying, setPlaying] = useState(false);
-  console.log('listing container render', playlist)
+  console.log("listing container render", playlist);
+
   const triggerNextSong = id => {
-    console.log('trigger next song', playlist)
-    console.log("triggerNextSong fired!")
+    console.log("trigger next song", playlist);
+    console.log("triggerNextSong fired!");
+
     const prev = playlist.listings.find(listing => listing.id === id);
     console.log("the prev track is NOW in position", prev.position);
 
@@ -55,7 +55,7 @@ const ListingContainer = (props, routerProps) => {
     );
     if (next) {
       console.log("the next track is in position", next.position);
-      console.log("The new current Listing is", next)
+      console.log("The new current Listing is", next);
       setCurrentListing({ ...next });
     } else {
       alert("Playlist Over!");
@@ -72,7 +72,7 @@ const ListingContainer = (props, routerProps) => {
           setCurrentListing={setCurrentListing}
           setPlaying={setPlaying}
           isPlaying={isPlaying}
-          showUpDownButtons={!!currentUser}
+          showAdminControls={!!currentUser}
           setCurrentUserFromToken={props.setCurrentUserFromToken}
         />
       ));

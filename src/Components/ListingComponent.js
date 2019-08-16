@@ -68,7 +68,7 @@ export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
   const { id, suggestion, url, position, playlist_id, name, updated_at } = props.listing
-  const { setCurrentListing, setPlaying, isPlaying, showUpDownButtons } = props
+  const { setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
 
   const returnButtonColumn = () => {
     return (
@@ -139,7 +139,7 @@ export default function ListingComponent(props) {
 
       <Card className={classes.card}>
         <CardContent>
-          {showUpDownButtons && returnButtonColumn()}
+          {showAdminControls && returnButtonColumn()}
           <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>
             {name}
           </Typography>

@@ -8,6 +8,11 @@ import { Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import ListingContainer from "./Containers/ListingContainer";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faCheckSquare, faCoffee)
 
 const PLAYLISTURL = "http://localhost:3000/api/v1/playlists";
 
@@ -173,10 +178,10 @@ class App extends React.Component {
               )
             )}
           />
-          {
+          
 
             <Route exact path="/playlist/:id" render={(routerProps) => {
-              debugger
+              
               const playlist = this.state.playlists.find(playlist => playlist.id === parseInt(routerProps.match.params.id))
 
               if (!playlist) {  //i.e no playlists in state as NO USER
@@ -186,10 +191,11 @@ class App extends React.Component {
 
               console.log('render called', playlist)
               return ConditionalComponent(
-                !!playlist,
+                !!playlist, //the const above...either there is a user and it is asigned straight away OR getPlaylist changes state and it assignes 2nd time around
                 <>
                   <PlaylistShowHeader
                     {...routerProps}
+                    currentUser={this.state.user}
                     clearCurrentUser={this.clearCurrentUser}
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
                     playlist={playlist}
@@ -202,13 +208,11 @@ class App extends React.Component {
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
                     setCurrentUserFromToken={this.setCurrentUserFromToken}
                   />
-
-
                 </>
               )
             }}
             />
-          }
+          
         </Switch>
       </div>
     );
