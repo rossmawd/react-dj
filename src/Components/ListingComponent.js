@@ -39,9 +39,8 @@ const useStyles = makeStyles(theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
-  }, card: {
-    minWidth: 275,
-  },
+  }, 
+  
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
@@ -58,9 +57,7 @@ const useStyles = makeStyles(theme => ({
       background: '#C0C0C0',
     },
     padding: "5px",
-    border: "2px solid black"
-
-
+    border: "2px solid black",
   }
 }));
 
@@ -68,7 +65,7 @@ export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
   const { id, suggestion, url, position, playlist_id, name, updated_at } = props.listing
-  const { setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
+  const { currentListing, setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
 
   const returnButtonColumn = () => {
     return (
@@ -134,10 +131,18 @@ export default function ListingComponent(props) {
     setPlaying(true)
   }
 
+  const setStyle = () => {
+    const style = {
+      background: "lightBlue"
+    }
+    return isPlaying && currentListing.id === id ? style : null 
+  }
+  
+
   return (
     <div className={classes.root}>
 
-      <Card className={classes.card}>
+      <Card className={classes.card} style={setStyle()} >
         <CardContent>
           {showAdminControls && returnButtonColumn()}
           <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>

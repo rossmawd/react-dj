@@ -70,6 +70,7 @@ const ListingContainer = (props, routerProps) => {
           key={listing.id}
           listing={listing}
           setCurrentListing={setCurrentListing}
+          currentListing={currentListing}
           setPlaying={setPlaying}
           isPlaying={isPlaying}
           showAdminControls={!!currentUser}
