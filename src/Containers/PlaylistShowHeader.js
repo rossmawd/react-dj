@@ -17,15 +17,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const PlaylistShowHeader = (routerProps, props) => {
+const PlaylistShowHeader = (props) => {
   const classes = useStyles();
   const { playlist, currentUser } = props;
   const MySwal = withReactContent(Swal);
 
   const copiedToClipboard = () => {
-
-
+    props ? console.log(props) : console.log("nay")
+    MySwal.fire({
+      title: 'URL Copied to Clipboard!',
+      animation: false,
+      customClass: {
+        popup: 'animated tada'
+      }
+    })
     
+
   };
 
   return (
@@ -50,7 +57,7 @@ const PlaylistShowHeader = (routerProps, props) => {
           </Button>
 
           <CopyToClipboard
-            text={"localhost:3001" + routerProps.location.pathname}
+            text={"localhost:3001" + props.location.pathname}
             onCopy={() => copiedToClipboard()} >
             <Button>Share</Button>
           </CopyToClipboard>
