@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import ButtonAppBar from "../Components/ButtonAppBar";
@@ -30,9 +30,7 @@ const PlaylistShowHeader = (props) => {
       customClass: {
         popup: 'animated tada'
       }
-    })
-    
-
+    }) 
   };
 
   return (
@@ -44,6 +42,7 @@ const PlaylistShowHeader = (props) => {
           aria-label="full width outlined button group"
           className={classes.buttons}
         >
+          
           <Button as={Link}>
             <Link to={"/playlists"}>React-DJ</Link>
           </Button>

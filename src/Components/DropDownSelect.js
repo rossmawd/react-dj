@@ -21,17 +21,17 @@ const useStyles = makeStyles(theme => ({
 
 export default function DropDownSelect(props) {
   const classes = useStyles();
-  
   const inputLabel = React.useRef(null);
-  const genres = ["Blues" ,"Classical","Country", "Electronic",
-   "Folk","Jazz" ,"New age", "Reggae", "Rock", "Metal", "Other"]
+  const genres = ["Blues", "Classical", "Country", "Electronic",
+    "Folk", "Jazz", "New age", "Reggae", "Rock", "Metal", "Other"]
   const [labelWidth, setLabelWidth] = React.useState(0);
+
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = event => {  
-    props.setGenre(event.target.value)  
+  const handleChange = event => {
+    props.setGenre(event.target.value)
   }
 
   const returnGenreOption = (genre) => {
@@ -41,9 +41,11 @@ export default function DropDownSelect(props) {
   return (
     <div className={classes.root}>
       <FormControl variant="outlined" className={classes.formControl}>
+
         <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
           Genre
         </InputLabel>
+
         <Select
           native
           defaultValue={props.selectedPlaylist && props.addOrEdit === "edit" ? props.selectedPlaylist.genre : null}
@@ -52,12 +54,14 @@ export default function DropDownSelect(props) {
             <OutlinedInput name="genre" labelWidth={labelWidth} id="outlined-age-native-simple" />
           }
         >
+
           <option value=""></option>
           {genres.map(genre => returnGenreOption(genre))}
-          
+
         </Select>
+
       </FormControl>
-   
+
     </div>
   );
 }

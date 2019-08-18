@@ -42,8 +42,7 @@ export default function EditListingForm(props) {
       console.log("Here is the result of a listing POST: ", data)
       props.toggleShowListingsEdit()
       
-      setCurrentUserFromToken()
-      
+      setCurrentUserFromToken()   
     })
   };
 

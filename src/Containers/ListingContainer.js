@@ -4,7 +4,6 @@ import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomAppBar from "../Components/BottomAppBar";
-
 import Paper from "@material-ui/core/Paper";
 import Slide from "@material-ui/core/Slide";
 
@@ -30,17 +29,15 @@ const useStyles = makeStyles(theme => ({
 
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
-
   const { playlist, currentUser } = props;
-
+  const [isPlaying, setPlaying] = useState(false);
   const sortListings = () => {
     return playlist.listings.sort((a, b) => a.position - b.position).reverse();
   };
-
   const [currentListing, setCurrentListing] = useState({
     ...sortListings()[0]
   });
-  const [isPlaying, setPlaying] = useState(false);
+
   console.log("listing container render", playlist);
 
   const triggerNextSong = id => {
@@ -100,6 +97,7 @@ const ListingContainer = (props, routerProps) => {
             />
           </Paper>
         </Slide>
+        
       </div>
       {renderListings()}
       <BottomAppBar

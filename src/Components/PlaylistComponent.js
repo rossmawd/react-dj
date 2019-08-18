@@ -3,7 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Lightning from "@material-ui/icons/OfflineBolt";
+//import Lightning from "@material-ui/icons/OfflineBolt";
 import Delete from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -21,10 +21,7 @@ import { FaJoint as Jazz } from "react-icons/fa";
 import { FaSpa as NewAge } from "react-icons/fa";
 import { FaPeace as Reggae } from "react-icons/fa";
 import { FaFireAlt as Rock } from "react-icons/fa";
-
 import { FaBeer } from "react-icons/fa";
-import { WiAlien as Hello } from "react-icons/wi";
-
 import API from "../API";
 
 const useStyles = makeStyles(theme => ({
@@ -123,6 +120,7 @@ export default function PlaylistComponent(props) {
   return (
     <Paper className={classes.paper}>
       <Grid container wrap="nowrap" spacing={2}>
+
         <Tooltip title="Edit" TransitionComponent={Zoom}>
           <Grid item>
             <CreateIcon className={classes.icon} onClick={handleClick} />
@@ -142,19 +140,21 @@ export default function PlaylistComponent(props) {
             <Delete className={classes.icon} onClick={handleDelete} />
           </Grid>
         </Tooltip>
+
       </Grid>
 
       <Grid container wrap="nowrap" spacing={3}>
+
       <Tooltip title={props.playlist.genre} TransitionComponent={Zoom}>
-          <Grid className={classes.faIcon} item>
+          <Grid item className={classes.faIcon} item>
             {/* <FontAwesomeIcon icon="blind" />  */}
             {renderGenreIcon(props.playlist.genre)}
           </Grid>
-        </Tooltip>
+      </Tooltip>
+      
         <Grid item xs zeroMinWidth>
           <Typography variant={"subtitle"} noWrap>User: {props.playlist.user_id}</Typography>
         </Grid>
-
        
       </Grid>
     </Paper>

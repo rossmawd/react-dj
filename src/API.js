@@ -5,7 +5,6 @@ const loginUrl = `${endpoint}login/`;
 const validateUrl = `${endpoint}validate/`;
 const listingsUrl = `${endpoint}listings/`;
 const listingPositonUrl = `${endpoint}listing/`;
-//const listingDownUrl = `${endpoint}listing/down`;
 const playlistsUrl = `${endpoint}playlists/`;
 
 const jsonify = res => {
@@ -28,13 +27,6 @@ const handleServerError = errors => {
   throw errors;
 }; //only called in catch
 
-// const cards = () => {
-//   return fetch(cardsUrl)
-//     .then(jsonify)
-//     // .then(console.log)
-//     .catch(handleServerError)
-// }
-
 const fetchAllListings = () => {
   return fetch(listingsUrl)
     .then(resp => resp.json())
@@ -46,7 +38,6 @@ const fetchAllPlaylists = () => {
     .then(resp => resp.json())
     .catch(handleServerError);
 };
-
 
 const getPlaylist = (id) => {
   return fetch(playlistsUrl + '/' + id)
@@ -184,8 +175,6 @@ const updatePlaylist = (playlist) => fetch(playlistsUrl + playlist.id, {
     return playlist
   })
   .catch(handleServerError)
-
-
 
 const postPlaylist = (playlist) => fetch(playlistsUrl, {
   method: 'POST',

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PlaylistComponent from "../Components/PlaylistComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import AddorEditPlaylist from "../Components/AddorEditPlaylist";
@@ -48,7 +48,7 @@ const PlaylistsIndexContainer = (props, routerProps) => {
               setSelectedPlaylist={setSelectedPlaylist}
                 {...routerProps}
                 updatePlaylists={props.updatePlaylists}
-                key={i}
+                key={playlist.id}
                 playlist={playlist}
                 togglePlaylistForm={props.togglePlaylistForm}
               />

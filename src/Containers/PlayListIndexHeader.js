@@ -7,9 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import API from '../API'
 
-
 const useStyles = makeStyles(theme => ({
-
   buttons: {
     backgroundColor: "white"
   },
@@ -21,28 +19,31 @@ const PlaylistIndexHeader = (props) => {
   return (
     <div  >
       <CssBaseline />
-      <AppBar>
-        <ButtonGroup
-          fullWidth
-          aria-label="full width outlined button group"
-          className={classes.buttons}
-        >
-          <Button>React-DJ</Button>
 
-          <Button
-            onClick={() => {
-              API.logOut(props)
-              //props.history.push('/')
-            }
-            }
-          >Log Out
-          </Button>
+        <AppBar>
+          <ButtonGroup
+            fullWidth
+            aria-label="full width outlined button group"
+            className={classes.buttons}
+          >
+            <Button>React-DJ</Button>
 
-          <Button>Filter</Button>
-        </ButtonGroup>
-        <ButtonAppBar 
-        togglePlaylistForm={props.togglePlaylistForm}
-        />
+            <Button
+              onClick={() => {
+                API.logOut(props)
+                //props.history.push('/')
+              }
+              }
+            >Log Out
+            </Button>
+
+            <Button>Filter</Button>
+          </ButtonGroup>
+
+          <ButtonAppBar 
+          togglePlaylistForm={props.togglePlaylistForm}
+          />
+
       </AppBar>
 
     </div>

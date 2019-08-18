@@ -35,8 +35,9 @@ export default function AddorEditPlaylist(props) {
   const [name, setName] = useState(
     props.selectedPlaylist && props.addOrEdit === "edit" ?
     props.selectedPlaylist.name : "");
-  const [description, setDescription] = useState(props.selectedPlaylist && props.addOrEdit === "edit" ?
-  props.selectedPlaylist.description : "");
+  const [description, setDescription] = useState(
+    props.selectedPlaylist && props.addOrEdit === "edit" ?
+    props.selectedPlaylist.description : "");
 
   const handleChange = event => {
     if (event.target.id === "name") {
@@ -53,7 +54,7 @@ export default function AddorEditPlaylist(props) {
       props.togglePlaylistForm()
       props.updatePlaylists()
     })
-    // POST - Party flase
+    // POST - Party false
     console.log("lets POST a playlist!")
   };
 

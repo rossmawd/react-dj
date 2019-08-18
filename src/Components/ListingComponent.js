@@ -1,18 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+//import Grid from '@material-ui/core/Grid';
+//import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import ReactPlayer from 'react-player'
-import { ResponsivePlayer } from './ResponsivePlayer';
+//import ButtonBase from '@material-ui/core/ButtonBase';
+//import ReactPlayer from 'react-player'
 import API from '../API'
 import Fab from '@material-ui/core/Fab';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import Divider from '@material-ui/core/Divider';
+//import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -92,8 +91,8 @@ export default function ListingComponent(props) {
     type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
     let newListing = { ...props.listing }
     API.updateListingsPositions(newListing, type).then(resp => {
-      props.setCurrentUserFromToken() // Updates user playlists and Listings
 
+      props.setCurrentUserFromToken() // Updates user playlists and Listings
     })
   }
 
@@ -112,6 +111,7 @@ export default function ListingComponent(props) {
       if (result.value) {
         API.updateListingsPositions(props.listing, "delete")
         API.deleteListing(id).then(resp => {
+          
           props.setCurrentUserFromToken()
           MySwal.fire(
             'Done!',
@@ -119,10 +119,8 @@ export default function ListingComponent(props) {
             'success'
           )
         })
-
       }
     })
-
   }
 
   const handlePlay = () => {
@@ -138,13 +136,13 @@ export default function ListingComponent(props) {
     return isPlaying && currentListing.id === id ? style : null 
   }
   
-
   return (
     <div className={classes.root}>
 
       <Card className={classes.card} style={setStyle()} >
         <CardContent>
           {showAdminControls && returnButtonColumn()}
+
           <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>
             {name}
           </Typography>
@@ -159,7 +157,9 @@ export default function ListingComponent(props) {
             <br />
             Position: {position}
           </Typography>
+          
         </CardContent>
+
         <CardActions>
           <Button size="small" onClick={handleDelete}>DELETE</Button>
         </CardActions>
