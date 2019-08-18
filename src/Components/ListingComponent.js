@@ -159,10 +159,13 @@ export default function ListingComponent(props) {
           </Typography>
           
         </CardContent>
-
+        { showAdminControls ?
         <CardActions>
           <Button size="small" onClick={handleDelete}>DELETE</Button>
         </CardActions>
+        :
+        null
+         }
       </Card>
 
       {/* <ReactPlayer
