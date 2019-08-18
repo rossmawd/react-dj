@@ -6,6 +6,7 @@ const validateUrl = `${endpoint}validate/`;
 const listingsUrl = `${endpoint}listings/`;
 const listingPositonUrl = `${endpoint}listing/`;
 const playlistsUrl = `${endpoint}playlists/`;
+const likeUrl = `${endpoint}likes/`;
 
 const jsonify = res => {
   if (res.ok) return res.json(); //DEFAULT
@@ -41,7 +42,7 @@ const fetchAllPlaylists = () => {
 
 const getPlaylist = (id) => {
   return fetch(playlistsUrl + '/' + id)
-    .then(resp => resp.json())
+    .then(resp => resp.json()).then(data => console.log("here is playlist", data))
     .catch(handleServerError);
 };
 
@@ -150,6 +151,19 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
+  const postLike = (like) => fetch(likeUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ like })
+  }).then(jsonify)
+    .then(like => {
+      console.log("listing: ", like)
+      return like
+    })
+    .catch(handleServerError)
+
 const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + type, {
   method: 'PATCH',
   headers: {
@@ -203,5 +217,7 @@ export default {
   fetchAllPlaylists,
   updateListingsPositions,
   updatePlaylist,
-  getPlaylist
+  getPlaylist,
+  postLike,
+  
 };

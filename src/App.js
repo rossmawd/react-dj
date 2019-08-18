@@ -62,9 +62,9 @@ class App extends React.Component {
   };
 
   getPlaylist = id => {
-    API.getPlaylist(id).then(playlist =>
+    API.getPlaylist(id).then(playlist => {
       this.setState({ playlists: [...this.state.playlists, playlist] })
-    );
+    });
   };
 
   setCurrentUserFromToken = () => {
@@ -168,17 +168,21 @@ class App extends React.Component {
             exact
             path="/playlist/:id"
             render={routerProps => {
+            // if (this.state.playlists) {
               const playlist = this.state.playlists.find(
                 playlist =>
                   playlist.id === parseInt(routerProps.match.params.id)
               );
+              
 
               if (!playlist) {
+                
                 //i.e no playlists in state as NO USER
                 this.getPlaylist(routerProps.match.params.id);
                 return null;
               }
 
+            
               console.log("render called", playlist);
               return ConditionalComponent(
                 !!playlist, //the const above...either there is a user and it is asigned straight away OR getPlaylist changes state and it assignes 2nd time around
@@ -194,6 +198,7 @@ class App extends React.Component {
                   <ListingContainer
                     currentUser={this.state.user}
                     playlist={playlist}
+                    getPlaylist={this.getPlaylist}
                     showListingsEdit={this.state.showListingsEdit}
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
                     setCurrentUserFromToken={this.setCurrentUserFromToken}

@@ -9,6 +9,8 @@ import API from '../API'
 import Fab from '@material-ui/core/Fab';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import { MdThumbUp } from "react-icons/md";
+import { MdThumbDown } from "react-icons/md";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 //import Divider from '@material-ui/core/Divider';
@@ -63,10 +65,11 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
-  const { id, suggestion, url, position, playlist_id, name, updated_at } = props.listing
-  const { currentListing, setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
+  const { id, suggestion, url, likes, dislikes, position, playlist_id, name, updated_at } = props.listing
 
-  const returnButtonColumn = () => {
+  const { currentUser, currentListing, setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
+
+  const returnUpDownButtons = () => {
     return (
       <div className={classes.margin}>
         <Fab id="up" size="small" color="primary" aria-label="add"
@@ -86,6 +89,52 @@ export default function ListingComponent(props) {
       </div>
     )
   }
+  const returnLikeDislikeButtons = () => {
+    
+    return (
+      <div className={classes.margin}>
+        <Fab id="up" size="small" color="primary" aria-label="add"
+          // className={classes.margin}
+          onClick={() => handleLikeDislike("like")}
+        >
+          <MdThumbUp />
+        </Fab>
+
+        <Fab id="down" size="small" color="primary" aria-label="add"
+          // className={classes.margin}
+          onClick={() => handleLikeDislike("dislike")}
+        >
+          <MdThumbDown />
+        </Fab>
+
+      </div>
+    )
+  }
+
+  const handleLikeDislike = (type) => {
+    
+    if (!currentUser && localStorage.getItem(JSON.stringify(id)) === type) {
+       alert("you can only " +type + " a listing once!")
+    } else if (!currentUser) {
+       console.log(type +"d as guest")
+       localStorage.setItem(JSON.stringify(id), type)
+       postLikeDislike(type)
+    } else {
+      console.log(type + "d as logged in User: ", currentUser.email )
+    }
+  }
+
+  const postLikeDislike = (type) => {
+    if(!currentUser && type === "like") {
+       API.postLike({listing_id: id, user_id: 1}).then(resp => {
+         props.getPlaylist(playlist_id)
+       })
+    } else if (!currentUser && type === "dislike") {
+      API.postDislike({listing_id: id, user_id: 1})
+    }
+  }
+
+ 
 
   const handleMove = (type) => {
     type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
@@ -124,6 +173,7 @@ export default function ListingComponent(props) {
   }
 
   const handlePlay = () => {
+    console.log(currentListing.likes)
     console.log("Play triggered by clicking on Title; currentListing is now:", props.listing)
     setCurrentListing(props.listing)
     setPlaying(true)
@@ -141,7 +191,7 @@ export default function ListingComponent(props) {
 
       <Card className={classes.card} style={setStyle()} >
         <CardContent>
-          {showAdminControls && returnButtonColumn()}
+          {showAdminControls ? returnUpDownButtons() : returnLikeDislikeButtons()}
 
           <Typography onClick={handlePlay} className={classes.title} color="textSecondary" gutterBottom>
             {name}
@@ -156,6 +206,13 @@ export default function ListingComponent(props) {
             Listing id: {id}
             <br />
             Position: {position}
+            
+          </Typography>
+          <Typography variant="body2" component="p">
+            Likes: {likes.length}
+            <br/>
+            Dislikes: {dislikes.length}
+            
           </Typography>
           
         </CardContent>

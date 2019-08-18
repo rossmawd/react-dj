@@ -61,7 +61,7 @@ const ListingContainer = (props, routerProps) => {
 
   const renderListings = () => {
     if (playlist.listings && playlist.listings.length !== 0) {
-      debugger
+      
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}
@@ -73,6 +73,8 @@ const ListingContainer = (props, routerProps) => {
           isPlaying={isPlaying}
           showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
           setCurrentUserFromToken={props.setCurrentUserFromToken}
+          getPlaylist={props.getPlaylist}
+          currentUser={currentUser}
         />
       ));
     }
