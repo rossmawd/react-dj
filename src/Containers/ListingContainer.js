@@ -61,6 +61,7 @@ const ListingContainer = (props, routerProps) => {
 
   const renderListings = () => {
     if (playlist.listings && playlist.listings.length !== 0) {
+      debugger
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}
@@ -70,7 +71,7 @@ const ListingContainer = (props, routerProps) => {
           currentListing={currentListing}
           setPlaying={setPlaying}
           isPlaying={isPlaying}
-          showAdminControls={!!currentUser}
+          showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
           setCurrentUserFromToken={props.setCurrentUserFromToken}
         />
       ));
@@ -97,7 +98,7 @@ const ListingContainer = (props, routerProps) => {
             />
           </Paper>
         </Slide>
-        
+
       </div>
       {renderListings()}
       <BottomAppBar
