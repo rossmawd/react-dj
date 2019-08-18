@@ -18,6 +18,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import { useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,12 +63,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
   const { id, suggestion, url, likes, dislikes, position, playlist_id, name, updated_at } = props.listing
-
+  
   const { currentUser, currentListing, setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
+
 
   const returnUpDownButtons = () => {
     return (
@@ -128,6 +132,7 @@ export default function ListingComponent(props) {
     if(!currentUser && type === "like") {
        API.postLike({listing_id: id, user_id: 1}).then(resp => {
          props.getPlaylist(playlist_id)
+        //  props.forceUpdate()
        })
     } else if (!currentUser && type === "dislike") {
       API.postDislike({listing_id: id, user_id: 1})

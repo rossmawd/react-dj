@@ -167,13 +167,15 @@ class App extends React.Component {
           <Route
             exact
             path="/playlist/:id"
-            render={routerProps => {
-            // if (this.state.playlists) {
+            component={routerProps => {
+             
+             
+              
               const playlist = this.state.playlists.find(
                 playlist =>
                   playlist.id === parseInt(routerProps.match.params.id)
               );
-              
+            
 
               if (!playlist) {
                 

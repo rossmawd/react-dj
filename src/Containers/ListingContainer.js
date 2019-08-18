@@ -27,8 +27,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// function useForceUpdate(){
+//   const [value, set] = useState(true); //boolean state
+  
+//   return () => set(!value); // toggle the state to force render
+// }
+
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
+  // const forceUpdate = useForceUpdate()
   const { playlist, currentUser } = props;
   const [isPlaying, setPlaying] = useState(false);
   const sortListings = () => {
@@ -75,6 +82,7 @@ const ListingContainer = (props, routerProps) => {
           setCurrentUserFromToken={props.setCurrentUserFromToken}
           getPlaylist={props.getPlaylist}
           currentUser={currentUser}
+          // forceUpdate={forceUpdate}
         />
       ));
     }
