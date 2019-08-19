@@ -62,10 +62,17 @@ class App extends React.Component {
   };
 
   getPlaylist = id => {
+   
     API.getPlaylist(id).then(playlist => {
-      this.setState({ playlists: [...this.state.playlists, playlist] })
+      this.setState({ playlists: [playlist] })  // spreading in the playlist was causing a duplicate!!
     });
   };
+
+   updatePlaylist = (updatedPlaylist) => {
+    this.setState({
+      playlists: this.state.playlists.map(playlist => playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist)
+    })
+  }
 
   setCurrentUserFromToken = () => {
     let token = localStorage.token ? localStorage.token : null;
@@ -119,11 +126,7 @@ class App extends React.Component {
     );
   };
 
-  updatePlaylist = (updatedPlaylist) => {
-    this.setState({
-      playlists: this.state.playlists.map(playlist => playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist)
-    })
-  }
+ 
 
 
   render() {

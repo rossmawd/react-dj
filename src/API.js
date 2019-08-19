@@ -42,7 +42,8 @@ const fetchAllPlaylists = () => {
 };
 
 const getPlaylist = (id) => {
-  return fetch(playlistsUrl + '/' + id)
+  
+  return fetch(playlistsUrl + id)
     .then(resp => resp.json())
     .catch(handleServerError);
 };
@@ -160,7 +161,7 @@ const postListing = (listing) => fetch(listingsUrl, {
     body: JSON.stringify({ like })
   }).then(jsonify)
     .then(like => {
-      console.log("listing: ", like)
+      console.log("like: ", like)
       return like
     })
     .catch(handleServerError)
@@ -174,6 +175,7 @@ const postListing = (listing) => fetch(listingsUrl, {
   }).then(jsonify)
     .then(dislike => {
       console.log("listing: ", dislike)
+      
       return dislike
     })
     .catch(handleServerError)
