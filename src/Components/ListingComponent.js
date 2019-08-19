@@ -94,6 +94,15 @@ export default function ListingComponent(props) {
     )
   }
 
+  const handleMove = (type) => {
+    type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
+    let newListing = { ...props.listing }
+    API.updateListingsPositions(newListing, type).then(resp => {
+
+      props.setCurrentUserFromToken() // Updates user playlists and Listings
+    })
+  }
+
   const returnLikeDislikeButtons = () => {  
     return (
       <div className={classes.margin}>
@@ -137,17 +146,6 @@ export default function ListingComponent(props) {
     } else if (!currentUser && type === "dislike") {
       API.postDislike({listing_id: id, user_id: 1})
     }
-  }
-
- 
-
-  const handleMove = (type) => {
-    type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
-    let newListing = { ...props.listing }
-    API.updateListingsPositions(newListing, type).then(resp => {
-
-      props.setCurrentUserFromToken() // Updates user playlists and Listings
-    })
   }
 
   const handleDelete = () => {

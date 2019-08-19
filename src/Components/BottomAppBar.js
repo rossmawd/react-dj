@@ -1,4 +1,5 @@
 import React from "react";
+import {useEffect, useRef} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,8 +30,26 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BottomAppBar(props) {
+// function useTraceUpdate(props) {
+//   const prev = useRef(props);
+//   useEffect(() => {
+//     const changedProps = Object.entries(props).reduce((ps, [k, v]) => {
+//       if (prev.current[k] !== v) {
+//         ps[k] = [prev.current[k], v];
+//       }
+//       return ps;
+//     }, {});
+//     if (Object.keys(changedProps).length > 0) {
+//       console.log('Changed props:', changedProps);
+//     }
+//     prev.current = props;
+//   });
+// }
+
+function BottomAppBar(props) {
   const classes = useStyles();
+  debugger
+  // useTraceUpdate(props)
 
   const playOrPause = () => {
     if (!props.isPlaying) {
@@ -53,7 +72,9 @@ export default function BottomAppBar(props) {
   };
 
   return (
+  
     <React.Fragment>
+        {console.log("the bottom app bar has rendered")}
       <CssBaseline />
 
       <AppBar position="fixed" color="primary" className={classes.appBar}>
@@ -95,9 +116,13 @@ export default function BottomAppBar(props) {
           <IconButton edge="end" color="inherit">
             <MoreIcon />
           </IconButton>
-
+        
         </Toolbar>
+        
       </AppBar>
+      
     </React.Fragment>
   );
 }
+
+export default BottomAppBar
