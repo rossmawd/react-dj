@@ -64,7 +64,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)

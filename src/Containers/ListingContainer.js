@@ -48,14 +48,14 @@ const ListingContainer = (props, routerProps) => {
   });
   const [nextListing, setNextListing] = useState(null)
 
-  console.log("listing container render", playlist);
+  
 
   useEffect(() => {
-    console.log('mount')
+    console.log('MOUNT')
 
     // returned function will be called on component unmount 
     return () => {
-      console.log('un,moiut')
+      console.log('UNMOUNT')
     }
   }, [])
 

@@ -127,7 +127,7 @@ class App extends React.Component {
 
 
   render() {
-    console.log("APP HAS RENDERED");
+    //console.log("APP HAS RENDERED");
     return (
       <div className="App">
         <Switch>
@@ -189,8 +189,6 @@ class App extends React.Component {
                 return null;
               }
 
-
-              console.log("render called", playlist);
               return ConditionalComponent(
                 !!playlist, //the const above...either there is a user and it is asigned straight away OR getPlaylist changes state and it assignes 2nd time around
                 <>

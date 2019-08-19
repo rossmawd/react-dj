@@ -185,9 +185,9 @@ const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + typ
   },
   body: JSON.stringify({ listing })
 }).then(jsonify)
-  .then(listing => {
-    console.log("Updated listing: ", listing)
-    return listing
+  .then(updatedPlaylist => {
+    console.log("Updated playlist: ", updatedPlaylist)
+    return updatedPlaylist
   })
   .catch(handleServerError)
 
