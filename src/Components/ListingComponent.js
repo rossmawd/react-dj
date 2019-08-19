@@ -18,7 +18,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import { useState } from 'react';
+//import { useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -68,8 +68,8 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal)
-  const { id, suggestion, url, likes, dislikes, position, playlist_id, name, updated_at } = props.listing
-  
+  const { id, likes, dislikes, position, playlist_id, name} = props.listing
+ //const { suggestion, url, updated_at } = props.listing
   const { currentUser, currentListing, setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
 
 
@@ -93,13 +93,13 @@ export default function ListingComponent(props) {
       </div>
     )
   }
-  const returnLikeDislikeButtons = () => {
-    
+
+  const returnLikeDislikeButtons = () => {  
     return (
       <div className={classes.margin}>
         <Fab id="up" size="small" color="primary" aria-label="add"
           // className={classes.margin}
-          onClick={() => handleLikeDislike("like")}
+          onClick={(event) => handleLikeDislike(event, "like")}
         >
           <MdThumbUp />
         </Fab>
@@ -115,8 +115,8 @@ export default function ListingComponent(props) {
     )
   }
 
-  const handleLikeDislike = (type) => {
-    
+  const handleLikeDislike = (event, type) => {
+    //event.preventDefault()
     if (!currentUser && localStorage.getItem(JSON.stringify(id)) === type) {
        alert("you can only " +type + " a listing once!")
     } else if (!currentUser) {

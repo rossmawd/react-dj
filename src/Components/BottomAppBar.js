@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
+//import Paper from "@material-ui/core/Paper";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import { MdSkipNext } from "react-icons/md";

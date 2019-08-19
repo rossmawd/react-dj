@@ -78,19 +78,6 @@ export default function PlaylistComponent(props) {
   };
 
   const renderGenreIcon = genre => {
-    const genres = [
-      "Blues",
-      "Classical",
-      "Country",
-      "Electronic",
-      "Folk",
-      "Jazz",
-      "New age",
-      "Reggae",
-      "Rock",
-      "Metal",
-      "Other"
-    ];
     switch (genre) {
       case "Blues":
         return <Blues />;
@@ -146,7 +133,7 @@ export default function PlaylistComponent(props) {
       <Grid container wrap="nowrap" spacing={3}>
 
       <Tooltip title={props.playlist.genre} TransitionComponent={Zoom}>
-          <Grid item className={classes.faIcon} item>
+          <Grid item className={classes.faIcon} >
             {/* <FontAwesomeIcon icon="blind" />  */}
             {renderGenreIcon(props.playlist.genre)}
           </Grid>

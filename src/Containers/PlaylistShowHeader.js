@@ -42,7 +42,7 @@ const PlaylistShowHeader = (props) => {
           aria-label="full width outlined button group"
           className={classes.buttons}
         >
-          
+
           <Button as={Link}>
             <Link to={"/playlists"}>React-DJ</Link>
           </Button>
@@ -52,7 +52,7 @@ const PlaylistShowHeader = (props) => {
               API.logOut(props);
             }}
           >
-            {props.currentUser ? "Log Out" : "Guest View"}
+            {currentUser ? "Log Out" : "Guest View"}
           </Button>
 
           <CopyToClipboard
