@@ -41,14 +41,25 @@ const ListingContainer = (props, routerProps) => {
   const sortListings = () => {
     return playlist.listings.sort((a, b) => a.position - b.position).reverse();
   };
-  const [currentListing, setCurrentListing] = useState({
+  const [currentListing, setCurrentListing] = useState(() => {
+    return {
     ...sortListings()[0]
-  });
+  }});
   const [nextListing, setNextListing] = useState(null)
 
   console.log("listing container render", playlist);
 
+
+  const determineNextLisiting = () => {
+  
+    let currentlyPlaying = playlist.listings.find(listing => listing.id === currentListing.id )
+    let upNextPosition = currentlyPlaying.position - 1
+    let nextLising = playlist.listings.find(listing => listing.position === upNextPosition)
+    debugger
+  }
+
   const triggerNextSong = id => {
+    //determineNextLisiting()
     console.log("trigger next song", playlist);
     console.log("triggerNextSong fired!");
 
@@ -77,6 +88,9 @@ const ListingContainer = (props, routerProps) => {
           listing={listing}
           setCurrentListing={setCurrentListing}
           currentListing={currentListing}
+          // nextLising={nextListing}
+          // setNextListing={setNextListing}
+          determineNextLisiting={determineNextLisiting}
           setPlaying={setPlaying}
           isPlaying={isPlaying}
           showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}

@@ -17,6 +17,7 @@ export const ResponsivePlayer = ({
 }) => {
   const classes = useStyles();
 
+
   return (
     <div className={classes.playerWrapper}>
       {currentListing ? (

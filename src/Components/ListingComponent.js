@@ -70,7 +70,7 @@ export default function ListingComponent(props) {
   const MySwal = withReactContent(Swal)
   const { id, likes, dislikes, position, playlist_id, name} = props.listing
  //const { suggestion, url, updated_at } = props.listing
-  const { currentUser, currentListing, setCurrentListing, setPlaying, isPlaying, showAdminControls } = props
+  const { currentUser, currentListing, setCurrentListing, nextListing, setNextListing, setPlaying, isPlaying, showAdminControls } = props
 
 
   const returnUpDownButtons = () => {

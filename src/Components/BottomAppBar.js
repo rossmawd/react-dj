@@ -57,7 +57,7 @@ class BottomAppBar extends React.Component {
   //   //Only update if the props you care about change.
   //   //keep in mind that it can cause major problems if you set it and forget it,
   //   console.log("checking")
-  //   debugger
+   
   //   return ((this.props.isPlaying !== nextProps.isPlaying))
     
   // }
