@@ -1,6 +1,6 @@
 import React from "react";
-import {useEffect, useRef} from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -13,7 +13,8 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 //import ReactPlayer from "react-player";
 import { ResponsivePlayer } from "./ResponsivePlayer";
 
-const useStyles = makeStyles(theme => ({
+// const useStyles = makeStyles(theme => ({
+const styles = {
   paper: {
     paddingBottom: 50
   },
@@ -27,8 +28,9 @@ const useStyles = makeStyles(theme => ({
   },
   grow: {
     flexGrow: 1
-  },
-}));
+  }
+};
+// }));
 
 // function useTraceUpdate(props) {
 //   const prev = useRef(props);
@@ -46,44 +48,55 @@ const useStyles = makeStyles(theme => ({
 //   });
 // }
 
-function BottomAppBar(props) {
-  const classes = useStyles();
-  debugger
+class BottomAppBar extends React.Component {
+  //const classes = useStyles();
+  //debugger
   // useTraceUpdate(props)
 
-  const playOrPause = () => {
-    if (!props.isPlaying) {
-      return (
-        <FaPlay
-          onClick={() => {
-            props.setPlaying(!props.isPlaying);
-          }}
-        />
-      );
-    } else {
-      return (
-        <FaPause
-          onClick={() => {
-            props.setPlaying(!props.isPlaying);
-          }}
-        />
-      );
-    }
-  };
+  // shouldComponentUpdate(nextProps, nextState) {  // should always return a boolean
+  //   //Only update if the props you care about change.
+  //   //keep in mind that it can cause major problems if you set it and forget it,
+  //   console.log("checking")
+  //   debugger
+  //   return ((this.props.isPlaying !== nextProps.isPlaying))
+    
+  // }
 
-  return (
-  
-    <React.Fragment>
+  render() {
+    const { classes } = this.props;
+
+    const playOrPause = () => {
+      if (!this.props.isPlaying) {
+        return (
+          <FaPlay
+            onClick={() => {
+              this.props.setPlaying(!this.props.isPlaying);
+            }}
+          />
+        );
+      } else {
+        return (
+          <FaPause
+            onClick={() => {
+              this.props.setPlaying(!this.props.isPlaying);
+            }}
+          />
+        );
+      }
+    };
+
+    return (
+      <React.Fragment>
         {console.log("the bottom app bar has rendered")}
-      <CssBaseline />
+        <CssBaseline />
 
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
-            {playOrPause()}
-          </IconButton>
+        <AppBar position="fixed" color="primary" className={classes.appBar}>
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="open drawer">
+              {playOrPause()}
+            </IconButton>
 
-          {/* <ReactPlayer
+            {/* <ReactPlayer
             className={classes.img}
             // playing={currentlyPlaying === position ? true : false}
             url={"https://www.youtube.com/watch?v=_X_1o3Qw4KM"}
@@ -97,32 +110,33 @@ function BottomAppBar(props) {
             // onEnded={() => setPlaying(position - 1)}
             controls={true}
           /> */}
-          <ResponsivePlayer
-            setPlaying={props.setPlaying}
-            currentListing={props.currentListing}
-            triggerNextSong={props.triggerNextSong}
-            isPlaying={props.isPlaying}
-          />
-         
-          {/* <div className={classes.grow} />  */} 
-          {/* moves controls over to RHS */}
-
-          <IconButton color="inherit">
-            <MdSkipNext
-              onClick={() => props.triggerNextSong(props.currentListing.id)}
+            <ResponsivePlayer
+              setPlaying={this.props.setPlaying}
+              currentListing={this.props.currentListing}
+              triggerNextSong={this.props.triggerNextSong}
+              isPlaying={this.props.isPlaying}
             />
-          </IconButton>
 
-          <IconButton edge="end" color="inherit">
-            <MoreIcon />
-          </IconButton>
-        
-        </Toolbar>
-        
-      </AppBar>
-      
-    </React.Fragment>
-  );
+            {/* <div className={classes.grow} />  */}
+            {/* moves controls over to RHS */}
+
+            <IconButton
+              onClick={() =>
+                this.props.triggerNextSong(this.props.currentListing.id)
+              }
+              color="inherit"
+            >
+              <MdSkipNext />
+            </IconButton>
+
+            <IconButton edge="end" color="inherit">
+              <MoreIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      </React.Fragment>
+    );
+  }
 }
 
-export default BottomAppBar
+export default withStyles(styles)(BottomAppBar);

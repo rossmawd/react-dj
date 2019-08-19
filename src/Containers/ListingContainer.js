@@ -44,6 +44,7 @@ const ListingContainer = (props, routerProps) => {
   const [currentListing, setCurrentListing] = useState({
     ...sortListings()[0]
   });
+  const [nextListing, setNextListing] = useState(null)
 
   console.log("listing container render", playlist);
 
