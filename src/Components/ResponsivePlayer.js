@@ -6,6 +6,9 @@ const useStyles = makeStyles(theme => ({
   playerWrapper: {
     //  position: "relative",
     //  paddingTop: "56.25% /* Player ratio: 100 / (1280 / 720) */"
+    paddingTop: "5%",
+    paddingBottom: "3%",
+    position: "inherit"
   }
 }));
 
