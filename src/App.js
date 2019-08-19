@@ -100,7 +100,7 @@ class App extends React.Component {
       });
   };
 
-   handleSignInSubmit = e => {
+  handleSignInSubmit = e => {
     e.preventDefault();
     let submittedUser = {
       email: this.state.email,
@@ -118,6 +118,12 @@ class App extends React.Component {
       />
     );
   };
+
+  updatePlaylist = (updatedPlaylist) => {
+    this.setState({
+      playlists: this.state.playlists.map(playlist => playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist)
+    })
+  }
 
 
   render() {
@@ -167,24 +173,23 @@ class App extends React.Component {
           <Route
             exact
             path="/playlist/:id"
-            component={routerProps => {
-             
-             
-              
+            render={routerProps => {
+
+
+
               const playlist = this.state.playlists.find(
                 playlist =>
                   playlist.id === parseInt(routerProps.match.params.id)
               );
-            
 
               if (!playlist) {
-                
+
                 //i.e no playlists in state as NO USER
                 this.getPlaylist(routerProps.match.params.id);
                 return null;
               }
 
-            
+
               console.log("render called", playlist);
               return ConditionalComponent(
                 !!playlist, //the const above...either there is a user and it is asigned straight away OR getPlaylist changes state and it assignes 2nd time around
@@ -198,6 +203,7 @@ class App extends React.Component {
                   />
 
                   <ListingContainer
+                    updatePlaylist={this.updatePlaylist}
                     currentUser={this.state.user}
                     playlist={playlist}
                     getPlaylist={this.getPlaylist}

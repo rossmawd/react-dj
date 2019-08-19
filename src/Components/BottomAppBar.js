@@ -57,10 +57,14 @@ class BottomAppBar extends React.Component {
   //   //Only update if the props you care about change.
   //   //keep in mind that it can cause major problems if you set it and forget it,
   //   console.log("checking")
-   
+
   //   return ((this.props.isPlaying !== nextProps.isPlaying))
-    
+
   // }
+
+  componentWillUnmount() {
+    console.log("bottom app bar unmount")
+  }
 
   render() {
     const { classes } = this.props;
@@ -113,7 +117,8 @@ class BottomAppBar extends React.Component {
             <ResponsivePlayer
               setPlaying={this.props.setPlaying}
               currentListing={this.props.currentListing}
-              triggerNextSong={this.props.triggerNextSong}
+              triggerNextSong={() =>
+                this.props.triggerNextSong(this.props.currentListing.id)}
               isPlaying={this.props.isPlaying}
             />
 

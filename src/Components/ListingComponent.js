@@ -97,9 +97,9 @@ export default function ListingComponent(props) {
   const handleMove = (type) => {
     type === "up" ? console.log("moving up...", id) : console.log("moving down...", id)
     let newListing = { ...props.listing }
-    API.updateListingsPositions(newListing, type).then(resp => {
+    API.updateListingsPositions(newListing, type).then(playlist => {
 
-      props.setCurrentUserFromToken() // Updates user playlists and Listings
+      props.updatePlaylist(playlist) // Updates user playlists and Listings
     })
   }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 
 // function useForceUpdate(){
 //   const [value, set] = useState(true); //boolean state
-  
+
 //   return () => set(!value); // toggle the state to force render
 // }
 
@@ -43,16 +43,26 @@ const ListingContainer = (props, routerProps) => {
   };
   const [currentListing, setCurrentListing] = useState(() => {
     return {
-    ...sortListings()[0]
-  }});
+      ...sortListings()[0]
+    }
+  });
   const [nextListing, setNextListing] = useState(null)
 
   console.log("listing container render", playlist);
 
+  useEffect(() => {
+    console.log('mount')
+
+    // returned function will be called on component unmount 
+    return () => {
+      console.log('un,moiut')
+    }
+  }, [])
+
 
   const determineNextLisiting = () => {
-  
-    let currentlyPlaying = playlist.listings.find(listing => listing.id === currentListing.id )
+
+    let currentlyPlaying = playlist.listings.find(listing => listing.id === currentListing.id)
     let upNextPosition = currentlyPlaying.position - 1
     let nextLising = playlist.listings.find(listing => listing.position === upNextPosition)
     debugger
@@ -80,7 +90,7 @@ const ListingContainer = (props, routerProps) => {
 
   const renderListings = () => {
     if (playlist.listings && playlist.listings.length !== 0) {
-      
+
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}
@@ -97,7 +107,8 @@ const ListingContainer = (props, routerProps) => {
           setCurrentUserFromToken={props.setCurrentUserFromToken}
           getPlaylist={props.getPlaylist}
           currentUser={currentUser}
-          // forceUpdate={forceUpdate}
+          updatePlaylist={props.updatePlaylist}
+        // forceUpdate={forceUpdate}
         />
       ));
     }

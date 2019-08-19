@@ -28,7 +28,7 @@ export const ResponsivePlayer = ({
           height="100%"
           playing={isPlaying}
           controls={true}
-          onEnded={() => triggerNextSong(currentListing.id)}
+          onEnded={triggerNextSong}
         />
       ) : (
         <h1>hello</h1>
