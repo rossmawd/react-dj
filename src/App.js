@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import PlaylistIndexHeader from "./Containers/PlaylistIndexHeader";
+import PlaylistIndexHeader from "./Containers/PlayListIndexHeader";
 import PlaylistShowHeader from "./Containers/PlaylistShowHeader";
 import PlaylistsIndexContainer from "./Containers/PlaylistsIndexContainer";
 import API from "./API.js";

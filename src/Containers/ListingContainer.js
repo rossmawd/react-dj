@@ -61,7 +61,7 @@ const ListingContainer = (props, routerProps) => {
 
   const renderListings = () => {
     if (playlist.listings && playlist.listings.length !== 0) {
-      debugger
+      
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}

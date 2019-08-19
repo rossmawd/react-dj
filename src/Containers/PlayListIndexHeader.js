@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const PlaylistIndexHeader = (props) => {
+const PlayListIndexHeader = (props) => {
   const classes = useStyles();
 
   return (
@@ -50,4 +50,4 @@ const PlaylistIndexHeader = (props) => {
   );
 }
 
-export default PlaylistIndexHeader;
+export default PlayListIndexHeader;
