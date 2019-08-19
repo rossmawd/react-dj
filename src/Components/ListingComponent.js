@@ -60,6 +60,9 @@ const useStyles = makeStyles(theme => ({
     },
     padding: "5px",
     border: "2px solid black"
+  },
+  like: {
+    background: "black"
   }
 }));
 
@@ -117,21 +120,45 @@ export default function ListingComponent(props) {
     });
   };
 
+ 
+
   const returnLikeDislikeButtons = () => {
+
+     const setButtonStyle = () => {
+    let key = JSON.stringify(id) + "like"
+    const style = {
+      background: "black"
+    }
+    return localStorage.getItem(key) ? style : null
+  }
+  const setButtonStyle2 = () => {
+    let key = JSON.stringify(id) + "dislike"
+    const style = {
+      background: "black"
+    }
+    return localStorage.getItem(key) ? style : null
+  }
+
     return (
       <div className={classes.margin}>
         <Fab
+          style={setButtonStyle()}
           id="up"
           size="small"
           color="primary"
           aria-label="add"
           // className={classes.margin}
-          onClick={event => handleLikeDislike("like")}
+          onClick={event => {
+            handleLikeDislike("like")
+            //setButtonStyle("like")
+          }}
+
         >
           <MdThumbUp />
         </Fab>
 
         <Fab
+        style={setButtonStyle2()}
           id="down"
           size="small"
           color="primary"
@@ -146,17 +173,14 @@ export default function ListingComponent(props) {
   };
 
   const handleLikeDislike = type => {
-    //event.preventDefault()
- 
-    if (!currentUser) {
-      setLocalStorageForGuest(type);
-      
-    }  else {
-      console.log(type + "d as logged in User: ", currentUser.email )
+
+    setLocalStorageForLikesDislikes(type);
+    if (currentUser) {
+      console.log(type + "d as logged in User: ", currentUser.email)
     }
   };
 
-  const setLocalStorageForGuest = (type) => {
+  const setLocalStorageForLikesDislikes = (type) => {
     let key = JSON.stringify(id) + type;
     let id_s = JSON.stringify(id);
     if (localStorage.getItem(key)) alert("You can only " + type + " a song once!");
@@ -174,13 +198,15 @@ export default function ListingComponent(props) {
   };
 
   const postLikeDislike = type => {
-    if (!currentUser && type === "like") {
-      API.postLike({ listing_id: id, user_id: 1 }).then(resp => {
+    // if (!currentUser && type === "like") {
+    let user_id = !currentUser ? 1 : currentUser.id
+
+    if (type === "like") {
+      API.postLike({ listing_id: id, user_id: user_id }).then(resp => {
         props.getPlaylist(playlist_id);
       });
-    } else if (!currentUser && type === "dislike") {
-      API.postDislike({ listing_id: id, user_id: 1 });
-
+    } else if (type === "dislike") {
+      API.postDislike({ listing_id: id, user_id: user_id });
       props.getPlaylist(playlist_id);
     }
   };
@@ -215,16 +241,18 @@ export default function ListingComponent(props) {
     setPlaying(true);
   };
 
-  const setStyle = () => {
+  const setCardStyle = () => {
     const style = {
       background: "lightBlue"
     };
     return isPlaying && currentListing.id === id ? style : null;
   };
 
+
+
   return (
     <div className={classes.root}>
-      <Card className={classes.card} style={setStyle()}>
+      <Card className={classes.card} style={setCardStyle()}>
         <CardContent>
           {showAdminControls
             ? returnUpDownButtons()
