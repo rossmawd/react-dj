@@ -37,6 +37,7 @@ const PlaylistShowHeader = (props) => {
     <div>
       <CssBaseline />
       <AppBar>
+      
         <ButtonGroup
           fullWidth
           aria-label="full width outlined button group"
@@ -67,7 +68,7 @@ const PlaylistShowHeader = (props) => {
           playlist={playlist}
           toggleShowListingsEdit={props.toggleShowListingsEdit}
         />
-
+         <textarea value={props.text} onChange={props.changeText} />
       </AppBar>
     </div>
   );

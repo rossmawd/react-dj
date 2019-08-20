@@ -11,7 +11,9 @@ import ListingContainer from "./Containers/ListingContainer";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
+import ActionCable from 'actioncable'
 library.add(fab, faCheckSquare, faCoffee);
+
 
 const ConditionalComponent = (condition, jsx) => {
   return condition ? jsx : <div>Loading...</div>;
@@ -25,11 +27,38 @@ class App extends React.Component {
     password: null,
     showListingsEdit: false,
     showPlaylistForm: false,
-    addOrEdit: null
+    addOrEdit: null,
+    text: ""
   };
 
   componentDidMount() {
     this.setCurrentUserFromToken();
+   
+    // ACTION CABLE
+    window.fetch("http://localhost:3000/notes/1").then(data => {
+      data.json().then(res => {
+        this.setState({ text: res.text });
+      });
+    });
+
+    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+
+    this.sub = cable.subscriptions.create('NotesChannel', {
+      received: this.handleReceiveNewText
+    })
+  }
+
+    //ACTION CABLE start
+    handleChange = e => {
+      this.setState({ text: e.target.value })
+      this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
+    }
+  
+    handleReceiveNewText = ({ text }) => {
+    
+    if (text !== this.state.text) {
+      this.setState({ text })
+    }
   }
 
   togglePlaylistForm = (edit = false) => {
@@ -62,17 +91,18 @@ class App extends React.Component {
   };
 
   getPlaylist = id => {
-   
     API.getPlaylist(id).then(playlist => {
-      this.setState({ playlists: [playlist] })  // spreading in the playlist was causing a duplicate!!
+      this.setState({ playlists: [playlist] }); // spreading in the playlist was causing a duplicate!!
     });
   };
 
-   updatePlaylist = (updatedPlaylist) => {
+  updatePlaylist = updatedPlaylist => {
     this.setState({
-      playlists: this.state.playlists.map(playlist => playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist)
-    })
-  }
+      playlists: this.state.playlists.map(playlist =>
+        playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist
+      )
+    });
+  };
 
   setCurrentUserFromToken = () => {
     let token = localStorage.token ? localStorage.token : null;
@@ -126,9 +156,6 @@ class App extends React.Component {
     );
   };
 
- 
-
-
   render() {
     //console.log("APP HAS RENDERED");
     return (
@@ -177,16 +204,12 @@ class App extends React.Component {
             exact
             path="/playlist/:id"
             render={routerProps => {
-
-
-
               const playlist = this.state.playlists.find(
                 playlist =>
                   playlist.id === parseInt(routerProps.match.params.id)
               );
 
               if (!playlist) {
-
                 //i.e no playlists in state as NO USER
                 this.getPlaylist(routerProps.match.params.id);
                 return null;
@@ -201,6 +224,8 @@ class App extends React.Component {
                     clearCurrentUser={this.clearCurrentUser}
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
                     playlist={playlist}
+                    text={this.state.text}
+                    changeText={this.handleChange}
                   />
 
                   <ListingContainer
@@ -217,6 +242,7 @@ class App extends React.Component {
             }}
           />
         </Switch>
+        <textarea value={this.state.text} onChange={this.handleChange} />
       </div>
     );
   }
