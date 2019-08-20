@@ -28,8 +28,18 @@ class App extends React.Component {
     showListingsEdit: false,
     showPlaylistForm: false,
     addOrEdit: null,
-    text: ""
+    text: "",
+    showFilterForm: false,
+    playlistFilter: "All"
   };
+
+setPlaylistFilter = (genre) => {
+  this.setState({playlistFilter: genre})
+}
+
+  toggleFilterForm = () => {
+    this.setState({ showFilterForm: !this.state.showFilterForm})
+  }
 
   componentDidMount() {
     this.setCurrentUserFromToken();
@@ -195,14 +205,22 @@ class App extends React.Component {
                     clearCurrentUser={this.clearCurrentUser}
                     togglePlaylistForm={this.togglePlaylistForm}
                     showPlaylistForm={this.state.showPlaylistForm}
+                    toggleFilterForm={this.toggleFilterForm}
+                    showFilterForm={this.state.showFilterForm}
                   />
+
                   <PlaylistsIndexContainer
-                    {...routerProps}
+                    {...routerProps}  
                     playlists={this.state.playlists}
+                    getPlaylist={this.getPlaylist}
                     updatePlaylists={this.fetchPlaylists}
                     showPlaylistForm={this.state.showPlaylistForm}
                     togglePlaylistForm={this.togglePlaylistForm}
                     addOrEdit={this.state.addOrEdit}
+                    toggleFilterForm={this.toggleFilterForm}
+                    showFilterForm={this.state.showFilterForm}
+                    playlistFilter={this.state.playlistFilter}
+                    setPlaylistFilter={this.setPlaylistFilter}
                   />
                 </>
               )
@@ -235,6 +253,7 @@ class App extends React.Component {
                     playlist={playlist}
                     text={this.state.text}
                     changeText={this.handleChange}
+                    
                   />
 
                   <ListingContainer

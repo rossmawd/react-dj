@@ -139,9 +139,9 @@ export default function PlaylistComponent(props) {
           </Grid>
       </Tooltip>
       
-        {/* <Grid item xs zeroMinWidth>
+        <Grid item xs zeroMinWidth>
           <Typography variant={"caption"} noWrap>User: {props.playlist.user_id}</Typography>
-        </Grid> */}
+        </Grid>
        
       </Grid>
     </Paper>

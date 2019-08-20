@@ -76,11 +76,6 @@ const PlaylistShowHeader = (props) => {
   };
 
 
-  const actionMessageTimeout = () => {
-    let message = props.text
-
-  }
-
   return (
     <div>
       <CssBaseline />

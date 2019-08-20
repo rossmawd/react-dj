@@ -37,7 +37,8 @@ const PlayListIndexHeader = (props) => {
             >Log Out
             </Button>
 
-            <Button>Filter</Button>
+            <Button onClick={props.toggleFilterForm}
+            >Filter</Button>
           </ButtonGroup>
 
           <ButtonAppBar 
