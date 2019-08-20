@@ -6,7 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CreateIcon from '@material-ui/icons/Create';
-import SettingsIcon from '@material-ui/icons/Settings';
+import Snackbar from '@material-ui/core/Snackbar';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,12 +24,28 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   createButton: {
-  }
+  },
+  
 }));
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
   const {playlist} = props 
+  // const [state, setState] = React.useState({
+  //   open: true,
+  //   vertical: 'middle',
+  //   horizontal: 'center',
+  // });
+
+  // const { vertical, horizontal, open } = state;
+
+  // const handleClick = newState => () => {
+  //   setState({ open: true, ...newState });
+  // };
+
+  // function handleClose() {
+  //   setState({ ...state, open: false });
+  // }
 
   return (
     <div className={classes.root}>
@@ -39,9 +56,16 @@ export default function ButtonAppBar(props) {
             {playlist ? playlist.name : localStorage.email}
           </Typography>
 
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="create">
-            <SettingsIcon />
-          </IconButton>
+          {/* <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        key={`${vertical},${horizontal}`}
+        open={open}
+        onClose={handleClose}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={<span id="message-id">{props.actionCableText}</span>}
+      /> */}
 
           <IconButton edge="start" color="inherit" aria-label="create"
             onClick={props.toggleShowListingsEdit ? props.toggleShowListingsEdit : () => props.togglePlaylistForm(false)}>

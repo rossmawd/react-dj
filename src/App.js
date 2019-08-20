@@ -242,7 +242,7 @@ class App extends React.Component {
             }}
           />
         </Switch>
-        <textarea value={this.state.text} onChange={this.handleChange} />
+  
       </div>
     );
   }
