@@ -28,6 +28,9 @@ const styles = {
   },
   grow: {
     flexGrow: 1
+  },
+  skipIcon: {
+    zoom: "1.3"
   }
 };
 // }));
@@ -131,12 +134,12 @@ class BottomAppBar extends React.Component {
               }
               color="inherit"
             >
-              <MdSkipNext />
+              <MdSkipNext className={classes.skipIcon}/>
             </IconButton>
 
-            <IconButton edge="end" color="inherit">
+            {/* <IconButton edge="end" color="inherit">
               <MoreIcon />
-            </IconButton>
+            </IconButton> */}
           </Toolbar>
         </AppBar>
       </React.Fragment>

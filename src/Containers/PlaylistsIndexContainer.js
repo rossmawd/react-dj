@@ -2,7 +2,8 @@ import React from "react";
 import PlaylistComponent from "../Components/PlaylistComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import AddorEditPlaylist from "../Components/AddorEditPlaylist";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Slide from "@material-ui/core/Slide";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,6 +19,15 @@ const PlaylistsIndexContainer = (props, routerProps) => {
   const classes = useStyles();
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
 
+  useEffect(() => {
+    console.log('MOUNT')
+
+    // returned function will be called on component unmount 
+    return () => {
+      console.log('UNMOUNT')
+    }
+  }, [])
+
   const userPlaylists = playlists => {
     if (playlists.length !== 0) {
       return playlists.filter(
@@ -32,14 +42,15 @@ const PlaylistsIndexContainer = (props, routerProps) => {
 
   return (
     <div className={classes.root}>
-      {props.showPlaylistForm ? (
+    
         <AddorEditPlaylist
           selectedPlaylist={selectedPlaylist}
           togglePlaylistForm={props.togglePlaylistForm}
+          showPlaylistForm={props.showPlaylistForm}
           updatePlaylists={props.updatePlaylists}
           addOrEdit={props.addOrEdit}
         />
-      ) : null}
+      
 
       {props.playlists.length !== 0
         ? sortedUserPlaylists(userPlaylists(props.playlists)).map(

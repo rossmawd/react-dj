@@ -38,6 +38,7 @@ class App extends React.Component {
     window.fetch("http://localhost:3000/notes/1").then(data => {
       data.json().then(res => {
         this.setState({ text: res.text });
+      
       });
     });
 
@@ -54,11 +55,18 @@ class App extends React.Component {
       this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
     }
   
-    handleReceiveNewText = ({ text }) => {
+    handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
     
+  
     if (text !== this.state.text) {
       this.setState({ text })
     }
+
+    // let playlist =  this.state.playlists.filter(playlist => playlist.id === parseInt(playlist_id))
+    // let listing = playlist.listings.filter(listing => )
+    this.getPlaylist(parseInt(playlist_id))
+   
+
   }
 
   togglePlaylistForm = (edit = false) => {
@@ -186,6 +194,7 @@ class App extends React.Component {
                     {...routerProps}
                     clearCurrentUser={this.clearCurrentUser}
                     togglePlaylistForm={this.togglePlaylistForm}
+                    showPlaylistForm={this.state.showPlaylistForm}
                   />
                   <PlaylistsIndexContainer
                     {...routerProps}
