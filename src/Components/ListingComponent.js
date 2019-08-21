@@ -11,14 +11,17 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import { MdThumbUp } from "react-icons/md";
 import { MdThumbDown } from "react-icons/md";
+import Delete from "@material-ui/icons/Delete";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 //import Divider from '@material-ui/core/Divider';
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import GoogleFontLoader from 'react-google-font-loader';
+//import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import { spacing } from '@material-ui/system';
+import GoogleFontLoader from "react-google-font-loader";
 //import { useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
@@ -51,8 +54,11 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: 20,
-    fontFamily: 'Roboto, sans-serif',
-   
+    fontFamily: "Roboto, sans-serif"
+  },
+  subTitle: {
+    fontSize: 16,
+    fontFamily: "Roboto, sans-serif"
   },
   pos: {
     marginBottom: 12
@@ -72,7 +78,15 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal);
-  const { id, likes, dislikes, position, suggestion, playlist_id, name } = props.listing;
+  const {
+    id,
+    likes,
+    dislikes,
+    position,
+    suggestion,
+    playlist_id,
+    name
+  } = props.listing;
   //const { suggestion, url, updated_at } = props.listing
   const {
     currentUser,
@@ -87,28 +101,32 @@ export default function ListingComponent(props) {
 
   const returnUpDownButtons = () => {
     return (
-      <div className={classes.margin}>
-        <Fab
-          id="up"
-          size="small"
-          color="primary"
-          aria-label="add"
-          // className={classes.margin}
-          onClick={() => handleMove("up")}
-        >
-          <ArrowUpwardIcon />
-        </Fab>
-
-        <Fab
-          id="down"
-          size="small"
-          color="primary"
-          aria-label="add"
-          // className={classes.margin}
-          onClick={() => handleMove("down")}
-        >
-          <ArrowDownwardIcon />
-        </Fab>
+      // <div className={classes.margin}>
+      <div>
+        <Grid item>
+          <Fab
+            id="up"
+            size="small"
+            color="primary"
+            aria-label="add"
+            // className={classes.margin}
+            onClick={() => handleMove("up")}
+          >
+            <ArrowUpwardIcon />
+          </Fab>
+        </Grid>
+        <Grid item xs >
+          <Fab
+            id="down"
+            size="small"
+            color="primary"
+            aria-label="add"
+            // className={classes.margin}
+            onClick={() => handleMove("down")}
+          >
+            <ArrowDownwardIcon />
+          </Fab>
+        </Grid>
       </div>
     );
   };
@@ -123,24 +141,21 @@ export default function ListingComponent(props) {
     });
   };
 
- 
-
   const returnLikeDislikeButtons = () => {
-
-     const setButtonStyle = () => {
-    let key = JSON.stringify(id) + "like"
-    const style = {
-      background: "black"
-    }
-    return localStorage.getItem(key) ? style : null
-  }
-  const setButtonStyle2 = () => {
-    let key = JSON.stringify(id) + "dislike"
-    const style = {
-      background: "black"
-    }
-    return localStorage.getItem(key) ? style : null
-  }
+    const setButtonStyle = () => {
+      let key = JSON.stringify(id) + "like";
+      const style = {
+        background: "black"
+      };
+      return localStorage.getItem(key) ? style : null;
+    };
+    const setButtonStyle2 = () => {
+      let key = JSON.stringify(id) + "dislike";
+      const style = {
+        background: "black"
+      };
+      return localStorage.getItem(key) ? style : null;
+    };
 
     return (
       <div className={classes.margin}>
@@ -152,16 +167,15 @@ export default function ListingComponent(props) {
           aria-label="add"
           // className={classes.margin}
           onClick={event => {
-            handleLikeDislike("like")
+            handleLikeDislike("like");
             //setButtonStyle("like")
           }}
-
         >
           <MdThumbUp />
         </Fab>
 
         <Fab
-        style={setButtonStyle2()}
+          style={setButtonStyle2()}
           id="down"
           size="small"
           color="primary"
@@ -176,33 +190,33 @@ export default function ListingComponent(props) {
   };
 
   const handleLikeDislike = type => {
-
     setLocalStorageForLikesDislikes(type);
     if (currentUser) {
-      console.log(type + "d as logged in User: ", currentUser.email)
+      console.log(type + "d as logged in User: ", currentUser.email);
     }
   };
 
-  const setLocalStorageForLikesDislikes = (type) => {
+  const setLocalStorageForLikesDislikes = type => {
     let key = JSON.stringify(id) + type;
     let id_s = JSON.stringify(id);
-    if (localStorage.getItem(key)) alert("You can only " + type + " a song once!");
+    if (localStorage.getItem(key))
+      alert("You can only " + type + " a song once!");
     else if (type === "like") {
-      console.log("liked!")
+      console.log("liked!");
       localStorage.removeItem(id_s + "dislike");
       localStorage.setItem(id_s + "like", "true");
-      postLikeDislike(type)
+      postLikeDislike(type);
     } else if (type === "dislike") {
-      console.log("disliked!")
+      console.log("disliked!");
       localStorage.removeItem(id_s + "like");
       localStorage.setItem(id_s + "dislike", "true");
-      postLikeDislike(type)
+      postLikeDislike(type);
     }
   };
 
   const postLikeDislike = type => {
     // if (!currentUser && type === "like") {
-    let user_id = !currentUser ? 1 : currentUser.id
+    let user_id = !currentUser ? 1 : currentUser.id;
 
     if (type === "like") {
       API.postLike({ listing_id: id, user_id: user_id }).then(resp => {
@@ -251,62 +265,75 @@ export default function ListingComponent(props) {
     return isPlaying && currentListing.id === id ? style : null;
   };
 
-
-
   return (
     <div className={classes.root}>
-       <GoogleFontLoader
-      fonts={[
-        {
-          font: 'Roboto',
-          weights: [400, '400i'],
-        },
-        {
-          font: 'Roboto Mono',
-          weights: [400, 700],
-        },
-      ]}
-      subsets={['cyrillic-ext', 'greek']}
-    />
+      <GoogleFontLoader
+        fonts={[
+          {
+            font: "Roboto",
+            weights: [400, "400i"]
+          },
+          {
+            font: "Roboto Mono",
+            weights: [400, 700]
+          }
+        ]}
+        subsets={["cyrillic-ext", "greek"]}
+      />
+
       <Card className={classes.card} style={setCardStyle()}>
         <CardContent>
-          {showAdminControls
-            ? returnUpDownButtons()
-            : returnLikeDislikeButtons()}
-
-          <Typography
-            onClick={handlePlay}
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
+          <Grid
+            direction="column"
+            container
+        
+            justify="space-between"
+            alignItems="flex-start"
           >
-            {name}
-          </Typography>
-          {/* <Typography variant="h5" component="h2">
+            {showAdminControls
+              ? returnUpDownButtons()
+              : returnLikeDislikeButtons()}
+          </Grid>
+
+          <Grid
+          container
+            direction="column"
+            justify="flex-end"
+            alignItems="flex-end"
+            
+          >
+            <Grid item xs={12}>
+              <Typography
+                onClick={handlePlay}
+                className={classes.title}
+                color="textSecondary"
+                gutterBottom
+              >
+                {name}
+              </Typography>
+            </Grid>
+            {/* <Typography variant="h5" component="h2">
         Suggestion?: {suggestion ? "Yes" : "No"}
         </Typography> */}
-        
-          {/* <Typography variant="body2" component="p">
+
+            {/* <Typography variant="body2" component="p">
             Listing id: {id}
             <br />
             Position: {position}
           </Typography> */}
-          <Typography variant="body2" component="p">
-            Likes: {likes.length} ||
-            Dislikes: {dislikes.length}
-            
-          </Typography>
-         
+            <Grid item xs={6}>
+              <Typography className={classes.subTitle }>
+                Likes: {likes.length} || Dislikes: {dislikes.length}
+              </Typography>
+            </Grid>
+          </Grid>
         </CardContent>
         {showAdminControls ? (
           <CardActions>
-            <Button size="small" onClick={handleDelete}>
-              DELETE
-            </Button>
+            <Delete onClick={handleDelete} />
           </CardActions>
         ) : null}
       </Card>
-
     </div>
   );
 }
