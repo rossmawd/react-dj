@@ -30,8 +30,13 @@ class App extends React.Component {
     addOrEdit: null,
     text: "",
     showFilterForm: false,
-    playlistFilter: "All"
+    playlistFilter: "All",
+    selectedPlaylist: null
   };
+
+  setSelectedPlaylist = (playlist) => {
+    this.setState({selectedPlaylist: playlist})
+  }
 
 setPlaylistFilter = (genre) => {
   this.setState({playlistFilter: genre})
@@ -221,6 +226,8 @@ setPlaylistFilter = (genre) => {
                     showFilterForm={this.state.showFilterForm}
                     playlistFilter={this.state.playlistFilter}
                     setPlaylistFilter={this.setPlaylistFilter}
+                    setSelectedPlaylist={this.setSelectedPlaylist}
+                    selectedPlaylist={this.state.selectedPlaylist}
                   />
                 </>
               )

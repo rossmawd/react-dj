@@ -46,15 +46,15 @@ const useStyles = makeStyles(theme => ({
 export default function AddorEditPlaylist(props) {
   const classes = useStyles();
   const [genre, setGenre] = useState(
-    props.selectedPlaylist && props.addOrEdit === "edit" ?
+    props.selectedPlaylist && (props.addOrEdit === "edit") ?
       props.selectedPlaylist.genre : "");
   const [name, setName] = useState(
-    props.selectedPlaylist && props.addOrEdit === "edit" ?
+    props.selectedPlaylist && (props.addOrEdit === "edit") ?
       props.selectedPlaylist.name : "");
   const [description, setDescription] = useState(
-    props.selectedPlaylist && props.addOrEdit === "edit" ?
+    props.selectedPlaylist && (props.addOrEdit === "edit") ?
       props.selectedPlaylist.description : "");
-
+     
     
 
   const handleChange = event => {

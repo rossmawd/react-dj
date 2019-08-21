@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const PlaylistsIndexContainer = (props, routerProps) => {
   const classes = useStyles();
-  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  // const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const MySwal = withReactContent(Swal);
 
   // useEffect(() => {
@@ -79,7 +79,7 @@ const PlaylistsIndexContainer = (props, routerProps) => {
       />
 
       <AddorEditPlaylist
-        selectedPlaylist={selectedPlaylist}
+        selectedPlaylist={props.selectedPlaylist}
         togglePlaylistForm={props.togglePlaylistForm}
         showPlaylistForm={props.showPlaylistForm}
         updatePlaylists={props.updatePlaylists}
@@ -92,7 +92,7 @@ const PlaylistsIndexContainer = (props, routerProps) => {
         ? sortedUserPlaylists(userPlaylists(props.playlists)).map(
           (playlist) => (
             <PlaylistComponent
-              setSelectedPlaylist={setSelectedPlaylist}
+              setSelectedPlaylist={props.setSelectedPlaylist}
               {...routerProps}
               updatePlaylists={props.updatePlaylists}
               key={playlist.id}
