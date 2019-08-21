@@ -48,16 +48,16 @@ export default function AddorEditPlaylist(props) {
       ? props.selectedPlaylist.genre
       : ""
   );
-  const [name, setName] = useState(
-    props.selectedPlaylist && props.addOrEdit === "edit"
-      ? props.selectedPlaylist.name
-      : ""
-  );
-  const [description, setDescription] = useState(
-    props.selectedPlaylist && props.addOrEdit === "edit"
-      ? props.selectedPlaylist.description
-      : ""
-  );
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  
+  //debugger
+  React.useEffect(() => {
+  
+    setName(props.selectedPlaylist ? props.selectedPlaylist.name : null)
+  setDescription(props.selectedPlaylist ? props.selectedPlaylist.description : null)
+  }, [props.selectedPlaylist]);
+
 
   const handleChange = event => {
     if (event.target.id === "name") {
@@ -123,7 +123,7 @@ export default function AddorEditPlaylist(props) {
               <Grid item xs={12}>
                 <TextField
                   id="name"
-                  value={name ? name : null} //CONTROLLED
+                  value={name} //CONTROLLED
                   className={clsx(classes.margin, classes.textField)}
                   variant="outlined"
                   label="Playlist Name"
@@ -142,7 +142,7 @@ export default function AddorEditPlaylist(props) {
               <Grid item xs={12}>
                 <TextField
                   id="description"
-                  value={description ? description : null} //CONTROLLED
+                  value={description} //CONTROLLED
                   label="Description"
                   multiline
                   rows="4"
