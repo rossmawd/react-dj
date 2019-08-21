@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
@@ -42,6 +42,7 @@ const ListingContainer = (props, routerProps) => {
   const { playlist, currentUser } = props;
   const [isPlaying, setPlaying] = useState(false);
   const MySwal = withReactContent(Swal);
+  //const newTrack = useRef(null);
   let count = 0
   const sortListings = () => {
     return playlist.listings.sort((a, b) => a.position - b.position).reverse();
@@ -51,18 +52,16 @@ const ListingContainer = (props, routerProps) => {
       ...sortListings()[0]
     }
   });
-  const [nextListing, setNextListing] = useState(null)
-
   
 
-  useEffect(() => {
-    console.log('MOUNT')
+  // useEffect(() => {
+  //   console.log('MOUNT')
 
-    // returned function will be called on component unmount 
-    return () => {
-      console.log('UNMOUNT')
-    }
-  }, [])
+  //   // returned function will be called on component unmount 
+  //   return () => {
+  //     console.log('UNMOUNT')
+  //   }
+  // }, [])
 
 
   const determineNextLisiting = () => {
@@ -93,7 +92,7 @@ const ListingContainer = (props, routerProps) => {
     }
   };
 
-  React.useEffect(() => { //Prevents displaying the error on re-render
+  useEffect(() => { //Prevents displaying the error on re-render
     if (playlist.listings && playlist.listings.length === 0) {
       
       Swal.fire(
@@ -102,6 +101,7 @@ const ListingContainer = (props, routerProps) => {
         'info'
       )
     }
+
   }, []);
 
   const renderListings = () => {
@@ -163,6 +163,7 @@ const ListingContainer = (props, routerProps) => {
         triggerNextSong={id => triggerNextSong(id)}
         setPlaying={setPlaying}
         isPlaying={isPlaying}
+        setCurrentListing={setCurrentListing}
       />
     </div>
   );

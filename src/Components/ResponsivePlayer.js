@@ -16,7 +16,8 @@ export const ResponsivePlayer = ({
   isPlaying,
   setPlaying,
   triggerNextSong,
-  currentListing
+  currentListing,
+  setCurrentListing
 }) => {
   const classes = useStyles();
 
@@ -30,6 +31,7 @@ export const ResponsivePlayer = ({
           width="100%"
           height="100%"
           playing={isPlaying}
+          onPlay={setPlaying(true)}
           controls={true}
           onEnded={triggerNextSong}
         />

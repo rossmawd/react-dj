@@ -120,6 +120,7 @@ class BottomAppBar extends React.Component {
             <ResponsivePlayer
               setPlaying={this.props.setPlaying}
               currentListing={this.props.currentListing}
+              setCurrentListing={this.props.setCurrentListing}
               triggerNextSong={() =>
                 this.props.triggerNextSong(this.props.currentListing.id)}
               isPlaying={this.props.isPlaying}
