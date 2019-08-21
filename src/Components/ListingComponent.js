@@ -18,6 +18,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import GoogleFontLoader from 'react-google-font-loader';
 //import { useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
@@ -49,7 +50,9 @@ const useStyles = makeStyles(theme => ({
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 14
+    fontSize: 20,
+    fontFamily: 'Roboto, sans-serif',
+   
   },
   pos: {
     marginBottom: 12
@@ -252,6 +255,19 @@ export default function ListingComponent(props) {
 
   return (
     <div className={classes.root}>
+       <GoogleFontLoader
+      fonts={[
+        {
+          font: 'Roboto',
+          weights: [400, '400i'],
+        },
+        {
+          font: 'Roboto Mono',
+          weights: [400, 700],
+        },
+      ]}
+      subsets={['cyrillic-ext', 'greek']}
+    />
       <Card className={classes.card} style={setCardStyle()}>
         <CardContent>
           {showAdminControls
@@ -266,22 +282,21 @@ export default function ListingComponent(props) {
           >
             {name}
           </Typography>
-          <Typography variant="h5" component="h2">
+          {/* <Typography variant="h5" component="h2">
         Suggestion?: {suggestion ? "Yes" : "No"}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-        Position Number: {position}
-        </Typography>
-          <Typography variant="body2" component="p">
+        </Typography> */}
+        
+          {/* <Typography variant="body2" component="p">
             Listing id: {id}
             <br />
             Position: {position}
-          </Typography>
+          </Typography> */}
           <Typography variant="body2" component="p">
-            Likes: {likes.length}
-            <br />
+            Likes: {likes.length} ||
             Dislikes: {dislikes.length}
+            
           </Typography>
+         
         </CardContent>
         {showAdminControls ? (
           <CardActions>

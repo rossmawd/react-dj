@@ -9,6 +9,8 @@ import Slide from "@material-ui/core/Slide";
 import DialogSelect from '../Components/DialogSelect';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,6 +43,10 @@ const ListingContainer = (props, routerProps) => {
   // const forceUpdate = useForceUpdate()
   const { playlist, currentUser } = props;
   const [isPlaying, setPlaying] = useState(false);
+  // var Scroll = require('react-scroll');
+  // var Element = Scroll.Element;
+  // var scroller = Scroll.scroller;
+
   const MySwal = withReactContent(Swal);
   //const newTrack = useRef(null);
   let count = 0
@@ -101,17 +107,22 @@ const ListingContainer = (props, routerProps) => {
         'info'
       )
     }
-
   }, []);
+
+  const scrollOnCreate = () => {
+    scroll.scrollToTop();
+  }
 
   const renderListings = () => {
    
-  
+    
     if (playlist.listings && playlist.listings.length !== 0) {
         
       return sortListings().map((listing, i) => (
+        <Element name={listing.url}>
         <ListingComponent
           {...routerProps}
+          name={listing.url}
           key={listing.id}
           listing={listing}
           setCurrentListing={setCurrentListing}
@@ -128,6 +139,7 @@ const ListingContainer = (props, routerProps) => {
           updatePlaylist={props.updatePlaylist}
         // forceUpdate={forceUpdate}
         />
+        </Element>
       ));
     }
   };
@@ -147,6 +159,7 @@ const ListingContainer = (props, routerProps) => {
             <EditListingForm
               {...routerProps}
               playlist={props.playlist}
+              scrollOnCreate={scrollOnCreate}
               playlistLength={playlist.listings.length}
               getPlaylist={props.getPlaylist}
               toggleShowListingsEdit={props.toggleShowListingsEdit}

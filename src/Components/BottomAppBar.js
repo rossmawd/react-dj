@@ -10,7 +10,10 @@ import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import { MdSkipNext } from "react-icons/md";
 import MoreIcon from "@material-ui/icons/MoreVert";
-//import ReactPlayer from "react-player";
+import { FaArrowCircleUp } from "react-icons/fa";
+import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 import { ResponsivePlayer } from "./ResponsivePlayer";
 
 // const useStyles = makeStyles(theme => ({
@@ -92,6 +95,10 @@ class BottomAppBar extends React.Component {
       }
     };
 
+    const scrollToTop = () => {
+      scroll.scrollToTop()
+    }
+
     return (
       <React.Fragment>
         {console.log("the bottom app bar has rendered")}
@@ -138,9 +145,9 @@ class BottomAppBar extends React.Component {
               <MdSkipNext className={classes.skipIcon}/>
             </IconButton>
 
-            {/* <IconButton edge="end" color="inherit">
-              <MoreIcon />
-            </IconButton> */}
+            <IconButton edge="end" color="inherit" onClick={scrollToTop}>
+              <FaArrowCircleUp />
+            </IconButton>
           </Toolbar>
         </AppBar>
       </React.Fragment>

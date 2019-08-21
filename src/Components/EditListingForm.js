@@ -49,6 +49,7 @@ export default function EditListingForm(props) {
         props.toggleShowListingsEdit();
         props.getPlaylist(playlist.id);
         setCurrentUserFromToken();
+        props.scrollOnCreate()
       });
     }
   };

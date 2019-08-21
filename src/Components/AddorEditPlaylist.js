@@ -13,14 +13,20 @@ import Slide from "@material-ui/core/Slide";
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
+    
     flexWrap: "wrap",
     position: "fixed",
-    width: "1000px"
+    width: "1000px",
+   
   },
   wrapper: {
     width: "1000px",
     position: "fixed",
-    zIndex: "1"
+    // alignItems:"flex-start",
+    // justify:"flex-end",
+    //  direction:"row",
+    
+    zIndex: 1
   },
   margin: {
     margin: theme.spacing(1)
@@ -37,6 +43,10 @@ const useStyles = makeStyles(theme => ({
   paper: {
     zIndex: 1,
     position: "relative",
+    // alignItems:"flex-start",
+    // justify:"flex-end",
+    //  direction:"row",
+   
     margin: theme.spacing(1)
   }
 }));
@@ -112,9 +122,9 @@ export default function AddorEditPlaylist(props) {
   };
 
   return (
-    <div className={classes.root}>
-      <br />
+    <div className={classes.root}> 
       <div className={classes.wrapper}>
+      <br></br>
         <Slide
           timeout={500}
           direction="right"
@@ -122,6 +132,8 @@ export default function AddorEditPlaylist(props) {
           mountOnEnter
           unmountOnExit
         >
+     
+     
           <Grid container spacing={3}>
             <Paper elevation={4} className={classes.paper}>
               <Grid item xs={12}>

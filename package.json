@@ -14,11 +14,13 @@
     "react": "^16.9.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
+    "react-google-font-loader": "^1.0.5",
     "react-icons": "^3.7.0",
     "react-player": "^1.11.2",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-scroll": "^1.7.13",
     "sweetalert2": "^8.15.3",
     "sweetalert2-react-content": "^1.1.0",
     "typeface-roboto": "0.0.75"

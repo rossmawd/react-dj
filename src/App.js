@@ -12,6 +12,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
 import ActionCable from 'actioncable'
+import GoogleFontLoader from 'react-google-font-loader';
 library.add(fab, faCheckSquare, faCoffee);
 
 
@@ -180,7 +181,21 @@ setPlaylistFilter = (genre) => {
     //console.log("APP HAS RENDERED");
     return (
       <div className="App">
+        <GoogleFontLoader
+      fonts={[
+        {
+          font: 'Roboto',
+          weights: [400, '400i'],
+        },
+        {
+          font: 'Roboto Mono',
+          weights: [400, 700],
+        },
+      ]}
+      subsets={['cyrillic-ext', 'greek']}
+    />
         <Switch>
+        
           <Route
             exact
             path="/"
@@ -274,6 +289,7 @@ setPlaylistFilter = (genre) => {
               );
             }}
           />
+          <Route component={() => <h1>404 - Page not Found ;-p</h1>} />
         </Switch>
   
       </div>
