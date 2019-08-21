@@ -53,10 +53,14 @@ export default function AddorEditPlaylist(props) {
   
   //debugger
   React.useEffect(() => {
-  
-    setName(props.selectedPlaylist ? props.selectedPlaylist.name : null)
-  setDescription(props.selectedPlaylist ? props.selectedPlaylist.description : null)
-  }, [props.selectedPlaylist]);
+  if (props.addOrEdit === "edit") {
+    setName(props.selectedPlaylist ? props.selectedPlaylist.name : "null")
+  setDescription(props.selectedPlaylist ? props.selectedPlaylist.description : "null")
+  } else {
+    setName("")
+  setDescription("")
+  }
+  }, [props]);
 
 
   const handleChange = event => {
