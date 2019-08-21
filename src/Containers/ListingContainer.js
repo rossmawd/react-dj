@@ -131,8 +131,10 @@ const ListingContainer = (props, routerProps) => {
               {...routerProps}
               playlist={props.playlist}
               playlistLength={playlist.listings.length}
+              getPlaylist={props.getPlaylist}
               toggleShowListingsEdit={props.toggleShowListingsEdit}
               setCurrentUserFromToken={props.setCurrentUserFromToken}
+              showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
             />
           </Paper>
         </Slide>

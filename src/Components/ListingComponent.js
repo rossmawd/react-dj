@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 export default function ListingComponent(props) {
   const classes = useStyles();
   const MySwal = withReactContent(Swal);
-  const { id, likes, dislikes, position, playlist_id, name } = props.listing;
+  const { id, likes, dislikes, position, suggestion, playlist_id, name } = props.listing;
   //const { suggestion, url, updated_at } = props.listing
   const {
     currentUser,
@@ -266,12 +266,12 @@ export default function ListingComponent(props) {
           >
             {name}
           </Typography>
-          {/* <Typography variant="h5" component="h2">
+          <Typography variant="h5" component="h2">
         Suggestion?: {suggestion ? "Yes" : "No"}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
         Position Number: {position}
-        </Typography> */}
+        </Typography>
           <Typography variant="body2" component="p">
             Listing id: {id}
             <br />

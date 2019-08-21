@@ -27,7 +27,7 @@ export default function EditListingForm(props) {
   const classes = useStyles();
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
-  const {playlistLength, setCurrentUserFromToken} = props
+  const {playlist, playlistLength, setCurrentUserFromToken} = props
 
   const handleChange = event => {
     if (event.target.id === "url") {
@@ -41,13 +41,14 @@ export default function EditListingForm(props) {
     API.postListing(constructListing()).then(data => {
       console.log("Here is the result of a listing POST: ", data)
       props.toggleShowListingsEdit()
-      
+      props.getPlaylist(playlist.id)
       setCurrentUserFromToken()   
     })
   };
 
   const constructListing = () => {
-    let newListing = { "name": name, "url": url, "suggestion": false, "position": playlistLength, "playlist_id": props.playlist.id }
+    let suggestion = !props.showAdminControls
+    let newListing = { "name": name, "url": url, "suggestion": suggestion, "position": playlistLength, "playlist_id": props.playlist.id }
     return newListing
   };
 
@@ -75,7 +76,7 @@ export default function EditListingForm(props) {
         className={classes.button}
         onClick={handleSubmit}
       >
-        Add To Playlist
+        {props.showAdminControls ? "Add To Playlist" : "Add Suggestion"}
       </Button>
     </div>
   );
