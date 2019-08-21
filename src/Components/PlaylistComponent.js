@@ -71,7 +71,8 @@ export default function PlaylistComponent(props) {
     });
   };
 
-  const handleClick = () => {
+  const handleEdit = () => {
+    //debugger
     props.setSelectedPlaylist(props.playlist);
     console.log("time to edit");
     props.togglePlaylistForm(true);
@@ -110,7 +111,7 @@ export default function PlaylistComponent(props) {
 
         <Tooltip title="Edit" TransitionComponent={Zoom}>
           <Grid item>
-            <CreateIcon className={classes.icon} onClick={handleClick} />
+            <CreateIcon className={classes.icon} onClick={handleEdit} />
           </Grid>
         </Tooltip>
 

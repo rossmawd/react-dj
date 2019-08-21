@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 14
+    fontSize: 18
   },
   pos: {
     marginBottom: 12
@@ -263,20 +263,19 @@ export default function ListingComponent(props) {
             className={classes.title}
             color="textSecondary"
             gutterBottom
+            variant="body2"
           >
             {name}
           </Typography>
-          <Typography variant="h5" component="h2">
+          {/* <Typography variant="body2" component="h2">
         Suggestion?: {suggestion ? "Yes" : "No"}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-        Position Number: {position}
-        </Typography>
+       
           <Typography variant="body2" component="p">
             Listing id: {id}
             <br />
             Position: {position}
-          </Typography>
+          </Typography> */}
           <Typography variant="body2" component="p">
             Likes: {likes.length}
             <br />

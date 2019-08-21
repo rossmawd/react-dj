@@ -77,9 +77,19 @@ const ListingContainer = (props, routerProps) => {
     const prev = playlist.listings.find(listing => listing.id === id);
     console.log("the prev track is NOW in position", prev.position);
 
-    const next = playlist.listings.find(
+    
+    let next = playlist.listings.find(
       listing => listing.position === prev.position - 1
     );
+  //   let x = 2
+  //  debugger
+  //   while (next.suggestion || (playlist.length - x > 0)) {
+  //     x += 1
+  //     next = playlist.listings.find(
+  //       listing => listing.position === prev.position - x
+  //     );
+  //   } 
+
     if (next) {
       console.log("the next track is in position", next.position);
       console.log("The new current Listing is", next);

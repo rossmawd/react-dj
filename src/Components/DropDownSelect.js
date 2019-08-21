@@ -34,8 +34,8 @@ export default function DropDownSelect(props) {
     props.setGenre(event.target.value)
   }
 
-  const returnGenreOption = (genre) => {
-    return (<option value={genre}>{genre}</option>)
+  const returnGenreOption = (genre,i) => {
+    return (<option key={i} value={genre}>{genre}</option>)
   }
 
   return (
@@ -56,7 +56,7 @@ export default function DropDownSelect(props) {
         >
 
           <option value=""></option>
-          {genres.map(genre => returnGenreOption(genre))}
+          {genres.map((genre,i) => returnGenreOption(genre,i))}
 
         </Select>
 

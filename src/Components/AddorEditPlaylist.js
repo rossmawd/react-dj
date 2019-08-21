@@ -114,7 +114,7 @@ export default function AddorEditPlaylist(props) {
             <Grid item xs={12}>
               <TextField
                 id="name"
-                value={name ? name : null} //CONTROLLED
+                value={name} //CONTROLLED
                 className={clsx(classes.margin, classes.textField)}
                 variant="outlined"
                 label="Playlist Name"
@@ -132,7 +132,7 @@ export default function AddorEditPlaylist(props) {
             <Grid item xs={12}>
               <TextField
                 id="description"
-                value={description ? description : null} //CONTROLLED
+                value={description} //CONTROLLED
                 label="Description"
                 multiline
                 rows="4"

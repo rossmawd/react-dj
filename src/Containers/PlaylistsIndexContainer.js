@@ -23,14 +23,14 @@ const PlaylistsIndexContainer = (props, routerProps) => {
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const MySwal = withReactContent(Swal);
 
-  useEffect(() => {
-    console.log('MOUNT')
+  // useEffect(() => {
+  //   console.log('MOUNT')
 
-    // returned function will be called on component unmount 
-    return () => {
-      console.log('UNMOUNT')
-    }
-  }, [])
+  //   // returned function will be called on component unmount 
+  //   return () => {
+  //     console.log('UNMOUNT')
+  //   }
+  // }, [])
 
   const userPlaylists = playlists => {
     if (playlists.length !== 0) {
@@ -90,7 +90,7 @@ const PlaylistsIndexContainer = (props, routerProps) => {
 
       {props.playlists.length !== 0
         ? sortedUserPlaylists(userPlaylists(props.playlists)).map(
-          (playlist, i) => (
+          (playlist) => (
             <PlaylistComponent
               setSelectedPlaylist={setSelectedPlaylist}
               {...routerProps}
