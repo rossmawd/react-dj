@@ -42,7 +42,7 @@ const PlaylistShowHeader = (props) => {
 	updateTimerTwo.current = setTimeout(() => {
 	  setHide(true)
 	  updateTimerTwo.current = null;
-	}, 3000);
+	}, 5000);
   }
 
   React.useEffect(() => {
@@ -88,7 +88,7 @@ const PlaylistShowHeader = (props) => {
         >
 
           <Button as={Link}>
-            <Link to={"/playlists"}>React-DJ</Link>
+            <Link to={props.currentUser ? "/playlists": "/signup"}>React-DJ</Link>
           </Button>
 
           <Button
@@ -112,6 +112,8 @@ const PlaylistShowHeader = (props) => {
           toggleShowListingsEdit={props.toggleShowListingsEdit}
           actionCableText={props.text}
           changeText={props.changeText}
+          showAdminControls={currentUser && currentUser.id === playlist.user_id}
+          
         />
          {/* <Chip label={props.text} className={classes.chip} /> */}
          <span hidden={spanHide} className="label-text" style={{ backgroundColor: ace }}>

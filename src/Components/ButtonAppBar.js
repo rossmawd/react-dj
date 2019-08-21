@@ -56,21 +56,12 @@ export default function ButtonAppBar(props) {
             {playlist ? playlist.name : localStorage.email}
           </Typography>
 
-          {/* <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        key={`${vertical},${horizontal}`}
-        open={open}
-        onClose={handleClose}
-        ContentProps={{
-          'aria-describedby': 'message-id',
-        }}
-        message={<span id="message-id">{props.actionCableText}</span>}
-      /> */}
-
-          <IconButton edge="start" color="inherit" aria-label="create"
+      
+ {props.showAdminControls ? <IconButton edge="start" color="inherit" aria-label="create"
             onClick={props.toggleShowListingsEdit ? props.toggleShowListingsEdit : () => props.togglePlaylistForm(false)}>
             <CreateIcon/>
-          </IconButton>
+          </IconButton> : null}
+         
          
         </Toolbar>
       </AppBar>

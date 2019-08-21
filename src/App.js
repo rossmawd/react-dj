@@ -213,6 +213,7 @@ setPlaylistFilter = (genre) => {
 
                   <PlaylistsIndexContainer
                     {...routerProps}  
+                    currentUser={this.state.user}
                     playlists={this.state.playlists}
                     getPlaylist={this.getPlaylist}
                     updatePlaylists={this.fetchPlaylists}
