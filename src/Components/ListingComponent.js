@@ -307,24 +307,6 @@ export default function ListingComponent(props) {
         ) : null}
       </Card>
 
-      {/* <ReactPlayer
-            className={classes.img}
-            playing={currentlyPlaying === position ? true : false}
-            // playing ={false}
-            url={url}
-          
-            wrapper={classes.paper}   //Hmmmm
-            onPlay={() => {
-              setPlaying(position)
-              addPlayer(playerCount + 1)
-            }
-            }
-            // onClick={setPlaying(-1)}
-            
-            onEnded={() => setPlaying(position - 1)}
-            controls={true}
-
-          /> */}
     </div>
   );
 }
