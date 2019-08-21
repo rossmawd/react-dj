@@ -25,7 +25,7 @@ const PlaylistsIndexContainer = (props, routerProps) => {
 
   useEffect(() => {
     console.log('MOUNT')
-
+    props.updatePlaylists()
     // returned function will be called on component unmount 
     return () => {
       console.log('UNMOUNT')

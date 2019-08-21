@@ -110,7 +110,8 @@ setPlaylistFilter = (genre) => {
 
   getPlaylist = id => {
     API.getPlaylist(id).then(playlist => {
-      this.setState({ playlists: [playlist] }); // spreading in the playlist was causing a duplicate!!
+      
+      this.setState({ playlists: [...this.state.playlists, playlist]}); // spreading in the playlist was causing a duplicate!!
     });
   };
 
