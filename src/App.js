@@ -204,6 +204,8 @@ setPlaylistFilter = (genre) => {
                 <>
                   <PlaylistIndexHeader
                     {...routerProps}
+                    playlistFilter={this.state.playlistFilter}
+                    setPlaylistFilter={this.setPlaylistFilter}
                     clearCurrentUser={this.clearCurrentUser}
                     togglePlaylistForm={this.togglePlaylistForm}
                     showPlaylistForm={this.state.showPlaylistForm}

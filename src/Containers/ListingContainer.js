@@ -7,6 +7,8 @@ import BottomAppBar from "../Components/BottomAppBar";
 import Paper from "@material-ui/core/Paper";
 import Slide from "@material-ui/core/Slide";
 import DialogSelect from '../Components/DialogSelect';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,6 +41,8 @@ const ListingContainer = (props, routerProps) => {
   // const forceUpdate = useForceUpdate()
   const { playlist, currentUser } = props;
   const [isPlaying, setPlaying] = useState(false);
+  const MySwal = withReactContent(Swal);
+  let count = 0
   const sortListings = () => {
     return playlist.listings.sort((a, b) => a.position - b.position).reverse();
   };
@@ -89,9 +93,22 @@ const ListingContainer = (props, routerProps) => {
     }
   };
 
-  const renderListings = () => {
-    if (playlist.listings && playlist.listings.length !== 0) {
+  React.useEffect(() => { //Prevents displaying the error on re-render
+    if (playlist.listings && playlist.listings.length === 0) {
+      
+      Swal.fire(
+        'Welcome to your new Playlist!',
+        'Click the pencil above to add a song',
+        'info'
+      )
+    }
+  }, []);
 
+  const renderListings = () => {
+   
+  
+    if (playlist.listings && playlist.listings.length !== 0) {
+        
       return sortListings().map((listing, i) => (
         <ListingComponent
           {...routerProps}

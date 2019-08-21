@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import ReactPlayer from "react-player";
 import API from "../API.js";
 
 const useStyles = makeStyles(theme => ({
@@ -71,6 +72,11 @@ export default function EditListingForm(props) {
     if (url === "") {
       text = "Please provide a URL from YouTube"
       showSubmitError(name, "noUrl", text)
+      return false
+    }
+    if (!ReactPlayer.canPlay(url)){
+      text = "Sorry, this doesn't look like a valid URL!"
+      showSubmitError(name, "badUrl", text)
       return false
     }
     let newListing = {

@@ -57,7 +57,7 @@ export default function ButtonAppBar(props) {
           </Typography>
 
       
- {props.showAdminControls ? <IconButton edge="start" color="inherit" aria-label="create"
+ {props.showAdminControls || !props.toggleShowListingsEdit ? <IconButton edge="start" color="inherit" aria-label="create"
             onClick={props.toggleShowListingsEdit ? props.toggleShowListingsEdit : () => props.togglePlaylistForm(false)}>
             <CreateIcon/>
           </IconButton> : null}
