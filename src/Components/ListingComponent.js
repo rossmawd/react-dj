@@ -16,6 +16,7 @@ import withReactContent from "sweetalert2-react-content";
 //import Divider from '@material-ui/core/Divider';
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
+import Delete from "@material-ui/icons/Delete";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import GoogleFontLoader from 'react-google-font-loader';
@@ -53,6 +54,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: 20,
     fontFamily: 'Roboto, sans-serif',
    
+  },
+  subTitile: {
+    fontSize: 15,
+    fontFamily: 'Roboto, sans-serif',
   },
   pos: {
     marginBottom: 12
@@ -273,12 +278,13 @@ export default function ListingComponent(props) {
           {showAdminControls
             ? returnUpDownButtons()
             : returnLikeDislikeButtons()}
-
+          <div onClick={handlePlay}>
           <Typography
-            onClick={handlePlay}
+            //onClick={handlePlay}
             className={classes.title}
             color="textSecondary"
             gutterBottom
+            noWrap
           >
             {name}
           </Typography>
@@ -291,18 +297,19 @@ export default function ListingComponent(props) {
             <br />
             Position: {position}
           </Typography> */}
-          <Typography variant="body2" component="p">
+          <Typography className={classes.subTitile}>
             Likes: {likes.length} ||
             Dislikes: {dislikes.length}
             
           </Typography>
-         
+          </div>
         </CardContent>
         {showAdminControls ? (
           <CardActions>
-            <Button size="small" onClick={handleDelete}>
+            {/* <Button size="small" onClick={handleDelete}>
               DELETE
-            </Button>
+            </Button> */}
+            <Delete onClick={handleDelete}/>
           </CardActions>
         ) : null}
       </Card>
