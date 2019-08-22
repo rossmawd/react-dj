@@ -21,6 +21,9 @@ export const ResponsivePlayer = ({
 }) => {
   const classes = useStyles();
 
+  React.useEffect(() => {
+    setPlaying(false)
+  }, []);
 
   return (
     <div className={classes.playerWrapper}>
@@ -30,6 +33,7 @@ export const ResponsivePlayer = ({
           url={currentListing ? currentListing.url : ""}
           width="100%"
           height="100%"
+          volume="1"
           playing={isPlaying}
           onPlay={setPlaying(true)}
           controls={true}
