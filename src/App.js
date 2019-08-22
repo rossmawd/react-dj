@@ -46,7 +46,7 @@ setPlaylistFilter = (genre) => {
     this.setCurrentUserFromToken();
    
     // ACTION CABLE
-    window.fetch("http://localhost:3000/notes/1").then(data => {
+    window.fetch("https://backend-react-dj.herokuapp.com/api/v1/notes/1").then(data => {
       data.json().then(res => {
         this.setState({ text: res.text });
       

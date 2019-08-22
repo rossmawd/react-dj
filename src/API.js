@@ -1,4 +1,4 @@
-const endpoint = "http://localhost:3000/api/v1/";
+const endpoint = "https://backend-react-dj.herokuapp.com/api/v1/";
 //Sam's Auth code:
 const signupUrl = `${endpoint}users/`;
 const loginUrl = `${endpoint}login/`;
