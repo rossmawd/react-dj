@@ -11,7 +11,10 @@ import ListingContainer from "./Containers/ListingContainer";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
+import ActionCable from 'actioncable'
+import GoogleFontLoader from 'react-google-font-loader';
 library.add(fab, faCheckSquare, faCoffee);
+
 
 const ConditionalComponent = (condition, jsx) => {
   return condition ? jsx : <div>Loading...</div>;
@@ -25,11 +28,56 @@ class App extends React.Component {
     password: null,
     showListingsEdit: false,
     showPlaylistForm: false,
-    addOrEdit: null
+    addOrEdit: null,
+    text: "",
+    showFilterForm: false,
+    playlistFilter: "All"
   };
+
+setPlaylistFilter = (genre) => {
+  this.setState({playlistFilter: genre})
+}
+
+  toggleFilterForm = () => {
+    this.setState({ showFilterForm: !this.state.showFilterForm})
+  }
 
   componentDidMount() {
     this.setCurrentUserFromToken();
+   
+    // ACTION CABLE
+    window.fetch("http://localhost:3000/notes/1").then(data => {
+      data.json().then(res => {
+        this.setState({ text: res.text });
+      
+      });
+    });
+
+    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+
+    this.sub = cable.subscriptions.create('NotesChannel', {
+      received: this.handleReceiveNewText
+    })
+  }
+
+    //ACTION CABLE start
+    handleChange = e => {
+      this.setState({ text: e.target.value })
+      this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
+    }
+  
+    handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
+    
+  
+    if (text !== this.state.text) {
+      this.setState({ text })
+    }
+
+    // let playlist =  this.state.playlists.filter(playlist => playlist.id === parseInt(playlist_id))
+    // let listing = playlist.listings.filter(listing => )
+    this.getPlaylist(parseInt(playlist_id))
+   
+
   }
 
   togglePlaylistForm = (edit = false) => {
@@ -62,9 +110,19 @@ class App extends React.Component {
   };
 
   getPlaylist = id => {
-    API.getPlaylist(id).then(playlist =>
-      this.setState({ playlists: [...this.state.playlists, playlist] })
-    );
+    API.getPlaylist(id).then(playlist => {
+      let currentPlaylists = this.state.playlists 
+      let playlistsMinusOne = currentPlaylists.filter(p => p.id !== playlist.id)
+      this.setState({ playlists: [...playlistsMinusOne, playlist]}); // spreading in the playlist was causing a duplicate!!
+    });
+  };
+
+  updatePlaylist = updatedPlaylist => {
+    this.setState({
+      playlists: this.state.playlists.map(playlist =>
+        playlist.id === updatedPlaylist.id ? updatedPlaylist : playlist
+      )
+    });
   };
 
   setCurrentUserFromToken = () => {
@@ -100,7 +158,7 @@ class App extends React.Component {
       });
   };
 
-   handleSignInSubmit = e => {
+  handleSignInSubmit = e => {
     e.preventDefault();
     let submittedUser = {
       email: this.state.email,
@@ -119,12 +177,25 @@ class App extends React.Component {
     );
   };
 
-
   render() {
-    console.log("APP HAS RENDERED");
+    //console.log("APP HAS RENDERED");
     return (
       <div className="App">
+        <GoogleFontLoader
+      fonts={[
+        {
+          font: 'Roboto',
+          weights: [400, '400i'],
+        },
+        {
+          font: 'Roboto Mono',
+          weights: [400, 700],
+        },
+      ]}
+      subsets={['cyrillic-ext', 'greek']}
+    />
         <Switch>
+        
           <Route
             exact
             path="/"
@@ -148,16 +219,28 @@ class App extends React.Component {
                 <>
                   <PlaylistIndexHeader
                     {...routerProps}
+                    playlistFilter={this.state.playlistFilter}
+                    setPlaylistFilter={this.setPlaylistFilter}
                     clearCurrentUser={this.clearCurrentUser}
                     togglePlaylistForm={this.togglePlaylistForm}
+                    showPlaylistForm={this.state.showPlaylistForm}
+                    toggleFilterForm={this.toggleFilterForm}
+                    showFilterForm={this.state.showFilterForm}
                   />
+
                   <PlaylistsIndexContainer
-                    {...routerProps}
+                    {...routerProps}  
+                    currentUser={this.state.user}
                     playlists={this.state.playlists}
+                    getPlaylist={this.getPlaylist}
                     updatePlaylists={this.fetchPlaylists}
                     showPlaylistForm={this.state.showPlaylistForm}
                     togglePlaylistForm={this.togglePlaylistForm}
                     addOrEdit={this.state.addOrEdit}
+                    toggleFilterForm={this.toggleFilterForm}
+                    showFilterForm={this.state.showFilterForm}
+                    playlistFilter={this.state.playlistFilter}
+                    setPlaylistFilter={this.setPlaylistFilter}
                   />
                 </>
               )
@@ -179,7 +262,6 @@ class App extends React.Component {
                 return null;
               }
 
-              console.log("render called", playlist);
               return ConditionalComponent(
                 !!playlist, //the const above...either there is a user and it is asigned straight away OR getPlaylist changes state and it assignes 2nd time around
                 <>
@@ -189,11 +271,16 @@ class App extends React.Component {
                     clearCurrentUser={this.clearCurrentUser}
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
                     playlist={playlist}
+                    text={this.state.text}
+                    changeText={this.handleChange}
+                    
                   />
 
                   <ListingContainer
+                    updatePlaylist={this.updatePlaylist}
                     currentUser={this.state.user}
                     playlist={playlist}
+                    getPlaylist={this.getPlaylist}
                     showListingsEdit={this.state.showListingsEdit}
                     toggleShowListingsEdit={this.toggleShowListingsEdit}
                     setCurrentUserFromToken={this.setCurrentUserFromToken}
@@ -202,7 +289,9 @@ class App extends React.Component {
               );
             }}
           />
+          <Route component={() => <h1>404 - Page not Found ;-p</h1>} />
         </Switch>
+  
       </div>
     );
   }

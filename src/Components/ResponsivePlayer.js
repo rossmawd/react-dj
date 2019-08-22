@@ -6,6 +6,9 @@ const useStyles = makeStyles(theme => ({
   playerWrapper: {
     //  position: "relative",
     //  paddingTop: "56.25% /* Player ratio: 100 / (1280 / 720) */"
+    paddingTop: "5%",
+    paddingBottom: "3%",
+    position: "inherit"
   }
 }));
 
@@ -13,9 +16,11 @@ export const ResponsivePlayer = ({
   isPlaying,
   setPlaying,
   triggerNextSong,
-  currentListing
+  currentListing,
+  setCurrentListing
 }) => {
   const classes = useStyles();
+
 
   return (
     <div className={classes.playerWrapper}>
@@ -26,8 +31,9 @@ export const ResponsivePlayer = ({
           width="100%"
           height="100%"
           playing={isPlaying}
+          onPlay={setPlaying(true)}
           controls={true}
-          onEnded={() => triggerNextSong(currentListing.id)}
+          onEnded={triggerNextSong}
         />
       ) : (
         <h1>hello</h1>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import ButtonAppBar from '../Components/ButtonAppBar';
@@ -11,6 +11,9 @@ const useStyles = makeStyles(theme => ({
   buttons: {
     backgroundColor: "white"
   },
+  highlightedButton: {
+    backgroundColour:"lightBlue"
+  }
 }));
 
 const PlayListIndexHeader = (props) => {
@@ -37,7 +40,16 @@ const PlayListIndexHeader = (props) => {
             >Log Out
             </Button>
 
-            <Button>Filter</Button>
+            <Button 
+            onClick={
+              () => {
+                props.playlistFilter === "All" && props.toggleFilterForm()
+                props.playlistFilter !== "All" && props.setPlaylistFilter("All")
+              }}
+            //className={props.playlistFilter !== "All" ? classes.buttons : null}
+            >{props.playlistFilter !== "All" ? "Filter On" : "Filter"}
+            
+            </Button>
           </ButtonGroup>
 
           <ButtonAppBar 

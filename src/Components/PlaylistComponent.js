@@ -22,18 +22,28 @@ import { FaSpa as NewAge } from "react-icons/fa";
 import { FaPeace as Reggae } from "react-icons/fa";
 import { FaFireAlt as Rock } from "react-icons/fa";
 import { FaBeer } from "react-icons/fa";
+import Button from "@material-ui/core/Button";
+import GoogleFontLoader from 'react-google-font-loader';
 import API from "../API";
 
 const useStyles = makeStyles(theme => ({
+
+
   paper: {
     maxWidth: 400,
     margin: `${theme.spacing(0.4)}px auto`, //space between divs
     padding: theme.spacing(2), //space between components in div
-    backgroundImage: "linear-gradient(#808080,#3B3A35)"
+    backgroundImage: "linear-gradient(#808080,#3B3A35)",
+    zIndex: "0",
+   
+  
   },
   title: {
-    fontSize: 20,
-    color: "black"
+    fontSize: 18,
+    color: "black",
+    fontFamily: 'Roboto Mono, monospaced',
+    textDecoration: 'none',
+   
   },
   icon: {
     color: "white",
@@ -41,6 +51,10 @@ const useStyles = makeStyles(theme => ({
   faIcon: {
     color: "white",
     zoom: "1.3"
+  },
+  button: {
+    color: "white",
+    border: "2px solid black",
   }
 }));
 
@@ -71,26 +85,13 @@ export default function PlaylistComponent(props) {
     });
   };
 
-  const handleClick = () => {
+  const handleAddEdit = () => {
     props.setSelectedPlaylist(props.playlist);
     console.log("time to edit");
     props.togglePlaylistForm(true);
   };
 
   const renderGenreIcon = genre => {
-    const genres = [
-      "Blues",
-      "Classical",
-      "Country",
-      "Electronic",
-      "Folk",
-      "Jazz",
-      "New age",
-      "Reggae",
-      "Rock",
-      "Metal",
-      "Other"
-    ];
     switch (genre) {
       case "Blues":
         return <Blues />;
@@ -118,21 +119,24 @@ export default function PlaylistComponent(props) {
   };
 
   return (
+    <div className={classes.wrapper}>
     <Paper className={classes.paper}>
       <Grid container wrap="nowrap" spacing={2}>
 
         <Tooltip title="Edit" TransitionComponent={Zoom}>
           <Grid item>
-            <CreateIcon className={classes.icon} onClick={handleClick} />
+            <CreateIcon className={classes.icon} onClick={handleAddEdit} />
           </Grid>
         </Tooltip>
 
         <Grid item xs zeroMinWidth>
-          <Typography variant={"button"} className={classes.title} noWrap>
-            <Link to={`/playlist/${props.playlist.id}`}>
+          {/* <Typography variant={"button"} className={classes.title} noWrap> */}
+          <Typography Wrap className={classes.button}>
+            <Link className={classes.title} to={`/playlist/${props.playlist.id}`}>
               {props.playlist.name}
             </Link>
-          </Typography>
+            </Typography>
+          {/* </Typography> */}
         </Grid>
 
         <Tooltip title="Delete" TransitionComponent={Zoom}>
@@ -146,18 +150,19 @@ export default function PlaylistComponent(props) {
       <Grid container wrap="nowrap" spacing={3}>
 
       <Tooltip title={props.playlist.genre} TransitionComponent={Zoom}>
-          <Grid item className={classes.faIcon} item>
+          <Grid item className={classes.faIcon} >
             {/* <FontAwesomeIcon icon="blind" />  */}
             {renderGenreIcon(props.playlist.genre)}
           </Grid>
       </Tooltip>
       
         <Grid item xs zeroMinWidth>
-          <Typography variant={"subtitle"} noWrap>User: {props.playlist.user_id}</Typography>
+          {/* <Typography variant={"caption"} noWrap>User: {props.playlist.user_id}</Typography> */}
         </Grid>
        
       </Grid>
     </Paper>
+    </div>
   );
 }
 

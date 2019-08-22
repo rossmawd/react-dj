@@ -2,7 +2,11 @@ import React from "react";
 import PlaylistComponent from "../Components/PlaylistComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import AddorEditPlaylist from "../Components/AddorEditPlaylist";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import DialogSelect from "../Components/DialogSelect";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,6 +21,19 @@ const useStyles = makeStyles(theme => ({
 const PlaylistsIndexContainer = (props, routerProps) => {
   const classes = useStyles();
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const MySwal = withReactContent(Swal);
+
+  
+
+  useEffect(() => {
+    console.log('MOUNT')
+   
+    
+    // returned function will be called on component unmount 
+    return () => {
+      console.log('UNMOUNT')
+    }
+  }, [])
 
   const userPlaylists = playlists => {
     if (playlists.length !== 0) {
@@ -27,34 +44,67 @@ const PlaylistsIndexContainer = (props, routerProps) => {
   };
 
   const sortedUserPlaylists = userPlaylists => {
-    return userPlaylists.sort(playlist => playlist.created_at).reverse();
+    let sorted_playlists = userPlaylists.sort(playlist => playlist.created_at).reverse();
+    if ((props.playlistFilter) === "All") {
+    return sorted_playlists
+    }  else {
+     return filteredPlaylists(sorted_playlists)
+    }
+
   };
+
+  const filteredPlaylists = (playlists) => {
+    let filtered_playlists = playlists.filter(playlist => playlist.genre === props.playlistFilter)
+
+    if (filtered_playlists.length === 0){
+      MySwal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: "You don't have any playlists of that genre!",
+        footer: 'Click the pencil above to add one!'
+      })
+      props.setPlaylistFilter("All")
+      return playlists 
+    }
+
+    return filtered_playlists
+  }
 
   return (
     <div className={classes.root}>
-      {props.showPlaylistForm ? (
-        <AddorEditPlaylist
-          selectedPlaylist={selectedPlaylist}
-          togglePlaylistForm={props.togglePlaylistForm}
-          updatePlaylists={props.updatePlaylists}
-          addOrEdit={props.addOrEdit}
-        />
-      ) : null}
+
+      <DialogSelect
+        toggleFilterForm={props.toggleFilterForm}
+        showFilterForm={props.showFilterForm}
+        playlistFilter={props.playlistFilter}
+        setPlaylistFilter={props.setPlaylistFilter}
+
+      />
+
+      <AddorEditPlaylist
+        selectedPlaylist={selectedPlaylist}
+        togglePlaylistForm={props.togglePlaylistForm}
+        showPlaylistForm={props.showPlaylistForm}
+        updatePlaylists={props.updatePlaylists}
+        getPlaylist={props.getPlaylist}
+        addOrEdit={props.addOrEdit}
+      />
+
 
       {props.playlists.length !== 0
         ? sortedUserPlaylists(userPlaylists(props.playlists)).map(
-            (playlist, i) => (
-              <PlaylistComponent
+          (playlist, i) => (
+            <PlaylistComponent
               setSelectedPlaylist={setSelectedPlaylist}
-                {...routerProps}
-                updatePlaylists={props.updatePlaylists}
-                key={playlist.id}
-                playlist={playlist}
-                togglePlaylistForm={props.togglePlaylistForm}
-              />
-            )
+              {...routerProps}
+              updatePlaylists={props.updatePlaylists}
+              key={playlist.id}
+              playlist={playlist}
+              togglePlaylistForm={props.togglePlaylistForm}
+            />
           )
-        : null}
+        )
+        : <h3>No Playlists Here!</h3>}
     </div>
   );
 };

@@ -1,11 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ListingComponent from "../Components/ListingComponent";
 import EditListingForm from "../Components/EditListingForm";
 import { makeStyles } from "@material-ui/core/styles";
 import BottomAppBar from "../Components/BottomAppBar";
 import Paper from "@material-ui/core/Paper";
 import Slide from "@material-ui/core/Slide";
+import DialogSelect from '../Components/DialogSelect';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,20 +32,54 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// function useForceUpdate(){
+//   const [value, set] = useState(true); //boolean state
+
+//   return () => set(!value); // toggle the state to force render
+// }
+
 const ListingContainer = (props, routerProps) => {
   const classes = useStyles();
+  // const forceUpdate = useForceUpdate()
   const { playlist, currentUser } = props;
   const [isPlaying, setPlaying] = useState(false);
+  // var Scroll = require('react-scroll');
+  // var Element = Scroll.Element;
+  // var scroller = Scroll.scroller;
+
+  const MySwal = withReactContent(Swal);
+  //const newTrack = useRef(null);
+  let count = 0
   const sortListings = () => {
     return playlist.listings.sort((a, b) => a.position - b.position).reverse();
   };
-  const [currentListing, setCurrentListing] = useState({
-    ...sortListings()[0]
+  const [currentListing, setCurrentListing] = useState(() => {
+    return {
+      ...sortListings()[0]
+    }
   });
+  
 
-  console.log("listing container render", playlist);
+  // useEffect(() => {
+  //   console.log('MOUNT')
+
+  //   // returned function will be called on component unmount 
+  //   return () => {
+  //     console.log('UNMOUNT')
+  //   }
+  // }, [])
+
+
+  const determineNextLisiting = () => {
+
+    let currentlyPlaying = playlist.listings.find(listing => listing.id === currentListing.id)
+    let upNextPosition = currentlyPlaying.position - 1
+    let nextLising = playlist.listings.find(listing => listing.position === upNextPosition)
+    debugger
+  }
 
   const triggerNextSong = id => {
+    //determineNextLisiting()
     console.log("trigger next song", playlist);
     console.log("triggerNextSong fired!");
 
@@ -59,27 +98,55 @@ const ListingContainer = (props, routerProps) => {
     }
   };
 
-  const renderListings = () => {
-    if (playlist.listings && playlist.listings.length !== 0) {
+  useEffect(() => { //Prevents displaying the error on re-render
+    if (playlist.listings && playlist.listings.length === 0) {
       
+      Swal.fire(
+        'Welcome to your new Playlist!',
+        'Click the pencil above to add a song',
+        'info'
+      )
+    }
+  }, []);
+
+  const scrollOnCreate = () => {
+    scroll.scrollToTop();
+  }
+
+  const renderListings = () => {
+   
+    
+    if (playlist.listings && playlist.listings.length !== 0) {
+        
       return sortListings().map((listing, i) => (
+        <Element name={listing.url}>
         <ListingComponent
           {...routerProps}
+          name={listing.url}
           key={listing.id}
           listing={listing}
           setCurrentListing={setCurrentListing}
           currentListing={currentListing}
+          // nextLising={nextListing}
+          // setNextListing={setNextListing}
+          determineNextLisiting={determineNextLisiting}
           setPlaying={setPlaying}
           isPlaying={isPlaying}
           showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
           setCurrentUserFromToken={props.setCurrentUserFromToken}
+          getPlaylist={props.getPlaylist}
+          currentUser={currentUser}
+          updatePlaylist={props.updatePlaylist}
+        // forceUpdate={forceUpdate}
         />
+        </Element>
       ));
     }
   };
 
   return (
     <div className={classes.root}>
+
       <div className={classes.wrapper}>
         <Slide
           timeout={500}
@@ -92,9 +159,12 @@ const ListingContainer = (props, routerProps) => {
             <EditListingForm
               {...routerProps}
               playlist={props.playlist}
+              scrollOnCreate={scrollOnCreate}
               playlistLength={playlist.listings.length}
+              getPlaylist={props.getPlaylist}
               toggleShowListingsEdit={props.toggleShowListingsEdit}
               setCurrentUserFromToken={props.setCurrentUserFromToken}
+              showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
             />
           </Paper>
         </Slide>
@@ -106,6 +176,7 @@ const ListingContainer = (props, routerProps) => {
         triggerNextSong={id => triggerNextSong(id)}
         setPlaying={setPlaying}
         isPlaying={isPlaying}
+        setCurrentListing={setCurrentListing}
       />
     </div>
   );
