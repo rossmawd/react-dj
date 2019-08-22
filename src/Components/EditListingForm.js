@@ -7,6 +7,10 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import ReactPlayer from "react-player";
+import YoutubeAutocomplete from 'new-material-react-youtube-autocomplete';
+import { createMuiTheme } from '@material-ui/core/styles'
+
+
 import API from "../API.js";
 
 const useStyles = makeStyles(theme => ({
@@ -100,6 +104,11 @@ export default function EditListingForm(props) {
     });
   };
 
+const handleSearchSubmit = (result) => {
+  setUrl(result[0].link)
+  setName(result[0].title)
+}
+
   return (
     <div className={classes.root}>
       <br />
@@ -108,6 +117,7 @@ export default function EditListingForm(props) {
         className={clsx(classes.margin, classes.textField)}
         variant="outlined"
         label="YouTube URL"
+        value={url}
         onChange={event => handleChange(event)}
         InputProps={{}}
       />
@@ -115,6 +125,7 @@ export default function EditListingForm(props) {
         id="song-name"
         className={clsx(classes.margin, classes.textField)}
         variant="outlined"
+        value={name}
         label="Track Name"
         onChange={event => handleChange(event)}
         InputProps={{}}
@@ -126,6 +137,28 @@ export default function EditListingForm(props) {
       >
         {props.showAdminControls ? "Add To Playlist" : "Add Suggestion"}
       </Button>
+
+<h5>Search YouTube</h5>
+      <YoutubeAutocomplete
+    useMui = {true}
+    placeholderText = "search"
+    inputId = 'my-input'
+    menuId = 'my-menu'
+    itemClassName = 'my-items'
+    // theme = {createMuiTheme({
+    //   primary: red,
+    // })}
+    option={{
+      maxResults:15,
+      type:['video', 'playlist'],
+      key: 'AIzaSyB8R4Bqkx25_-c58L7v1QaLReVw1FWea28'
+    }}
+    onSuggestError={error => console.log(`error: ${error}`)}
+    onSearchError={error => console.log(`error: ${error}`)}
+    onSearchResults={result => handleSearchSubmit(result)}
+    onSearchTrigger={inputValue => console.log(`${inputValue} is being searched.`)}
+  />
+     
     </div>
   );
 }

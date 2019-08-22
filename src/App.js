@@ -49,7 +49,7 @@ setPlaylistFilter = (genre) => {
     window.fetch("http://localhost:3000/notes/1").then(data => {
       data.json().then(res => {
         this.setState({ text: res.text });
-      
+        
       });
     });
 
@@ -64,6 +64,7 @@ setPlaylistFilter = (genre) => {
     handleChange = e => {
       this.setState({ text: e.target.value })
       this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
+     
     }
   
     handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
