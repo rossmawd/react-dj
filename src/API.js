@@ -10,7 +10,7 @@ const likeUrl = `${endpoint}likes/`;
 const dislikeUrl = `${endpoint}dislikes/`;
 
 const jsonify = res => {
-  //debugger
+
   if (res.ok) return res.json(); //DEFAULT
 
   else {

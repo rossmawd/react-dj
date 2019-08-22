@@ -44,9 +44,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setCurrentUserFromToken();
-
+       
     // ACTION CABLE
     window.fetch("https://backend-react-dj.herokuapp.com/notes/1").then(data => {
+      
       data.json().then(res => {
         this.setState({ text: res.text });
 
