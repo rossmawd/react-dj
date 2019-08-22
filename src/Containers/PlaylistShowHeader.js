@@ -100,7 +100,7 @@ const PlaylistShowHeader = (props) => {
           </Button>
 
           <CopyToClipboard
-            text={"localhost:3001" + props.location.pathname}
+            text={"https://react-dj.netlify.com/" + props.location.pathname}
             onCopy={() => copiedToClipboard()} >
             <Button>Share</Button>
           </CopyToClipboard>

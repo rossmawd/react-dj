@@ -60,6 +60,7 @@ const handleChange = (event) => {
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="genre-simple">genre</InputLabel>
               <Select
+              native
                 value={state.genre}
                 onChange={handleChange}
                 input={<Input id="genre-simple" />}
