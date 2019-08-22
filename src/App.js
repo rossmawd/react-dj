@@ -34,42 +34,42 @@ class App extends React.Component {
     playlistFilter: "All"
   };
 
-setPlaylistFilter = (genre) => {
-  this.setState({playlistFilter: genre})
-}
+  setPlaylistFilter = (genre) => {
+    this.setState({ playlistFilter: genre })
+  }
 
   toggleFilterForm = () => {
-    this.setState({ showFilterForm: !this.state.showFilterForm})
+    this.setState({ showFilterForm: !this.state.showFilterForm })
   }
 
   componentDidMount() {
     this.setCurrentUserFromToken();
-   
+
     // ACTION CABLE
-    window.fetch("http://localhost:3000/notes/1").then(data => {
+    window.fetch("https://backend-react-dj.herokuapp.com/notes/1").then(data => {
       data.json().then(res => {
         this.setState({ text: res.text });
-        
+
       });
     });
 
-    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    const cable = ActionCable.createConsumer('ws://backend-react-dj.herokuapp.com/cable')
 
     this.sub = cable.subscriptions.create('NotesChannel', {
       received: this.handleReceiveNewText
     })
   }
 
-    //ACTION CABLE start
-    handleChange = e => {
-      this.setState({ text: e.target.value })
-      this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
-     
-    }
-  
-    handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
-    
-  
+  //ACTION CABLE start
+  handleChange = e => {
+    this.setState({ text: e.target.value })
+    this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
+
+  }
+
+  handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
+
+
     if (text !== this.state.text) {
       this.setState({ text })
     }
@@ -77,7 +77,7 @@ setPlaylistFilter = (genre) => {
     // let playlist =  this.state.playlists.filter(playlist => playlist.id === parseInt(playlist_id))
     // let listing = playlist.listings.filter(listing => )
     this.getPlaylist(parseInt(playlist_id))
-   
+
 
   }
 
@@ -112,9 +112,9 @@ setPlaylistFilter = (genre) => {
 
   getPlaylist = id => {
     API.getPlaylist(id).then(playlist => {
-      let currentPlaylists = this.state.playlists 
+      let currentPlaylists = this.state.playlists
       let playlistsMinusOne = currentPlaylists.filter(p => p.id !== playlist.id)
-      this.setState({ playlists: [...playlistsMinusOne, playlist]}); // spreading in the playlist was causing a duplicate!!
+      this.setState({ playlists: [...playlistsMinusOne, playlist] }); // spreading in the playlist was causing a duplicate!!
     });
   };
 
@@ -183,20 +183,20 @@ setPlaylistFilter = (genre) => {
     return (
       <div className="App">
         <GoogleFontLoader
-      fonts={[
-        {
-          font: 'Roboto',
-          weights: [400, '400i'],
-        },
-        {
-          font: 'Roboto Mono',
-          weights: [400, 700],
-        },
-      ]}
-      subsets={['cyrillic-ext', 'greek']}
-    />
+          fonts={[
+            {
+              font: 'Roboto',
+              weights: [400, '400i'],
+            },
+            {
+              font: 'Roboto Mono',
+              weights: [400, 700],
+            },
+          ]}
+          subsets={['cyrillic-ext', 'greek']}
+        />
         <Switch>
-        
+
           <Route
             exact
             path="/"
@@ -230,7 +230,7 @@ setPlaylistFilter = (genre) => {
                   />
 
                   <PlaylistsIndexContainer
-                    {...routerProps}  
+                    {...routerProps}
                     currentUser={this.state.user}
                     playlists={this.state.playlists}
                     getPlaylist={this.getPlaylist}
@@ -274,7 +274,7 @@ setPlaylistFilter = (genre) => {
                     playlist={playlist}
                     text={this.state.text}
                     changeText={this.handleChange}
-                    
+
                   />
 
                   <ListingContainer
@@ -292,7 +292,7 @@ setPlaylistFilter = (genre) => {
           />
           <Route component={() => <h1>404 - Page not Found ;-p</h1>} />
         </Switch>
-  
+
       </div>
     );
   }

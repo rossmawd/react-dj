@@ -1,4 +1,4 @@
-const endpoint = "http://localhost:3000/api/v1/";
+const endpoint = "https://backend-react-dj.herokuapp.com/api/v1/";
 //Sam's Auth code:
 const signupUrl = `${endpoint}users/`;
 const loginUrl = `${endpoint}login/`;
@@ -10,6 +10,7 @@ const likeUrl = `${endpoint}likes/`;
 const dislikeUrl = `${endpoint}dislikes/`;
 
 const jsonify = res => {
+  //debugger
   if (res.ok) return res.json(); //DEFAULT
 
   else {
@@ -42,7 +43,7 @@ const fetchAllPlaylists = () => {
 };
 
 const getPlaylist = (id) => {
-  
+
   return fetch(playlistsUrl + id)
     .then(resp => resp.json())
     .catch(handleServerError);
@@ -153,32 +154,32 @@ const postListing = (listing) => fetch(listingsUrl, {
   })
   .catch(handleServerError)
 
-  const postLike = (like) => fetch(likeUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ like })
-  }).then(jsonify)
-    .then(like => {
-      console.log("like: ", like)
-      return like
-    })
-    .catch(handleServerError)
+const postLike = (like) => fetch(likeUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ like })
+}).then(jsonify)
+  .then(like => {
+    console.log("like: ", like)
+    return like
+  })
+  .catch(handleServerError)
 
-  const postDislike = (dislike) => fetch(dislikeUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ dislike })
-  }).then(jsonify)
-    .then(dislike => {
-      console.log("listing: ", dislike)
-      
-      return dislike
-    })
-    .catch(handleServerError)
+const postDislike = (dislike) => fetch(dislikeUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ dislike })
+}).then(jsonify)
+  .then(dislike => {
+    console.log("listing: ", dislike)
+
+    return dislike
+  })
+  .catch(handleServerError)
 
 const updateListingsPositions = (listing, type) => fetch(listingPositonUrl + type, {
   method: 'PATCH',
@@ -236,5 +237,5 @@ export default {
   getPlaylist,
   postLike,
   postDislike,
-  
+
 };
