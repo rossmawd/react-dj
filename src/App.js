@@ -53,7 +53,7 @@ setPlaylistFilter = (genre) => {
       });
     });
 
-    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    const cable = ActionCable.createConsumer('ws://backend-react-dj.herokuapp.com/cable')
 
     this.sub = cable.subscriptions.create('NotesChannel', {
       received: this.handleReceiveNewText
