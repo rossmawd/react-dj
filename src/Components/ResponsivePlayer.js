@@ -36,7 +36,7 @@ export const ResponsivePlayer = ({
           volume="1"
           playing={isPlaying}
           onPlay={setPlaying(true)}
-          controls={true}
+          controls={false}
           onEnded={triggerNextSong}
         />
       ) : (
