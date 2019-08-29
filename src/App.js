@@ -140,12 +140,17 @@ class App extends React.Component {
       .then(user => {
         let testPlaylist = {name: "My First Playlist", description: "", party: false, genre: "Other", user_id: user.id}
         //name: nil, description: nil, party: nil, genre: nil, user_id: nil
-        return API.postPlaylist(testPlaylist);
+        // let playlist = API.postPlaylist(testPlaylist)
+        return API.postPlaylist(testPlaylist)
       })
 
       .then((playlist) => {
-        //debugger
-        this.setState({ playlists: [...this.state.playlists, playlist] });
+        
+        this.setState({ playlists: [...this.state.playlists, playlist] })
+        let updatedUser = this.state.user
+        updatedUser.playlists = [{...Object.values(playlist)[0]}]
+       debugger
+       this.setState({user: updatedUser})
         console.log(this.props.history);
         this.props.history.push("/playlists");
       })
