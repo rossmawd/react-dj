@@ -19,7 +19,7 @@ function Copyright() {
       
       {' Built with '}
       <Link color="inherit" href="https://material-ui.com/">
-        Material-UI.drink
+        Material-UI.
       </Link>
     </Typography>
   );
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({handleSignUpSubmit, handleFormChange}) {
   const classes = useStyles();
 
   return (
@@ -69,24 +69,25 @@ export default function SignUp() {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="User Name"
                 name="email"
                 autoComplete="email"
+                onChange={(e) => handleFormChange(e)}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
+                // required
                 fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleFormChange}
               />
             </Grid>
            
@@ -97,6 +98,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={(e) => handleSignUpSubmit(e)}
           >
             Sign Up
           </Button>

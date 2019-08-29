@@ -11,10 +11,9 @@ import ListingContainer from "./Containers/ListingContainer";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
-import ActionCable from 'actioncable'
-import GoogleFontLoader from 'react-google-font-loader';
+import ActionCable from "actioncable";
+import GoogleFontLoader from "react-google-font-loader";
 library.add(fab, faCheckSquare, faCoffee);
-
 
 const ConditionalComponent = (condition, jsx) => {
   return condition ? jsx : <div>Loading...</div>;
@@ -34,52 +33,46 @@ class App extends React.Component {
     playlistFilter: "All"
   };
 
-setPlaylistFilter = (genre) => {
-  this.setState({playlistFilter: genre})
-}
+  setPlaylistFilter = genre => {
+    this.setState({ playlistFilter: genre });
+  };
 
   toggleFilterForm = () => {
-    this.setState({ showFilterForm: !this.state.showFilterForm})
-  }
+    this.setState({ showFilterForm: !this.state.showFilterForm });
+  };
 
   componentDidMount() {
     this.setCurrentUserFromToken();
-   
+
     // ACTION CABLE
     window.fetch("http://localhost:3000/notes/1").then(data => {
       data.json().then(res => {
         this.setState({ text: res.text });
-        
       });
     });
 
-    const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
+    const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
 
-    this.sub = cable.subscriptions.create('NotesChannel', {
+    this.sub = cable.subscriptions.create("NotesChannel", {
       received: this.handleReceiveNewText
-    })
+    });
   }
 
-    //ACTION CABLE start
-    handleChange = e => {
-      this.setState({ text: e.target.value })
-      this.sub.send({ text: e.target.value, id: 1 }) //sends changes to the backend 
-     
-    }
-  
-    handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
-    
-  
+  //ACTION CABLE start
+  handleChange = e => {
+    this.setState({ text: e.target.value });
+    this.sub.send({ text: e.target.value, id: 1 }); //sends changes to the backend
+  };
+
+  handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
     if (text !== this.state.text) {
-      this.setState({ text })
+      this.setState({ text });
     }
 
     // let playlist =  this.state.playlists.filter(playlist => playlist.id === parseInt(playlist_id))
     // let listing = playlist.listings.filter(listing => )
-    this.getPlaylist(parseInt(playlist_id))
-   
-
-  }
+    this.getPlaylist(parseInt(playlist_id));
+  };
 
   togglePlaylistForm = (edit = false) => {
     this.setState({
@@ -112,9 +105,11 @@ setPlaylistFilter = (genre) => {
 
   getPlaylist = id => {
     API.getPlaylist(id).then(playlist => {
-      let currentPlaylists = this.state.playlists 
-      let playlistsMinusOne = currentPlaylists.filter(p => p.id !== playlist.id)
-      this.setState({ playlists: [...playlistsMinusOne, playlist]}); // spreading in the playlist was causing a duplicate!!
+      let currentPlaylists = this.state.playlists;
+      let playlistsMinusOne = currentPlaylists.filter(
+        p => p.id !== playlist.id
+      );
+      this.setState({ playlists: [...playlistsMinusOne, playlist] }); // spreading in the playlist was causing a duplicate!!
     });
   };
 
@@ -138,8 +133,19 @@ setPlaylistFilter = (genre) => {
 
   createUser = user => {
     API.signUp(user)
-      .then(user => this.setState({ user, playlists: user.playlists }))
-      .then(() => {
+      .then(user => {
+        this.setState({ user });
+        return user;
+      })
+      .then(user => {
+        let testPlaylist = {name: "My First Playlist", description: "", party: false, genre: "Other", user_id: user.id}
+        //name: nil, description: nil, party: nil, genre: nil, user_id: nil
+        return API.postPlaylist(testPlaylist);
+      })
+
+      .then((playlist) => {
+        //debugger
+        this.setState({ playlists: [...this.state.playlists, playlist] });
         console.log(this.props.history);
         this.props.history.push("/playlists");
       })
@@ -168,6 +174,16 @@ setPlaylistFilter = (genre) => {
     this.logIn(submittedUser);
   };
 
+  handleSignUpSubmit = e => {
+    e.preventDefault();
+    //debugger
+    let submittedUser = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.createUser(submittedUser);
+  };
+
   renderWelcomePage = routerProps => {
     return (
       <SignIn
@@ -183,20 +199,19 @@ setPlaylistFilter = (genre) => {
     return (
       <div className="App">
         <GoogleFontLoader
-      fonts={[
-        {
-          font: 'Roboto',
-          weights: [400, '400i'],
-        },
-        {
-          font: 'Roboto Mono',
-          weights: [400, 700],
-        },
-      ]}
-      subsets={['cyrillic-ext', 'greek']}
-    />
+          fonts={[
+            {
+              font: "Roboto",
+              weights: [400, "400i"]
+            },
+            {
+              font: "Roboto Mono",
+              weights: [400, 700]
+            }
+          ]}
+          subsets={["cyrillic-ext", "greek"]}
+        />
         <Switch>
-        
           <Route
             exact
             path="/"
@@ -208,7 +223,13 @@ setPlaylistFilter = (genre) => {
           <Route
             exact
             path="/signup"
-            render={routerProps => <SignUp {...routerProps} />}
+            render={routerProps => (
+              <SignUp
+                {...routerProps}
+                handleFormChange={this.handleFormChange}
+                handleSignUpSubmit={this.handleSignUpSubmit}
+              />
+            )}
           />
 
           <Route
@@ -230,7 +251,7 @@ setPlaylistFilter = (genre) => {
                   />
 
                   <PlaylistsIndexContainer
-                    {...routerProps}  
+                    {...routerProps}
                     currentUser={this.state.user}
                     playlists={this.state.playlists}
                     getPlaylist={this.getPlaylist}
@@ -274,7 +295,6 @@ setPlaylistFilter = (genre) => {
                     playlist={playlist}
                     text={this.state.text}
                     changeText={this.handleChange}
-                    
                   />
 
                   <ListingContainer
@@ -292,7 +312,6 @@ setPlaylistFilter = (genre) => {
           />
           <Route component={() => <h1>404 - Page not Found ;-p</h1>} />
         </Switch>
-  
       </div>
     );
   }
