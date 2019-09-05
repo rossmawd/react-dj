@@ -135,6 +135,7 @@ class App extends React.Component {
     API.signUp(user)
       .then(user => {
         this.setState({ user });
+        
         return user;
       })
       .then(user => {
@@ -149,7 +150,7 @@ class App extends React.Component {
         this.setState({ playlists: [...this.state.playlists, playlist] })
         let updatedUser = this.state.user
         updatedUser.playlists = [{...Object.values(playlist)[0]}]
-       debugger
+       //debugger
        this.setState({user: updatedUser})
         console.log(this.props.history);
         this.props.history.push("/playlists");

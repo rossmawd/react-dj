@@ -66,6 +66,8 @@ const signUp = user =>
     .then(data => {
       console.log("token: ", data.token);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("currentUser", data.user.id);
+      localStorage.setItem("email", data.user.email);
       return data.user;
     })
     .catch(handleServerError);

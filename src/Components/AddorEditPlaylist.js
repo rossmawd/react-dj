@@ -83,6 +83,7 @@ export default function AddorEditPlaylist(props) {
   };
 
   const handleSubmit = () => {
+    //debugger
     API.postPlaylist(constructPlaylist()).then(data => {
       console.log("Here is the result of a Playlist POST: ", data);
       props.togglePlaylistForm();

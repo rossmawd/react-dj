@@ -75,7 +75,7 @@ const ListingContainer = (props, routerProps) => {
     let currentlyPlaying = playlist.listings.find(listing => listing.id === currentListing.id)
     let upNextPosition = currentlyPlaying.position - 1
     let nextLising = playlist.listings.find(listing => listing.position === upNextPosition)
-    debugger
+    //debugger
   }
 
   const triggerNextSong = id => {
