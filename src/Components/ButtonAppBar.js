@@ -5,6 +5,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CreateIcon from "@material-ui/icons/Create";
+import { MdAdd } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -65,7 +67,8 @@ export default function ButtonAppBar(props) {
                   : () => props.togglePlaylistForm(false)
               }
             >
-              <CreateIcon />
+              {/* <CreateIcon /> */}
+              <FaPlus />
             </IconButton>
           ) : null}
         </Toolbar>
