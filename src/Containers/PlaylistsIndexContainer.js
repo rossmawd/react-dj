@@ -7,7 +7,6 @@ import DialogSelect from "../Components/DialogSelect";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -21,19 +20,17 @@ const useStyles = makeStyles(theme => ({
 const PlaylistsIndexContainer = (props, routerProps) => {
   const classes = useStyles();
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [alertCount, setAlertCount] = useState(0);
   const MySwal = withReactContent(Swal);
 
-  
-
   useEffect(() => {
-    console.log('MOUNT')
-   
-    
-    // returned function will be called on component unmount 
+    console.log("MOUNT");
+
+    // returned function will be called on component unmount
     return () => {
-      console.log('UNMOUNT')
-    }
-  }, [])
+      console.log("UNMOUNT");
+    };
+  }, []);
 
   const userPlaylists = playlists => {
     if (playlists.length !== 0) {
@@ -44,41 +41,55 @@ const PlaylistsIndexContainer = (props, routerProps) => {
   };
 
   const sortedUserPlaylists = userPlaylists => {
-    let sorted_playlists = userPlaylists.sort(playlist => playlist.created_at).reverse();
-    if ((props.playlistFilter) === "All") {
-    return sorted_playlists
-    }  else {
-     return filteredPlaylists(sorted_playlists)
+    let sorted_playlists = userPlaylists
+      .sort(playlist => playlist.created_at)
+      .reverse();
+    if (props.playlistFilter === "All") {
+      return sorted_playlists;
+    } else {
+      return filteredPlaylists(sorted_playlists);
     }
-
   };
 
-  const filteredPlaylists = (playlists) => {
-    let filtered_playlists = playlists.filter(playlist => playlist.genre === props.playlistFilter)
+  const filteredPlaylists = playlists => {
+    let filtered_playlists = playlists.filter(
+      playlist => playlist.genre === props.playlistFilter
+    );
 
-    if (filtered_playlists.length === 0){
+    if (filtered_playlists.length === 0) {
       MySwal.fire({
-        type: 'error',
-        title: 'Oops...',
+        type: "error",
+        title: "Oops...",
         text: "You don't have any playlists of that genre!",
-        footer: 'Click the pencil above to add one!'
-      })
-      props.setPlaylistFilter("All")
-      return playlists 
+        footer: "Click the pencil above to add one!"
+      });
+      props.setPlaylistFilter("All");
+      return playlists;
     }
 
-    return filtered_playlists
-  }
+    return filtered_playlists;
+  };
+
+  const newUserAlert = () => {
+    if (alertCount < 1) {
+      MySwal.fire({
+        type: "info",
+        title: "Welcome!",
+        text: "This page is where you add and view your playlists!",
+        footer: "Click the pencil above to add one!"
+      });
+      setAlertCount(alertCount + 1);
+    } 
+   
+  };
 
   return (
     <div className={classes.root}>
-
       <DialogSelect
         toggleFilterForm={props.toggleFilterForm}
         showFilterForm={props.showFilterForm}
         playlistFilter={props.playlistFilter}
         setPlaylistFilter={props.setPlaylistFilter}
-
       />
 
       <AddorEditPlaylist
@@ -90,9 +101,9 @@ const PlaylistsIndexContainer = (props, routerProps) => {
         addOrEdit={props.addOrEdit}
       />
 
-
-      {props.playlists.length !== 0
-        ? sortedUserPlaylists(userPlaylists(props.playlists)).map(
+      {props.playlists[0].empty ? newUserAlert() : null}
+      {props.playlists.length !== 0 ? (
+        sortedUserPlaylists(userPlaylists(props.playlists)).map(
           (playlist, i) => (
             <PlaylistComponent
               setSelectedPlaylist={setSelectedPlaylist}
@@ -104,7 +115,9 @@ const PlaylistsIndexContainer = (props, routerProps) => {
             />
           )
         )
-        : <h3>No Playlists Here!</h3>}
+      ) : (
+        <h3>No Playlists Here!</h3>
+      )}
     </div>
   );
 };

@@ -142,7 +142,7 @@ class App extends React.Component {
         // let testPlaylist = {name: "My First Playlist", description: "", party: false, genre: "Other", user_id: user.id}
        
         // return API.postPlaylist(testPlaylist)
-        this.setState({playlists: [{}]})
+        this.setState({playlists: [{empty: true}]})
         this.props.history.push("/playlists");
       })
 
