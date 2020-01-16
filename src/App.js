@@ -54,7 +54,7 @@ class App extends React.Component {
     const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
 
     this.sub = cable.subscriptions.create("NotesChannel", {
-      received: this.handleReceiveNewText
+      received: this.handleReceiveNewLike
     });
   }
 
@@ -64,13 +64,11 @@ class App extends React.Component {
     this.sub.send({ text: e.target.value, id: 1 }); //sends changes to the backend
   };
 
-  handleReceiveNewText = ({ text, listing_id, playlist_id }) => {
+  handleReceiveNewLike = ({ text, playlist_id }) => {
     if (text !== this.state.text) {
       this.setState({ text });
     }
 
-    // let playlist =  this.state.playlists.filter(playlist => playlist.id === parseInt(playlist_id))
-    // let listing = playlist.listings.filter(listing => )
     this.getPlaylist(parseInt(playlist_id));
   };
 
@@ -135,19 +133,19 @@ class App extends React.Component {
     API.signUp(user)
       .then(user => {
         this.setState({ user });
-        
+
         return user;
       })
       .then(user => {
         // let testPlaylist = {name: "My First Playlist", description: "", party: false, genre: "Other", user_id: user.id}
-       
+
         // return API.postPlaylist(testPlaylist)
-        this.setState({playlists: [{empty: true}]})
+        this.setState({ playlists: [{ empty: true }] })
         this.props.history.push("/playlists");
       })
 
       // .then((playlist) => {
-        
+
       //   this.setState({ playlists: [...this.state.playlists, playlist] })
       //   let updatedUser = this.state.user
       //   updatedUser.playlists = [{...Object.values(playlist)[0]}]
