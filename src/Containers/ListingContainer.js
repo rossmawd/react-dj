@@ -10,7 +10,7 @@ import DialogSelect from '../Components/DialogSelect';
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import * as Scroll from 'react-scroll';
-import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -58,7 +58,7 @@ const ListingContainer = (props, routerProps) => {
       ...sortListings()[0]
     }
   });
-  
+
 
   // useEffect(() => {
   //   console.log('MOUNT')
@@ -100,45 +100,45 @@ const ListingContainer = (props, routerProps) => {
 
   useEffect(() => { //Prevents displaying the error on re-render
     if (playlist.listings && playlist.listings.length === 0) {
-      
+
       Swal.fire(
         'Welcome to your new Playlist!',
         'Click the pencil above to add a song',
         'info'
       )
     }
-  }, []);
+  });
 
   const scrollOnCreate = () => {
     scroll.scrollToTop();
   }
 
   const renderListings = () => {
-   
-    
+
+
     if (playlist.listings && playlist.listings.length !== 0) {
-        
+
       return sortListings().map((listing, i) => (
         <Element name={listing.url}>
-        <ListingComponent
-          {...routerProps}
-          name={listing.url}
-          key={listing.id}
-          listing={listing}
-          setCurrentListing={setCurrentListing}
-          currentListing={currentListing}
-          // nextLising={nextListing}
-          // setNextListing={setNextListing}
-          determineNextLisiting={determineNextLisiting}
-          setPlaying={setPlaying}
-          isPlaying={isPlaying}
-          showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
-          setCurrentUserFromToken={props.setCurrentUserFromToken}
-          getPlaylist={props.getPlaylist}
-          currentUser={currentUser}
-          updatePlaylist={props.updatePlaylist}
-        // forceUpdate={forceUpdate}
-        />
+          <ListingComponent
+            {...routerProps}
+            name={listing.url}
+            key={listing.id}
+            listing={listing}
+            setCurrentListing={setCurrentListing}
+            currentListing={currentListing}
+            // nextLising={nextListing}
+            // setNextListing={setNextListing}
+            determineNextLisiting={determineNextLisiting}
+            setPlaying={setPlaying}
+            isPlaying={isPlaying}
+            showAdminControls={!!currentUser && (playlist.user_id === currentUser.id)}
+            setCurrentUserFromToken={props.setCurrentUserFromToken}
+            getPlaylist={props.getPlaylist}
+            currentUser={currentUser}
+            updatePlaylist={props.updatePlaylist}
+          // forceUpdate={forceUpdate}
+          />
         </Element>
       ));
     }

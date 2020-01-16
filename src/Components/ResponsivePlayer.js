@@ -18,9 +18,9 @@ export const ResponsivePlayer = ({
 }) => {
   const classes = useStyles();
 
-  React.useEffect(() => {
-    setPlaying(false)
-  }, []);
+  // React.useEffect(() => {
+  //   setPlaying(false)
+  // });
 
   return (
     <div className={classes.playerWrapper}>
