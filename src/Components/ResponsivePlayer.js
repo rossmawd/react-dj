@@ -26,7 +26,6 @@ export const ResponsivePlayer = ({
     <div className={classes.playerWrapper}>
       {currentListing ? (
         <ReactPlayer
-          className={classes.reactPlayer}
           url={currentListing ? currentListing.url : ""}
           width="100%"
           height="100%"
@@ -37,7 +36,7 @@ export const ResponsivePlayer = ({
           onEnded={triggerNextSong}
         />
       ) : (
-          <h1>hello</h1>
+          <h1>Click on a song to play!</h1>
         )}
     </div>
   );

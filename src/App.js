@@ -133,28 +133,13 @@ class App extends React.Component {
     API.signUp(user)
       .then(user => {
         this.setState({ user });
-
         return user;
-      })
-      .then(user => {
-        // let testPlaylist = {name: "My First Playlist", description: "", party: false, genre: "Other", user_id: user.id}
+      }).then(user => {
 
-        // return API.postPlaylist(testPlaylist)
         this.setState({ playlists: [{ empty: true }] })
         this.props.history.push("/playlists");
-      })
+      }).catch(errors => {
 
-      // .then((playlist) => {
-
-      //   this.setState({ playlists: [...this.state.playlists, playlist] })
-      //   let updatedUser = this.state.user
-      //   updatedUser.playlists = [{...Object.values(playlist)[0]}]
-      //  //debugger
-      //  this.setState({user: updatedUser})
-      //   console.log(this.props.history);
-      //   this.props.history.push("/playlists");
-      // })
-      .catch(errors => {
         this.setState({ errors });
         alert(errors);
       });
