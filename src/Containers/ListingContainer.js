@@ -60,16 +60,6 @@ const ListingContainer = (props, routerProps) => {
   });
 
 
-  // useEffect(() => {
-  //   console.log('MOUNT')
-
-  //   // returned function will be called on component unmount 
-  //   return () => {
-  //     console.log('UNMOUNT')
-  //   }
-  // }, [])
-
-
   const determineNextLisiting = () => {
 
     let currentlyPlaying = playlist.listings.find(listing => listing.id === currentListing.id)
